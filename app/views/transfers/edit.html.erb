@@ -1,12 +1,11 @@
-<h1>Editing transfer</h1>
+<%= page_title "Modifier une transaction" %>
 
 <% form_for(@transfer) do |f| %>
   <%= render :partial => "form" %>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Enregistrer" %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @transfer %> |
-<%= link_to 'Back', transfers_path %>
+<%= link_to "Retour à la liste", transfers_path %>

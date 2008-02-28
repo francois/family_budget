@@ -29,3 +29,6 @@ table { border-collapse: collapse; }
 .budget td[scope] { text-align: left; }
 .budget td.over { background: red; }
 .budget tfoot td { font-weight: bold; border-top: 1px solid #735b3d; }
+#transfers { width: 100%; }
+.money { text-align: right; }
+table thead { border-bottom: 1px solid #333; }
