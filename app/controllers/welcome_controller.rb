@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
   before_filter :login_required
 
-  def index
+  def show
     @assets = current_family.accounts.assets
     @liabilities = current_family.accounts.liabilities
     @equities = current_family.accounts.equities

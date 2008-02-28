@@ -1,13 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :transfers
   map.resources :reports
-  map.resource :budget
+  map.resource :budget, :welcome
 
   map.resources :accounts
 
   map.resources :people, :families
   map.resource :session
-  map.root :controller => "welcome"
+  map.root :controller => "welcome", :action => "show"
 
   # The priority is based upon order of creation: first created -> highest priority.
 
