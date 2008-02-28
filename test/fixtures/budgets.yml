@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  account_id: 1
+  year: 1
+  month: 1
+  amount: 9.99
+
+two:
+  account_id: 1
+  year: 1
+  month: 1
+  amount: 9.99

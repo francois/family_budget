@@ -11,6 +11,8 @@ class Account < ActiveRecord::Base
   before_validation {|a| a.purpose = a.purpose.downcase unless a.purpose.blank?}
   validates_inclusion_of :purpose, :in => ValidPurposes
 
+  has_many :budgets, :order => "year, month"
+
   def to_s
     name
   end

@@ -9,12 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 8) do
+ActiveRecord::Schema.define(:version => 9) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id"
     t.string   "name"
     t.string   "purpose"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "budgets", :force => true do |t|
+    t.integer  "family_id"
+    t.integer  "account_id"
+    t.integer  "year"
+    t.integer  "month"
+    t.decimal  "amount",     :precision => 9, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
