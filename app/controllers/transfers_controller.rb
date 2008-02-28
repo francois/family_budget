@@ -1,23 +1,25 @@
 class TransfersController < ApplicationController
+  before_filter :load_transfer, :only => %w(show edit update destroy)
+
   def index
-    @transfers = Transfer.find(:all)
+    @transfers = current_family.transfers.find(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
     end
   end
 
   def show
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
     end
   end
 
   def new
-    @transfer = Transfer.new
+    @transfer = current_family.transfers.build
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
     end
   end
 
@@ -26,6 +28,8 @@ class TransfersController < ApplicationController
   end
 
   def create
+    @transfer = current_family.transfers.build(params[:transfer])
+    @transfer.posted_on = current_date
     respond_to do |format|
       if @transfer.save
         flash[:notice] = 'Transfer was successfully created.'
@@ -57,6 +61,6 @@ class TransfersController < ApplicationController
 
   protected
   def load_transfer
-    @transfer = Transfer.find(params[:id])
+    @transfer = current_family.transfers.find(params[:id])
   end
 end
