@@ -5,10 +5,6 @@ class FamiliesController < ApplicationController
     @families = Family.find(:all)
   end
 
-  def show
-    render
-  end
-
   def new
     @family = Family.new
   end

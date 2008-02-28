@@ -17,12 +17,6 @@ class AccountsController < ApplicationController
     end
   end
 
-  def show
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def new
     @account = current_family.accounts.build
 

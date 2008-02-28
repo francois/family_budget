@@ -10,12 +10,6 @@ class TransfersController < ApplicationController
     end
   end
 
-  def show
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def new
     @transfer = current_family.transfers.build
 
