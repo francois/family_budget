@@ -1,5 +1,6 @@
 class TransfersController < ApplicationController
   before_filter :load_transfer, :only => %w(show edit update destroy)
+  before_filter :load_accounts, :only => %w(new edit)
 
   def index
     @transfers = current_family.transfers.find(:all)
@@ -62,5 +63,9 @@ class TransfersController < ApplicationController
   protected
   def load_transfer
     @transfer = current_family.transfers.find(params[:id])
+  end
+
+  def load_accounts
+    @accounts = current_family.accounts.find(:all).map {|a| [a.name, a.id]}
   end
 end
