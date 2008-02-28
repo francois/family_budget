@@ -17,3 +17,4 @@ table { border-collapse: collapse; }
 #calendar a:hover { text-decoration: underline; }
 #calendar .outside a:link, #calendar .outside a:visited, #calendar .outside a:hover { background: #eee; }
 #calendar .today a:link, #calendar .today a:visited, #calendar .today a:hover { color: white; }
+#main { background: white; color: #735b3d; }
