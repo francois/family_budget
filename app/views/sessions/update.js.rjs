@@ -1,3 +1,4 @@
 page << %Q($$("#calendar td.today").each(function(e) {e.removeClassName("today")});)
 page.visual_effect :highlight, "date_#{current_date}"
 page << %Q($("date_#{current_date}").addClassName("today");)
+page << %Q(if ($("current_date")) {$("current_date").innerHTML = #{render_current_date.to_json}; #{visual_effect(:highlight, :current_date)}};)
