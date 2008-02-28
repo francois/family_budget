@@ -1,0 +1,19 @@
+body { background: #735b3d; margin: 0; padding: 0; color: white }
+table { border-collapse: collapse; }
+#container { width: 75em; margin: 0 auto; }
+#header { background-color: #faf0e6; color: #735b3d; font-size: 3em; font-weight: bold; line-height: 1.5em; }
+#header span { font-size: 40%; color: #333333; position: absolute; right: 10em; }
+#nav, #main, #calendar { vertical-align: top; padding: .5em .25em .25em; }
+#nav { width: 14em; background: #faf0e6; }
+#nav ul { padding: 0; margin: 0; list-style-type: none; }
+#nav li { padding: .5em .25em; }
+#calendar { background: #ECE45A; width: 20em; }
+#calendar table { width: 19.6em; margin: 0 auto; border: 1px solid #735b3d; padding: .1em; }
+#calendar th, #calendar td { width: 2.8em; text-align: right; }
+#calendar thead { background: #735b3d; color: #ece45a; text-align: center; }
+#calendar .outside { color: eee; }
+#calendar .today { background: #735b3d; color: #ece45a; font-weight: bold; }
+#calendar a:link, #calendar a:visited, #calendar a:hover { text-decoration: none; display: block; width: 100%; }
+#calendar a:hover { text-decoration: underline; }
+#calendar .outside a:link, #calendar .outside a:visited, #calendar .outside a:hover { background: #eee; }
+#calendar .today a:link, #calendar .today a:visited, #calendar .today a:hover { color: white; }

@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :transfers
+  map.resources :reports
 
   map.resources :accounts
 
