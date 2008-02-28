@@ -3,7 +3,7 @@ class TransfersController < ApplicationController
   before_filter :load_accounts, :only => %w(new edit)
 
   def index
-    @transfers = current_family.transfers.find(:all)
+    @transfers = current_family.transfers.find(:all, :order => "posted_on, created_at")
 
     respond_to do |format|
       format.html
