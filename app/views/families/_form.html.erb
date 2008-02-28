@@ -1,0 +1,5 @@
+<% fields_for(:family, @family) do |f| %>
+  <p><label for="family_name">Name:</label><br/>
+  <%= f.text_field :name, :size => 40 %>
+  </p>
+<% end -%>

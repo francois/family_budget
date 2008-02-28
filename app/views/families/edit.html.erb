@@ -1,0 +1,13 @@
+<h1>Editing family</h1>
+
+<%= error_messages_for :family %>
+
+<% form_for(@family) do |f| %>
+  <%= render :partial => "form" %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @family %> |
+<%= link_to 'Back', families_path %>

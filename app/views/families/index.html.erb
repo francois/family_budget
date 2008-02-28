@@ -1,0 +1,17 @@
+<h1>Listing families</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'family', :collection => @families %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New family', new_family_path %>
