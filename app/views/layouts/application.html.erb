@@ -21,7 +21,8 @@
           <li class="budget"><%= link_to "Gérer mon budget", budget_path %></li>
           <li class="accounts"><%= link_to "Gérer mes comptes", accounts_path %></li>
           <li class="transfers"><%= link_to "Gérer mes transactions", transfers_path %></li>
-          <li class="reports last"><%= link_to "Rapports", reports_path %></li>
+          <li class="reports"><%= link_to "Rapports", reports_path %></li>
+          <li class="logout last"><%= link_to "Fermer la session", session_path, :method => :delete %></li>
         </ul>
       </td>
       <td id="main">
