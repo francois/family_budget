@@ -6,13 +6,13 @@ class AccountsController < ApplicationController
     @accounts = current_family.accounts.find(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
     end
   end
 
   def show
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
     end
   end
 
@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
     @account = current_family.accounts.build
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
     end
   end
 
