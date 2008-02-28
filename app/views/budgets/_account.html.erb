@@ -1,0 +1,5 @@
+<tr>
+  <td scope="row"><%=h account.name %></td>
+  <td><%= text_field_tag "budget[#{account.id}]", amount(budgets[account].first.amount), :size => 6 %></td>
+  <%= render :partial => "budget", :collection => budgets[account][1..-1] %>
+</tr>

@@ -1,0 +1,21 @@
+<table class="budget">
+  <col width="*2"/>
+  <col width="*1"/>
+  <col width="*1"/>
+  <col width="*1"/>
+  <thead>
+    <tr>
+      <th><%=h name %></th>
+      <%= render :partial => "budget_head", :collection => periods %>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td>&nbsp;</td>
+      <%= render :partial => "total", :collection => periods, :locals => {:budgets => budgets.values.flatten} %>
+    </tr>
+  </tfoot>
+  <tbody>
+    <%= render :partial => "account", :collection => accounts, :locals => {:budgets => budgets} %>
+  </tbody>
+</table>

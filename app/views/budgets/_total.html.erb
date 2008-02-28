@@ -1,0 +1,2 @@
+<% period = total -%>
+<td><%=amount(budgets.select {|b| b.year == period.year && b.month == period.month}.map(&:amount).compact.sum) %></td>

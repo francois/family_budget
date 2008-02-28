@@ -44,4 +44,8 @@ module ApplicationHelper
   def render_current_date
     "#{DAY_NAMES[current_date.wday]} le #{current_date.day}"
   end
+
+  def amount(value)
+    value ?  "%0.2f"%value : ""
+  end
 end

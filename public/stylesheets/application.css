@@ -24,3 +24,8 @@ table { border-collapse: collapse; }
 #newxfer label { display: block; }
 #newxfer input { display: block; }
 #newxfer h3 { background: black; color: white; padding: 0; margin-top: 0; font-size: 1em; }
+.budget { width: 100%; }
+.budget input, .budget td { text-align: right; }
+.budget td[scope] { text-align: left; }
+.budget td.over { background: red; }
+.budget tfoot td { font-weight: bold; border-top: 1px solid #735b3d; }

@@ -1,0 +1,8 @@
+<%= page_title "Notre Budget" %>
+
+<% form_tag(budget_path, :method => :put) do %>
+  <%= render :partial => "budget_table", :locals => {:name => "Revenus", :accounts => @income_accounts, :budgets => @income_budgets, :periods => @periods} %>
+  <%= submit_tag "Enregister" %>
+  <%= render :partial => "budget_table", :locals => {:name => "Dépenses", :accounts => @expense_accounts, :budgets => @expense_budgets, :periods => @periods} %>
+  <%= submit_tag "Enregister" %>
+<% end %>
