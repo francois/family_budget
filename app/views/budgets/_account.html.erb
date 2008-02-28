@@ -1,5 +1,7 @@
+<% car = periods.first; cdr = periods[1..-1] -%>
 <tr>
   <td scope="row"><%=h account.name %></td>
-  <td><%= text_field_tag "budget[#{account.id}]", amount(budgets[account].first.amount), :size => 6 %></td>
-  <%= render :partial => "budget", :collection => budgets[account][1..-1] %>
+  <td class="budget"><%= text_field_tag "budget[#{account.id}]", amount(account.budget_amount_in_period(car.year, car.month)), :size => 6 %></td>
+  <td class="real"><%=amount account.real_amount_in_period(car.year, car.month) %></td>
+  <%= render :partial => "budget", :collection => cdr, :locals => {:account => account} %>
 </tr>

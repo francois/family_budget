@@ -1,2 +1,3 @@
 <% period = total -%>
-<td><%=amount(budgets.select {|b| b.year == period.year && b.month == period.month}.map(&:amount).compact.sum) %></td>
+<td class="budget"><%=amount accounts.map {|account| account.budget_amount_in_period(period.year, period.month) }.compact.sum %></td>
+<td class="real"><%=amount accounts.map {|account| account.real_amount_in_period(period.year, period.month) }.compact.sum %></td>

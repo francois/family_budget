@@ -1,1 +1,2 @@
-<td><%=amount budget.amount %></td>
+<td class="budget"><%=amount account.budget_amount_in_period(budget.year, budget.month) %></td>
+<td class="real"><%=amount account.real_amount_in_period(budget.year, budget.month) %></td>
