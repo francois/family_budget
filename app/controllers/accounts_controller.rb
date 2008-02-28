@@ -3,7 +3,7 @@ class AccountsController < ApplicationController
   before_filter :load_purposes, :only => %w(new edit)
 
   def index
-    @accounts = Account.find(:all)
+    @accounts = current_family.accounts.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class AccountsController < ApplicationController
   end
 
   def new
-    @account = Account.new
+    @account = current_family.accounts.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -29,7 +29,7 @@ class AccountsController < ApplicationController
   end
 
   def create
-    @account = Account.new(params[:account])
+    @account = current_family.accounts.build(params[:account])
 
     respond_to do |format|
       if @account.save
@@ -64,7 +64,7 @@ class AccountsController < ApplicationController
 
   protected
   def load_account
-    @account = Account.find(params[:id])
+    @account = current_family.accounts.find(params[:id])
   end
 
   def load_purposes

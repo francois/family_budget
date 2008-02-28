@@ -1,0 +1,33 @@
+<%= page_title "Mon État Courant" %>
+<h2>Nouvelle Transaction</h2>
+<table id="newxfer">
+  <col width="*1"/>
+  <col width="*1"/>
+  <col width="*1"/>
+  <col width="*1"/>
+  <tr>
+    <td colspan="4">
+      Aujourd'hui, j'ai&hellip;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>Acheté</h3>
+      <% form_for(@bought) do |f| %>
+        <p><label>Quoi <%= f.select :from, @expenses %></label></p>
+        <p><label>Payé avec <%= f.select :with, @assets + @liabilities %></label></p>
+        <p><label>Montant <%= f.text_field :amount %></label></p>
+        <p><%= submit_tag %></p>
+      <% end -%>
+    </td>
+    <td>
+      <h3>Remboursé</h3>
+    </td>
+    <td>
+      <h3>Payé</h3>
+    </td>
+    <td>
+      <h3>Reçu</h3>
+    </td>
+  </tr>
+</table>
