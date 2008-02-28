@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 4) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(:version => 4) do
     t.datetime "updated_at"
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
+  end
+
+  create_table "transfer_members", :force => true do |t|
+    t.integer "transfer_id"
+    t.integer "account_id"
+    t.decimal "debit_amount",  :precision => 9, :scale => 2
+    t.decimal "credit_amount", :precision => 9, :scale => 2
   end
 
   create_table "transfers", :force => true do |t|

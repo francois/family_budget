@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  transfer_id: 1
+  account_id: 1
+  amount_cents: 1
+  amount_currency: MyString
+
+two:
+  transfer_id: 1
+  account_id: 1
+  amount_cents: 1
+  amount_currency: MyString
