@@ -1,5 +1,10 @@
 class PeopleController < ApplicationController
   skip_before_filter :login_required, :only => %w(new create)
+  before_filter :load_person, :only => %w(show edit update destroy)
+
+  def index
+    @people = current_family.people
+  end
 
   def new
     @family = Family.new
@@ -20,5 +25,29 @@ class PeopleController < ApplicationController
         render :action => "new"
       end
     end
+  end
+
+  def edit
+    render
+  end
+
+  def update
+    if @person.update_attributes(params[:person]) then
+      flash[:notice] = "Person updated successfully"
+      redirect_to people_path
+    else
+      render :action => :edit
+    end
+  end
+
+  def destroy
+    @person.destroy
+    flash[:notice] = "Person destroyed"
+    redirect_to people_path
+  end
+
+  protected
+  def load_person
+    @person = current_family.people.find(params[:id])
   end
 end

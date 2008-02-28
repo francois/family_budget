@@ -1,23 +1,15 @@
 <%= page_title "On s'enregistre ?" %>
-<% form_for :person, :url => people_path do |f| -%>
-  <%= error_messages_for :family %>
-  <% fields_for(@family) do |fa| %>
-    <p><label for="family_name">Nom de la famille</label><br/>
-    <%= fa.text_field :name %></p>
+
+<% form_for @person, :url => people_path do |f| -%>
+  <%- unless logged_in? then %>
+    <%= error_messages_for :family %>
+    <% fields_for(@family) do |fa| %>
+      <p><label for="family_name">Nom de la famille</label><br/>
+      <%= fa.text_field :name %></p>
+    <% end -%>
   <% end -%>
 
-  <%= error_messages_for :person %>
-  <p><label for="login">Nom d'utilisateur</label><br/>
-  <%= f.text_field :login %></p>
-
-  <p><label for="email">Adresse courriel</label><br/>
-  <%= f.text_field :email %></p>
-
-  <p><label for="password">Mot de passe</label><br/>
-  <%= f.password_field :password %></p>
-
-  <p><label for="password_confirmation">Confirmer le mot de passe</label><br/>
-  <%= f.password_field :password_confirmation %></p>
+  <%= render :partial => "form" %>
 
   <p><%= submit_tag "S'enregistrer" %></p>
 <% end -%>

@@ -1,0 +1,14 @@
+<% fields_for(@person) do |f| %>
+<%= error_messages_for :person %>
+<p><label for="login">Nom d'utilisateur</label><br/>
+<%= f.text_field :login %></p>
+
+<p><label for="email">Adresse courriel</label><br/>
+<%= f.text_field :email %></p>
+
+<p><label for="password">Mot de passe</label><br/>
+<%= f.password_field :password %></p>
+
+<p><label for="password_confirmation">Confirmer le mot de passe</label><br/>
+<%= f.password_field :password_confirmation %></p>
+<% end -%>

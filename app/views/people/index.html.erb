@@ -1,0 +1,14 @@
+<%= page_title "Ma famille" %>
+
+<p><%= link_to "Ajouter un membre", new_person_path %></p>
+<table id="people">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Courriel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => "person", :collection => @people %>
+  </tbody>
+</table>
