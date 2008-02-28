@@ -35,7 +35,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save
         flash[:notice] = 'Account was successfully created.'
-        format.html { redirect_to(@account) }
+        format.html { redirect_to accounts_path }
       else
         load_purposes
         format.html { render :action => "new" }
@@ -47,7 +47,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.update_attributes(params[:account])
         flash[:notice] = 'Account was successfully updated.'
-        format.html { redirect_to(@account) }
+        format.html { redirect_to accounts_path }
       else
         load_purposes
         format.html { render :action => "edit" }
@@ -59,7 +59,7 @@ class AccountsController < ApplicationController
     @account.destroy
 
     respond_to do |format|
-      format.html { redirect_to(accounts_url) }
+      format.html { redirect_to accounts_path }
     end
   end
 

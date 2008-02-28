@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   helper :all
   helper_method :current_family, :current_date
 
+  before_filter :load_date
   before_filter :login_required
   before_filter :load_family
-  before_filter :load_date
 
   protected
   def load_family

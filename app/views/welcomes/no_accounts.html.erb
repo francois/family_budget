@@ -1,0 +1,5 @@
+<p>Vous n'avez aucun compte de défini.  Créez-en un ici:</p>
+<% form_for(@account) do |f| %>
+  <%= render :partial => "accounts/form" %>
+  <p><%= submit_tag "Créer" %></p>
+<% end -%>
