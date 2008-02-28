@@ -34,7 +34,7 @@ class TransfersController < ApplicationController
     respond_to do |format|
       if @transfer.save
         flash[:notice] = 'Transfer was successfully created.'
-        format.html { redirect_to(@transfer) }
+        format.html { redirect_to welcome_path }
       else
         format.html { render :action => "new" }
       end
@@ -45,7 +45,7 @@ class TransfersController < ApplicationController
     respond_to do |format|
       if @transfer.update_attributes(params[:transfer])
         flash[:notice] = 'Transfer was successfully updated.'
-        format.html { redirect_to(@transfer) }
+        format.html { redirect_to transfers_path }
       else
         format.html { render :action => "edit" }
       end
@@ -56,7 +56,7 @@ class TransfersController < ApplicationController
     @transfer.destroy
 
     respond_to do |format|
-      format.html { redirect_to(transfers_url) }
+      format.html { redirect_to transfers_path }
     end
   end
 
