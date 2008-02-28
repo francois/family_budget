@@ -12,6 +12,7 @@
 ActiveRecord::Schema.define(:version => 3) do
 
   create_table "accounts", :force => true do |t|
+    t.integer  "family_id"
     t.string   "name"
     t.string   "purpose"
     t.datetime "created_at"

@@ -1,17 +1,7 @@
 <h1>New account</h1>
 
-<%= error_messages_for :account %>
-
 <% form_for(@account) do |f| %>
-  <p>
-    <b>Name</b><br />
-    <%= f.text_field :name %>
-  </p>
-
-  <p>
-    <b>Purpose</b><br />
-    <%= f.text_field :purpose %>
-  </p>
+  <%= render :partial => "form" %>
 
   <p>
     <%= f.submit "Create" %>

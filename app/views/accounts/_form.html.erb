@@ -1,0 +1,13 @@
+<%= error_messages_for :account %>
+
+<% fields_for(@account) do |f| %>
+<p>
+  <b>Name</b><br />
+  <%= f.text_field :name %>
+</p>
+
+<p>
+  <b>Purpose</b><br />
+  <%= f.select :purpose, @purposes %>
+</p>
+<% end -%>
