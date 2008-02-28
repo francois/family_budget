@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :transfers
+
   map.resources :accounts
 
   map.resources :people, :families

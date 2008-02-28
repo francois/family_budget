@@ -1,0 +1,13 @@
+<%= error_messages_for :transfer %>
+
+<% fields_for(@transfer) do |f| %>
+<p>
+  <b>Posted on</b><br />
+  <%= f.date_select :posted_on %>
+</p>
+
+<p>
+  <b>Description</b><br />
+  <%= f.text_field :description %>
+</p>
+<% end -%>

@@ -1,0 +1,24 @@
+<h1>Listing transfers</h1>
+
+<table>
+  <tr>
+    <th>Family</th>
+    <th>Posted on</th>
+    <th>Description</th>
+  </tr>
+
+<% for transfer in @transfers %>
+  <tr>
+    <td><%=h transfer.family_id %></td>
+    <td><%=h transfer.posted_on %></td>
+    <td><%=h transfer.description %></td>
+    <td><%= link_to 'Show', transfer %></td>
+    <td><%= link_to 'Edit', edit_transfer_path(transfer) %></td>
+    <td><%= link_to 'Destroy', transfer, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New transfer', new_transfer_path %>

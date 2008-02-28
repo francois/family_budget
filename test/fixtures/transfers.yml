@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  family_id: 1
+  posted_on: 2008-02-27
+  description: MyString
+
+two:
+  family_id: 1
+  posted_on: 2008-02-27
+  description: MyString

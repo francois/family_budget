@@ -1,0 +1,18 @@
+<p>
+  <b>Family:</b>
+  <%=h @transfer.family_id %>
+</p>
+
+<p>
+  <b>Posted on:</b>
+  <%=h @transfer.posted_on %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @transfer.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_transfer_path(@transfer) %> |
+<%= link_to 'Back', transfers_path %>
