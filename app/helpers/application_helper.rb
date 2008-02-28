@@ -45,7 +45,7 @@ module ApplicationHelper
     "#{DAY_NAMES[current_date.wday]} le #{current_date.day}"
   end
 
-  def amount(value)
-    value ?  "%0.2f"%value : ""
+  def amount(value, default="")
+    value && value.nonzero? ?  "%0.2f"%value : default
   end
 end
