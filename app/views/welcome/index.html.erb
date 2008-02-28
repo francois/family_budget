@@ -9,17 +9,17 @@
   <tr>
     <td>
       <h3>Acheté un produit ou un service</h3>
-      <%= mini_form :bought, :from => @expenses, :with => @assets + @liabilities, :from_label => "Quoi ?", :with_label => "Avec quel compte ?", :amount_label => "Et ça m'a coûté:" %>
+      <%= mini_form :bought, :debit_accounts => @expenses, :credit_accounts => @assets + @liabilities, :debit_label => "Quoi ?", :credit_label => "Avec quel compte ?", :amount_label => "Et ça m'a coûté:" %>
     </td>
     <td>
       <h3>Remboursé une dette</h3>
-      <%= mini_form :reimbursed, :from => @liabilities, :with => @assets, :from_label => "Laquelle ?", :with_label => "À partir de ?", :amount_label => "Combien" %>
+      <%= mini_form :reimbursed, :debit_accounts => @liabilities, :credit_accounts => @assets + @liabilities, :debit_label => "Laquelle ?", :credit_label => "À partir de ?", :amount_label => "Combien" %>
     </td>
   </tr>
   <tr>
     <td colspan="2">
       <h3>Reçu un revenu</h3>
-      <%= mini_form :received, :from => @incomes, :with => @assets + @liabilities, :from_label => "De ?", :with_label => "Déposé dans ?", :amount_label => "Combien ?" %>
+      <%= mini_form :received, :debit_accounts => @incomes, :credit_accounts => @assets + @liabilities, :debit_label => "De ?", :credit_label => "Déposé dans ?", :amount_label => "Combien ?" %>
     </td>
   </tr>
 </table>
