@@ -1,0 +1,3 @@
+page << %Q($$("#calendar td.today").each(function(e) {e.removeClassName("today")});)
+page.visual_effect :highlight, "date_#{current_date}"
+page << %Q($("date_#{current_date}").addClassName("today");)

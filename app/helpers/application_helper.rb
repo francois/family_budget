@@ -31,7 +31,7 @@ module ApplicationHelper
           classes = []
           classes << "today" if date == current_date
           classes << "outside" if date.month != month
-          buffer << content_tag(:td, content_tag(:a, date.day, :href => "#"), :class => classes.join(" "))
+          buffer << content_tag(:td, content_tag(:a, date.day, :href => "#"), :id => "date_#{date}", :class => classes.join(" "))
         end
         buffer << %q(</tr>)
       end

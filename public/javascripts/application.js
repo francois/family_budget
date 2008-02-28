@@ -1,2 +1,15 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+function changeDate(e) {
+  var theDate = this.up("td").id.split("_").last();
+  new Ajax.Request("/session", {method: 'put', parameters: {"session[current_date]": theDate}});
+  Event.stop(e);
+}
+
+function registerEventHandlers() {
+  $$("#calendar a").each(function(anchor) {
+    anchor.observe("click", changeDate.bindAsEventListener(anchor));
+  });
+}
+
+Event.observe(window, "load", function() {
+  registerEventHandlers();
+});

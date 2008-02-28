@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_date=(date)
-    @_current_date = date.to_date
+    @_current_date = session[:current_date] = date.to_date
   end
 
   def current_date
