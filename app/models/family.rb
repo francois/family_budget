@@ -4,6 +4,8 @@ class Family < ActiveRecord::Base
   has_many :accounts, :order => "name", :extend => Extensions::Accounts
   has_many :budgets, :order => "account_id, year, month", :extend => Extensions::Budgets
 
+  validates_uniqueness_of :name
+
   def budget_for(year, month)
     returning({}) do |hash|
       self.budgets.for_period(year, month).each {|budget| hash[budget.account] = budget}
