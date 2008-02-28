@@ -4,7 +4,6 @@ class PeopleController < ApplicationController
   def new
     @family = Family.new
     @person = Person.new
-    render
   end
 
   def create
