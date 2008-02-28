@@ -1,6 +1,6 @@
 <% form_for(object) do |f| %>
-  <p><label for="<%= object_name %>_debit_account"><%=h debit_label %></label> <%= f.select :debit_account, debit_accounts, :id => "#{object_name}_debit_account" %></p>
-  <p><label for="<%= object_name %>_credit_account"><%=h credit_label %></label> <%= f.select :credit_account, credit_accounts, :id => "#{object_name}_credit_account" %></p>
+  <p><label for="<%= object_name %>_debit_account"><%=h debit_label %></label> <%= f.select :debit_account_id, debit_accounts, :id => "#{object_name}_debit_account" %></p>
+  <p><label for="<%= object_name %>_credit_account"><%=h credit_label %></label> <%= f.select :credit_account_id, credit_accounts, :id => "#{object_name}_credit_account" %></p>
   <p><label for="<%= object_name %>_amount"><%= amount_label %></label> <%= f.text_field :amount, :id => "#{object_name}_amount", :size => 5 %></p>
   <p><%= submit_tag "Ajouter" %></p>
 <% end -%>
