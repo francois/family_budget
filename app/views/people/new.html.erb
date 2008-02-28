@@ -1,16 +1,23 @@
-<%= error_messages_for :person %>
+<%= page_title "On s'enregistre ?" %>
 <% form_for :person, :url => people_path do |f| -%>
-<p><label for="login">Login</label><br/>
-<%= f.text_field :login %></p>
+  <%= error_messages_for :family %>
+  <% fields_for(@family) do |fa| %>
+    <p><label for="family_name">Nom de la famille</label><br/>
+    <%= fa.text_field :name %></p>
+  <% end -%>
 
-<p><label for="email">Email</label><br/>
-<%= f.text_field :email %></p>
+  <%= error_messages_for :person %>
+  <p><label for="login">Login</label><br/>
+  <%= f.text_field :login %></p>
 
-<p><label for="password">Password</label><br/>
-<%= f.password_field :password %></p>
+  <p><label for="email">Email</label><br/>
+  <%= f.text_field :email %></p>
 
-<p><label for="password_confirmation">Confirm Password</label><br/>
-<%= f.password_field :password_confirmation %></p>
+  <p><label for="password">Password</label><br/>
+  <%= f.password_field :password %></p>
 
-<p><%= submit_tag 'Sign up' %></p>
+  <p><label for="password_confirmation">Confirm Password</label><br/>
+  <%= f.password_field :password_confirmation %></p>
+
+  <p><%= submit_tag 'Sign up' %></p>
 <% end -%>
