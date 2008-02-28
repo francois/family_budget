@@ -1,12 +1,11 @@
-<h1>Editing account</h1>
+<%= page_title "Modifier un compte" %>
 
 <% form_for(@account) do |f| %>
   <%= render :partial => "form" %>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Enregistrer" %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @account %> |
-<%= link_to 'Back', accounts_path %>
+<p><%= link_to "Retour à la liste", accounts_path %></p>

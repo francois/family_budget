@@ -1,10 +1,17 @@
 class AccountsController < ApplicationController
   before_filter :load_account, :only => %w(show edit update destroy)
-  before_filter :load_purposes, :only => %w(new edit)
+  before_filter :load_purposes, :only => %w(index new edit)
 
   def index
-    @accounts = current_family.accounts.find(:all)
+    @purpose = params[:purpose]
+    return redirect_to(accounts_path) if @purpose.blank? and params.has_key?(:purpose)
 
+    options = Hash.new
+    options[:conditions] = ["purpose = ?", @purpose] unless @purpose.blank?
+    options[:order] = "name"
+    @accounts = current_family.accounts.find(:all, options)
+
+    @purposes.unshift ["Tous", ""]
     respond_to do |format|
       format.html
     end

@@ -2,12 +2,12 @@
 
 <% fields_for(@account) do |f| %>
 <p>
-  <b>Name</b><br />
+  <label for="account_name">Nom</label><br />
   <%= f.text_field :name %>
 </p>
 
 <p>
-  <b>Purpose</b><br />
+  <label for="account_purpose">Type</label><br />
   <%= f.select :purpose, @purposes %>
 </p>
 <% end -%>
