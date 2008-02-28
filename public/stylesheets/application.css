@@ -1,8 +1,8 @@
 body { background: #735b3d; margin: 0; padding: 0; color: white }
 table { border-collapse: collapse; }
 #container { width: 75em; margin: 0 auto; }
-#header { background-color: #faf0e6; color: #735b3d; font-size: 3em; font-weight: bold; line-height: 1.5em; }
-#header span { font-size: 40%; color: #333333; position: absolute; right: 10em; }
+#header { background-color: #faf0e6; color: #735b3d; font-size: 2em; font-weight: bold; line-height: 1.5em; }
+#header span { font-size: 40%; color: #333333; position: absolute; right: 12em; }
 #nav, #main, #calendar { vertical-align: top; padding: .5em .25em .25em; }
 #nav { width: 14em; background: #faf0e6; }
 #nav ul { padding: 0; margin: 0; list-style-type: none; }
