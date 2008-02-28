@@ -42,4 +42,12 @@ class FamiliesController < ApplicationController
   def load_family
     @family = Family.find(params[:id])
   end
+
+  def authorized?
+    current_person.admin?
+  end
+
+  def access_denied
+    render :status => "404 Not Found", :file => File.join(RAILS_ROOT, "public", "404.html")
+  end
 end
