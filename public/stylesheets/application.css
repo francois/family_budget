@@ -18,7 +18,9 @@ table { border-collapse: collapse; }
 #calendar .outside a:link, #calendar .outside a:visited, #calendar .outside a:hover { background: #eee; }
 #calendar .today a:link, #calendar .today a:visited, #calendar .today a:hover { color: white; }
 #main { background: white; color: #735b3d; }
-#newxfer { width: 100%; }
-#newxfer td { vertical-align: top; }
+#newxfer { width: 100%; margin: 0 auto; }
+#newxfer caption { font-size: 133%; margin: .5em 0; font-weight: bold; text-align: left; }
+#newxfer td { vertical-align: top; background: #eee; border: 1px solid black; }
 #newxfer label { display: block; }
 #newxfer input { display: block; }
+#newxfer h3 { background: black; color: white; padding: 0; margin-top: 0; font-size: 1em; }

@@ -1,0 +1,6 @@
+<% form_for(object) do |f| %>
+  <p><label for="<%= object_name %>_from"><%=h from_label %></label> <%= f.select :from, from, :id => "#{object_name}_from" %></p>
+  <p><label for="<%= object_name %>_with"><%=h with_label %></label> <%= f.select :with, with, :id => "#{object_name}_with" %></p>
+  <p><label for="<%= object_name %>_amount"><%= amount_label %></label> <%= f.text_field :amount, :id => "#{object_name}_amount", :size => 5 %></p>
+  <p><%= submit_tag "Ajouter" %></p>
+<% end -%>

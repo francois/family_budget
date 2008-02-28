@@ -5,29 +5,21 @@
   <col width="*1"/>
   <col width="*1"/>
   <col width="*1"/>
+  <caption>Aujourd'hui, <span id="current_date"><%= render_current_date %></span>, j'ai&hellip;</caption>
   <tr>
-    <td colspan="4">
-      Aujourd'hui, j'ai&hellip;
+    <td>
+      <h3>Acheté un produit ou un service</h3>
+      <%= mini_form :bought, :from => @expenses, :with => @assets + @liabilities, :from_label => "Quoi ?", :with_label => "Avec quel compte ?", :amount_label => "Et ça m'a coûté:" %>
+    </td>
+    <td>
+      <h3>Remboursé une dette</h3>
+      <%= mini_form :reimbursed, :from => @liabilities, :with => @assets, :from_label => "Laquelle ?", :with_label => "À partir de ?", :amount_label => "Combien" %>
     </td>
   </tr>
   <tr>
-    <td>
-      <h3>Acheté</h3>
-      <% form_for(@bought) do |f| %>
-        <p><label>Quoi <%= f.select :from, @expenses %></label></p>
-        <p><label>Payé avec <%= f.select :with, @assets + @liabilities %></label></p>
-        <p><label>Montant <%= f.text_field :amount %></label></p>
-        <p><%= submit_tag %></p>
-      <% end -%>
-    </td>
-    <td>
-      <h3>Remboursé</h3>
-    </td>
-    <td>
-      <h3>Payé</h3>
-    </td>
-    <td>
-      <h3>Reçu</h3>
+    <td colspan="2">
+      <h3>Reçu un revenu</h3>
+      <%= mini_form :received, :from => @incomes, :with => @assets + @liabilities, :from_label => "De ?", :with_label => "Déposé dans ?", :amount_label => "Combien ?" %>
     </td>
   </tr>
 </table>

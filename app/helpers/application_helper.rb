@@ -39,4 +39,9 @@ module ApplicationHelper
       buffer << %q(</table>)
     end.join("\n")
   end
+
+  DAY_NAMES = %w(dimanche lundi mardi mercredi jeudi vendredi samedi)
+  def render_current_date
+    "#{DAY_NAMES[current_date.wday]} le #{current_date.day}"
+  end
 end
