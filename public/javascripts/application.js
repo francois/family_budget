@@ -9,9 +9,7 @@ function registerEventHandlers() {
     anchor.observe("click", changeDate.bindAsEventListener(anchor));
   });
 
-  console.log("Registering event handlers for #flash");
   if ($("flash")) {
-    console.log("flash: %o", $("flash"));
     new Effect.Highlight($("flash"));
   }
 }
