@@ -7,6 +7,11 @@ module ApplicationHelper
   def body_classes
   end
 
+  def render_flash_notices
+    return nil if flash[:notice].blank?
+    render :partial => "shared/notice"
+  end
+
   def calendar
     year, month, day = current_date.year, current_date.month, current_date.day
     first_of_month = Date.new(year, month, 1)

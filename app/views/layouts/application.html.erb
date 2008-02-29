@@ -19,6 +19,7 @@
         <%= render :partial => current_family ? "shared/navigation" : "shared/unauthenticated" %>
       </td>
       <td id="main">
+        <%= render_flash_notices %>
         <%= yield  %>
       </td>
       <td id="calendar">
