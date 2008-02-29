@@ -8,4 +8,4 @@
   </p>
 <% end %>
 
-<p><%= link_to "Retour à la liste", accounts_path %></p>
+<p><%= button_to "Détruire", account_path(@account), :method => :delete %><%= link_to "Retour à la liste", accounts_path %></p>
