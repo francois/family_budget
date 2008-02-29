@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
+  include ExceptionNotifiable
+
   helper :all
   helper_method :current_family, :current_date
 
