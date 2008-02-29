@@ -1,7 +1,12 @@
-<% car = periods.first; cdr = periods[1..-1] -%>
+<%-
+  car = periods.first; cdr = periods[1..-1]
+  budget_amount = account.budget_amount_in_period(car.year, car.month)
+  real_amount = account.real_amount_in_period(car.year, car.month)
+  over = real_amount > budget_amount
+-%>
 <tr>
   <td scope="row"><%=h account.name %></td>
-  <td class="budget"><%= text_field_tag "budget[#{account.id}]", amount(account.budget_amount_in_period(car.year, car.month)), :size => 6 %></td>
-  <td class="real"><%=amount account.real_amount_in_period(car.year, car.month) %></td>
+  <td class="budget<%= " over" if over %>"><%= text_field_tag "budget[#{account.id}]", amount(budget_amount), :size => 6 %></td>
+  <td class="real<%= " over" if over %>"><%=amount real_amount %></td>
   <%= render :partial => "budget", :collection => cdr, :locals => {:account => account} %>
 </tr>
