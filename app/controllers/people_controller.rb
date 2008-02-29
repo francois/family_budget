@@ -15,7 +15,11 @@ class PeopleController < ApplicationController
     cookies.delete :auth_token
     reset_session
     Family.transaction do
-      @family = Family.create!(params[:family])
+      @family = if current_family then
+                  current_family
+                else
+                  Family.create!(params[:family])
+                end
       @person = @family.people.build(params[:person])
       if @person.save then
         self.current_person = @person
