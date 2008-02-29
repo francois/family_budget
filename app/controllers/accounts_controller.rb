@@ -18,7 +18,7 @@ class AccountsController < ApplicationController
   end
 
   def new
-    @account = current_family.accounts.build
+    @account = current_family.accounts.build(:purpose => params[:purpose])
 
     respond_to do |format|
       format.html
@@ -35,7 +35,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save
         flash[:notice] = 'Account was successfully created.'
-        format.html { redirect_to accounts_path }
+        format.html { redirect_to new_account_path(:purpose => @account.purpose) }
       else
         load_purposes
         format.html { render :action => "new" }
