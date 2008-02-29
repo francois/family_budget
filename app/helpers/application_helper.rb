@@ -20,6 +20,7 @@ module ApplicationHelper
     last_saturday = last_of_month + (6 - last_of_month.wday)
     returning([]) do |buffer|
       buffer << %q(<table cellspacing="0" cellpadding="0">)
+      buffer << %Q(<caption>#{month_name(month)} #{year}</caption>)
       buffer << %q(<thead>)
       buffer << %q(<tr>)
         %w(Dim Lun Mar Mer Jeu Ven Sam).each do |dayname|
@@ -48,6 +49,11 @@ module ApplicationHelper
   DAY_NAMES = %w(dimanche lundi mardi mercredi jeudi vendredi samedi)
   def render_current_date
     "#{DAY_NAMES[current_date.wday]} le #{current_date.day}"
+  end
+
+  MONTH_NAMES = %w(Janvier Février Mars Avril Mai Juin Juillet Août September Octobre Novembre Décembre)
+  def month_name(month)
+    MONTH_NAMES[month - 1]
   end
 
   def amount(value, default="")

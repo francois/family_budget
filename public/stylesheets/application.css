@@ -8,6 +8,7 @@ table { border-collapse: collapse; }
 #nav ul { padding: 0; margin: 0; list-style-type: none; }
 #nav li { padding: .5em .25em; }
 #calendar { background: #ECE45A; width: 20em; }
+#calendar caption { color: black; font-weight: bold; font-size: 115%; }
 #calendar table { width: 19.6em; margin: 0 auto; border: 1px solid #735b3d; padding: .1em; }
 #calendar th, #calendar td { width: 2.8em; text-align: right; }
 #calendar thead { background: #735b3d; color: #ece45a; text-align: center; }
