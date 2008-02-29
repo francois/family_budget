@@ -24,7 +24,7 @@ class BudgetsController < ApplicationController
   helper_method :budget_date, :budget_year, :budget_month
 
   def load_budget_date
-    @budget_date = Date.today
+    @budget_date = utc_to_local(Date.today).to_date
     @budget_year, @budget_month = budget_date.year, budget_date.month
     @budget_date = Date.new(@budget_year, @budget_month+1, 1)
     @budget_year, @budget_month = budget_date.year, budget_date.month
