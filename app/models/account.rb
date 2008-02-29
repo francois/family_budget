@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base
   belongs_to :family
   validates_presence_of :name, :purpose, :family_id
+  validates_uniqueness_of :name, :scope => :family_id
 
   Asset = "asset"
   Liability = "liability"
