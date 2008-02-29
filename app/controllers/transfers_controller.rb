@@ -27,7 +27,7 @@ class TransfersController < ApplicationController
     @transfer.posted_on = current_date
     respond_to do |format|
       if @transfer.save
-        flash[:notice] = 'Transfer was successfully created.'
+        flash[:notice] = "Transféré #{@transfer.amount} de #{@transfer.debit_account.name} à #{@transfer.credit_amount.name}, en date du #{@transfer.posted_on}"
         format.html { redirect_to welcome_path }
       else
         format.html { render :action => "new" }
