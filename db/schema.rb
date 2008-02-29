@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 10) do
+ActiveRecord::Schema.define(:version => 11) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 10) do
     t.integer  "account_id"
     t.integer  "year"
     t.integer  "month"
-    t.decimal  "amount",     :precision => 9, :scale => 2
+    t.decimal  "amount",     :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
