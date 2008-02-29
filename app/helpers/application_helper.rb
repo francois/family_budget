@@ -16,7 +16,7 @@ module ApplicationHelper
     year, month, day = current_date.year, current_date.month, current_date.day
     first_of_month = Date.new(year, month, 1)
     first_sunday = first_of_month - first_of_month.wday
-    last_of_month = Date.new(year, month + 1, 1) - 1
+    last_of_month = Date.new(year, month, 1) >> 1
     last_saturday = last_of_month + (6 - last_of_month.wday)
     returning([]) do |buffer|
       buffer << %q(<table cellspacing="0" cellpadding="0">)

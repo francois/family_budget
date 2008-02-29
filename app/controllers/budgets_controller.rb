@@ -26,7 +26,7 @@ class BudgetsController < ApplicationController
   def load_budget_date
     @budget_date = current_date
     @budget_year, @budget_month = budget_date.year, budget_date.month
-    @budget_date = Date.new(@budget_year, @budget_month+1, 1)
+    @budget_date = Date.new(@budget_year, @budget_month, 1) >> 1
     @budget_year, @budget_month = budget_date.year, budget_date.month
   end
 end
