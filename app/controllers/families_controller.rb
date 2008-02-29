@@ -12,7 +12,7 @@ class FamiliesController < ApplicationController
   def create
     @family = Family.new(params[:family])
     if @family.save then
-      flash[:notice] = "Family created"
+      flash[:notice] = "Famille créée"
       redirect_to families_path
     else
       render :action => :new
@@ -25,7 +25,7 @@ class FamiliesController < ApplicationController
 
   def update
     if @family.update_attributes(params[:family]) then
-      flash[:notice] = "Family updated"
+      flash[:notice] = "Famille mise à jour"
       redirect_to families_path
     else
       render :action => :edit
@@ -34,7 +34,7 @@ class FamiliesController < ApplicationController
 
   def destroy
     @family.destroy
-    flash[:notice] = "Family destroyed"
+    flash[:notice] = "Famille détruite"
     redirect_to families_path
   end
 

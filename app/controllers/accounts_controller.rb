@@ -34,7 +34,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-        flash[:notice] = 'Account was successfully created.'
+        flash[:notice] = "Compte créé"
         format.html { redirect_to new_account_path(:purpose => @account.purpose) }
       else
         load_purposes
@@ -46,7 +46,7 @@ class AccountsController < ApplicationController
   def update
     respond_to do |format|
       if @account.update_attributes(params[:account])
-        flash[:notice] = 'Account was successfully updated.'
+        flash[:notice] = "Compte modifié"
         format.html { redirect_to accounts_path }
       else
         load_purposes
@@ -59,6 +59,7 @@ class AccountsController < ApplicationController
     @account.destroy
 
     respond_to do |format|
+      flash[:notice] = "Compte détruit"
       format.html { redirect_to accounts_path }
     end
   end

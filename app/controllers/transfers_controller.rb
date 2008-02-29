@@ -38,7 +38,7 @@ class TransfersController < ApplicationController
   def update
     respond_to do |format|
       if @transfer.update_attributes(params[:transfer])
-        flash[:notice] = 'Transfer was successfully updated.'
+        flash[:notice] = "Transfer mis à jour"
         format.html { redirect_to transfers_path }
       else
         format.html { render :action => "edit" }
@@ -50,6 +50,7 @@ class TransfersController < ApplicationController
     @transfer.destroy
 
     respond_to do |format|
+      flash[:notice] = "Transfer détruit"
       format.html { redirect_to transfers_path }
     end
   end

@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
       if @person.save then
         self.current_person = @person
         redirect_back_or_default("/")
-        flash[:notice] = "Thanks for signing up!"
+        flash[:notice] = "Merci de vous être enregistré!"
       else
         render :action => "new"
       end
@@ -33,7 +33,7 @@ class PeopleController < ApplicationController
 
   def update
     if @person.update_attributes(params[:person]) then
-      flash[:notice] = "Person updated successfully"
+      flash[:notice] = "Membre de la famille mis à jour"
       redirect_to people_path
     else
       render :action => :edit
@@ -42,7 +42,7 @@ class PeopleController < ApplicationController
 
   def destroy
     @person.destroy
-    flash[:notice] = "Person destroyed"
+    flash[:notice] = "Membre de famille détruit"
     redirect_to people_path
   end
 
