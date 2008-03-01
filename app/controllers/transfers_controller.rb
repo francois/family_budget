@@ -25,12 +25,14 @@ class TransfersController < ApplicationController
   def create
     @transfer = current_family.transfers.build(params[:transfer])
     @transfer.posted_on = current_date
-    respond_to do |format|
-      if @transfer.save
-        flash[:notice] = "Transféré #{@transfer.amount} de #{@transfer.debit_account.name} à #{@transfer.credit_account.name}, en date du #{@transfer.posted_on}"
-        format.html { redirect_to welcome_path }
-      else
-        format.html { render :action => "new" }
+    Transfer.transaction do
+      respond_to do |format|
+        if @transfer.save
+          flash[:notice] = "Transféré #{@transfer.amount} de #{@transfer.debit_account.name} à #{@transfer.credit_account.name}, en date du #{@transfer.posted_on}"
+          format.html { redirect_to welcome_path }
+        else
+          format.html { render :action => "new" }
+        end
       end
     end
   end
