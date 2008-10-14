@@ -12,7 +12,14 @@ class Account < ActiveRecord::Base
   before_validation {|a| a.purpose = a.purpose.downcase unless a.purpose.blank?}
   validates_inclusion_of :purpose, :in => ValidPurposes
 
-  has_many :budgets, :order => "year, month", :extend => Extensions::Budgets
+  has_many :budgets, :order => "year, month"
+
+  named_scope :assets, :conditions => {:purpose => Asset}
+  named_scope :liabilities, :conditions => {:purpose => Liability}
+  named_scope :equities, :conditions => {:purpose => Equity}
+  named_scope :incomes, :conditions => {:purpose => Income}
+  named_scope :expenses, :conditions => {:purpose => Expense}
+  named_scope :by_type_and_name, :order => "purpose, name"
 
   def real_amount_in_period(year, month)
     debits = self.family.transfers.all_debits_by_account_year_month(self, year, month)

@@ -1,7 +1,7 @@
 class Family < ActiveRecord::Base
   has_many :people, :dependent => :destroy
   has_many :transfers, :extend => Extensions::Transfers, :dependent => :destroy
-  has_many :accounts, :order => "name", :extend => Extensions::Accounts, :dependent => :destroy
+  has_many :accounts, :order => "name", :dependent => :destroy
   has_many :budgets, :order => "account_id, year, month", :extend => Extensions::Budgets, :dependent => :destroy
 
   validates_uniqueness_of :name
