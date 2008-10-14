@@ -7,15 +7,10 @@ class ApplicationController < ActionController::Base
 
   before_filter :load_date
   before_filter :login_required
-  before_filter :load_family
 
   protected
-  def load_family
-    @_current_family ||= self.current_person.family if logged_in?
-  end
-
   def current_family
-    @_current_family
+    @_current_family ||= self.current_person.family if logged_in?
   end
 
   def load_date
