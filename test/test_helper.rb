@@ -39,4 +39,9 @@ class Test::Unit::TestCase
     message = build_message(message, "Expected <?> to include <?>", collection, object)
     assert_block(message) { collection.include?(object) }
   end
+
+  def assert_does_not_include(object, collection, message=nil)
+    message = build_message(message, "Expected <?> to NOT include <?>", collection, object)
+    assert_block(message) { !collection.include?(object) }
+  end
 end
