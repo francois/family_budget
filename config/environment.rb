@@ -26,7 +26,7 @@ Rails::Initializer.run do |config|
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
   # Add additional load paths for your own custom dirs
-  config.load_paths += Dir[File.join(RAILS_ROOT, "vendor", "*[0-9]", "lib")]
+  # config.load_paths += Dir[File.join(RAILS_ROOT, "vendor", "*[0-9]", "lib")]
 
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
@@ -53,6 +53,8 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
+
+  config.gem "tzinfo", :version => "~> 0.3"
 
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
