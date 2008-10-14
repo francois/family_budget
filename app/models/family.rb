@@ -1,6 +1,6 @@
 class Family < ActiveRecord::Base
   has_many :people, :dependent => :destroy
-  has_many :transfers, :extend => Extensions::Transfers, :dependent => :destroy
+  has_many :transfers, :dependent => :destroy
   has_many :accounts, :order => "name", :dependent => :destroy
   has_many :budgets, :order => "account_id, year, month", :dependent => :destroy
 
