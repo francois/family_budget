@@ -44,4 +44,6 @@ class Test::Unit::TestCase
     message = build_message(message, "Expected <?> to NOT include <?>", collection, object)
     assert_block(message) { !collection.include?(object) }
   end
+
+  include AuthenticatedTestHelper
 end
