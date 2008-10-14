@@ -35,4 +35,8 @@ class Test::Unit::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def assert_include(object, collection, message=nil)
+    message = build_message(message, "Expected <?> to include <?>", collection, object)
+    assert_block(message) { collection.include?(object) }
+  end
 end
