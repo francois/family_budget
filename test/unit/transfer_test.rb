@@ -60,4 +60,8 @@ class TransferTest < ActiveSupport::TestCase
     transfer.save(false)
     assert_does_not_include transfer, Transfer.for_account(accounts(:credit_card))
   end
+
+  def test_bad_scoping
+    flunk "Can't scope Transfer.debits or Transfer.credits the way they are done now: they will fail because both account_ids aren't NULL (it's a transfer, dummy!)"
+  end
 end
