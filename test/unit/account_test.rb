@@ -1,12 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AccountTest < ActiveSupport::TestCase
-  should "have all valid fixtures" do
-    Account.all.each do |account|
-      assert account.valid?, "Fixture #{account.inspect} is invalid"
-    end
-  end
-
+  should_have_valid_fixtures
   should_belong_to :family
   should_have_many :budgets
   should_require_attributes :name, :purpose, :family_id
