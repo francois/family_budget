@@ -1,13 +1,6 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  account_id: 1
-  year: 1
+home_budget_2008_01:
+  family: beausoleil
+  account: credit_card_repayment
+  amount: 2000
+  year: 2008
   month: 1
-  amount: 9.99
-
-two:
-  account_id: 1
-  year: 1
-  month: 1
-  amount: 9.99

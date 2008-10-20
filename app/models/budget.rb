@@ -2,7 +2,10 @@ class Budget < ActiveRecord::Base
   belongs_to :family
   belongs_to :account
   validates_presence_of :family_id, :account_id, :year, :month
-  validates_numericality_of :year, :month, :amount
+  validates_numericality_of :year, :month, :integer_only => true
+  validates_numericality_of :amount
+  validates_inclusion_of :year, :within => (2000..2100)
+  validates_inclusion_of :month, :within => (1..12)
 
   attr_accessible :family, :account, :year, :month, :amount
 
