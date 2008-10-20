@@ -21,6 +21,8 @@ class Account < ActiveRecord::Base
   named_scope :expenses, :conditions => {:purpose => Expense}
   named_scope :by_type_and_name, :order => "purpose, name"
 
+  attr_accessible :name, :purpose, :family
+
   def real_amount_in_period(year, month)
     debits = self.family.transfers.all_debits_by_account_year_month(self, year, month)
     credits = self.family.transfers.all_credits_by_account_year_month(self, year, month)

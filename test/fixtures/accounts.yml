@@ -1,9 +1,14 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 home:
+  family: beausoleil
   name: Home
   purpose: asset
 
 credit_card:
+  family: beausoleil
   name: Credit Card
   purpose: liability
+
+credit_card_repayment:
+  family: beausoleil
+  name: Credit Card Repayment
+  purpose: expense
