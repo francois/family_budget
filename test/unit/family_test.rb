@@ -1,8 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class FamilyTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
-  end
+  should_have_valid_fixtures Family
+  should_require_attributes :name
+  should_require_unique_attributes :name
+  should_protect_attributes :family_ids, :budget_ids, :people_ids
+  should_have_many :accounts, :budgets, :people
 end

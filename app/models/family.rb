@@ -4,7 +4,10 @@ class Family < ActiveRecord::Base
   has_many :accounts, :order => "name", :dependent => :destroy
   has_many :budgets, :order => "account_id, year, month", :dependent => :destroy
 
+  validates_presence_of :name
   validates_uniqueness_of :name
+
+  attr_accessible :name
 
   def budget_for(year, month)
     returning({}) do |hash|
