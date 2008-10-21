@@ -7,4 +7,14 @@ class BudgetTest < ActiveSupport::TestCase
   should_ensure_value_in_range :year, (2000..2100)
   should_ensure_value_in_range :month, (1 .. 12)
   should_protect_attributes :family_id, :account_id
+
+  context "A new budget" do
+    setup do
+      @budget = Budget.new
+    end
+
+    should "have a default amount of 0" do
+      assert @budget.amount.zero?
+    end
+  end
 end
