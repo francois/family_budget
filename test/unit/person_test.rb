@@ -1,49 +1,48 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class PersonTest < Test::Unit::TestCase
-  # Be sure to include AuthenticatedTestHelper in test/test_helper.rb instead.
-  # Then, you can remove it from this and the functional test.
-  include AuthenticatedTestHelper
-  fixtures :people
+  should_have_valid_fixtures
+  should_protect_attributes :crypted_password, :salt, :remember_token, :remember_token_expires_at, :family_id, :admin
+  should_require_attributes :login, :email, :password, :password_confirmation
+  should_require_unique_attributes :login, :email
 
-  def test_should_create_person
-    assert_difference 'Person.count' do
-      person = create_person
-      assert !person.new_record?, "#{person.errors.full_messages.to_sentence}"
+  context "A person" do
+    setup do
+      @person = people(:quentin)
     end
-  end
 
-  def test_should_require_login
-    assert_no_difference 'Person.count' do
-      u = create_person(:login => nil)
-      assert u.errors.on(:login)
+    context "updating it's login" do
+      setup do
+        @old_password_hash = @person.crypted_password
+        @person.update_attributes(:login => "bizarro")
+      end
+
+      should "authenticate using the new login" do
+        assert_equal @person, Person.authenticate("bizarro", "test")
+      end
+
+      should "NOT authenticate using the old login" do
+        assert_nil Person.authenticate("quentin", "test")
+      end
+
+      should "keep the same crypted password" do
+        assert_equal @old_password_hash, @person.reload.crypted_password
+      end
     end
-  end
 
-  def test_should_require_password
-    assert_no_difference 'Person.count' do
-      u = create_person(:password => nil)
-      assert u.errors.on(:password)
+    context "updating it's password" do
+      setup do
+        @person.update_attributes(:password => 'new password', :password_confirmation => 'new password')
+      end
+
+      should "authenticate using the new password" do
+        assert_equal @person, Person.authenticate('quentin', 'new password')
+      end
+
+      should "NOT authenticate with the old password" do
+        assert_nil Person.authenticate("quentin", "test")
+      end
     end
-  end
-
-  def test_should_require_password_confirmation
-    assert_no_difference 'Person.count' do
-      u = create_person(:password_confirmation => nil)
-      assert u.errors.on(:password_confirmation)
-    end
-  end
-
-  def test_should_require_email
-    assert_no_difference 'Person.count' do
-      u = create_person(:email => nil)
-      assert u.errors.on(:email)
-    end
-  end
-
-  def test_should_reset_password
-    people(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    assert_equal people(:quentin), Person.authenticate('quentin', 'new password')
   end
 
   def test_should_not_rehash_password
@@ -55,47 +54,51 @@ class PersonTest < Test::Unit::TestCase
     assert_equal people(:quentin), Person.authenticate('quentin', 'test')
   end
 
-  def test_should_set_remember_token
-    people(:quentin).remember_me
-    assert_not_nil people(:quentin).remember_token
-    assert_not_nil people(:quentin).remember_token_expires_at
-  end
+  context "A person that is remembered" do
+    setup do
+      @person = people(:quentin)
+      @person.remember_me
+      @person.reload
+    end
 
-  def test_should_unset_remember_token
-    people(:quentin).remember_me
-    assert_not_nil people(:quentin).remember_token
-    people(:quentin).forget_me
-    assert_nil people(:quentin).remember_token
-  end
+    context "being forgotten" do
+      setup do
+        @person.forget_me
+      end
 
-  def test_should_remember_me_for_one_week
-    before = 1.week.from_now.utc
-    people(:quentin).remember_me_for 1.week
-    after = 1.week.from_now.utc
-    assert_not_nil people(:quentin).remember_token
-    assert_not_nil people(:quentin).remember_token_expires_at
-    assert people(:quentin).remember_token_expires_at.between?(before, after)
-  end
+      should "NOT have a remember_token" do
+        assert_nil @person.remember_token
+      end
 
-  def test_should_remember_me_until_one_week
-    time = 1.week.from_now.utc
-    people(:quentin).remember_me_until time
-    assert_not_nil people(:quentin).remember_token
-    assert_not_nil people(:quentin).remember_token_expires_at
-    assert_equal people(:quentin).remember_token_expires_at, time
-  end
+      should "NOT have a remember_token_expires_at" do
+        assert_nil @person.remember_token_expires_at
+      end
 
-  def test_should_remember_me_default_two_weeks
-    before = 2.weeks.from_now.utc
-    people(:quentin).remember_me
-    after = 2.weeks.from_now.utc
-    assert_not_nil people(:quentin).remember_token
-    assert_not_nil people(:quentin).remember_token_expires_at
-    assert people(:quentin).remember_token_expires_at.between?(before, after)
-  end
+      should "NOT be authenticable using a nil token" do
+        assert_nil Person.authenticate(nil)
+      end
+    end
 
-protected
-  def create_person(options = {})
-    Person.create({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+    should "have a remember_token_expires_at set to 1 week in the future" do
+      expires_at = 2.weeks.from_now.utc
+      assert_include @person.remember_token_expires_at, ((expires_at - 1.second) .. (expires_at + 1.second))
+    end
+
+    should "have a remember_token" do
+      assert_not_nil @person.remember_token
+    end
+
+    should "authenticate with the correct remember_token" do
+      assert_equal @person, Person.authenticate(@person.remember_token)
+    end
+
+    should "NOT authenticate when incorrect remember token" do
+      assert_nil Person.authenticate(@person.remember_token.succ)
+    end
+
+    should "NOT authenticate when the remember token expired" do
+      @person.update_attribute(:remember_token_expires_at, 2.weeks.ago.utc)
+      assert_nil Person.authenticate(@person.remember_token)
+    end
   end
 end

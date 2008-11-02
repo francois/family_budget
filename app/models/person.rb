@@ -19,10 +19,30 @@ class Person < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :password, :password_confirmation
 
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
+  class << self
+    # Authenticates the user by remember_token OR login + password.
+    def authenticate(*args)
+      case args.length
+      when 1
+        self.authenticate_by_remember_token(args.first)
+      when 2
+        self.authenticate_by_username_password(*args)
+      else
+        raise ArgumentError, "Expected 1 or 2 arguments, received #{args.length}: #{args.inspect}"
+      end
+    end
+
+    protected
+    # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
+    def authenticate_by_username_password(login, password)
+      u = find_by_login(login) # need to get the salt
+      u && u.authenticated?(password) ? u : nil
+    end
+
+    def authenticate_by_remember_token(token)
+      return nil if token.blank?
+      find(:first, :conditions => ["remember_token = ? AND remember_token_expires_at >= ?", token, Time.now.utc])
+    end
   end
 
   # Encrypts some data with the salt.
