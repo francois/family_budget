@@ -7,3 +7,5 @@ second:
 third:
   id: 3
   name: Nothing
+invalid:
+  name: a

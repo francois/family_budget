@@ -10,5 +10,6 @@ class TagTest < Test::Unit::TestCase
 
   should_fail do
     should_protect_attributes :name
+    should_have_valid_fixtures
   end
 end

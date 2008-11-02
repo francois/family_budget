@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
-name: thoughtbot-shoulda
+name: francois-shoulda
 version: !ruby/object:Gem::Version 
-  version: 2.0.2
+  version: 2.0.5.0
 platform: ruby
 authors: 
 - Tammer Saleh
@@ -9,7 +9,7 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2008-09-20 00:00:00 -04:00
+date: 2008-10-15 00:00:00 -04:00
 default_executable: convert_to_should_syntax
 dependencies: 
 - !ruby/object:Gem::Dependency 
@@ -20,7 +20,7 @@ dependencies:
     requirements: 
     - - ">="
       - !ruby/object:Gem::Version 
-        version: "2.0"
+        version: 2.0.0
     version: 
 description: 
 email: tsaleh@thoughtbot.com
@@ -65,6 +65,7 @@ files:
 - lib/shoulda/tasks/yaml_to_shoulda.rake
 - lib/shoulda/tasks.rb
 - lib/shoulda.rb
+- rails/init.rb
 - test/fail_macros.rb
 - test/fixtures
 - test/fixtures/addresses.yml

@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class UserTest < Test::Unit::TestCase
   fixtures :all
 
+  should_have_valid_fixtures
+
   should_have_many :posts
   should_have_many :dogs
 
@@ -32,6 +34,7 @@ class UserTest < Test::Unit::TestCase
   should_ensure_length_in_range :email, 1..100
   should_ensure_value_in_range :age, 1..100
   should_protect_attributes :password
+  should_allow_attributes :name, :email
   should_have_class_methods :find, :destroy
   should_have_instance_methods :email, :age, :email=, :valid?
   should_have_db_columns :name, :email, :age
@@ -48,5 +51,6 @@ class UserTest < Test::Unit::TestCase
 
   should_fail do
     should_protect_attributes :name, :age
+    should_allow_attributes :password
   end
 end
