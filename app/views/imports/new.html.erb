@@ -1,0 +1,5 @@
+<% form_for(:import, :url => imports_url, :method => :post) do |f| %>
+<p><%= f.label :format %><br/><%= f.select :format, %w(Quicken) %></p>
+<p><%= f.label :data %><br/><%= f.file_field :data %></p>
+<p><%= submit_tag "Import" %></p>
+<% end %>

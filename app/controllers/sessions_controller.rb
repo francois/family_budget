@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     self.current_person = Person.authenticate(params[:login], params[:password])
-    if logged_in?
+    if logged_in? then
       if params[:remember_me] == "1" then
         self.current_person.remember_me
         cookies[:auth_token] = { :value => self.current_person.remember_token , :expires => self.current_person.remember_token_expires_at }

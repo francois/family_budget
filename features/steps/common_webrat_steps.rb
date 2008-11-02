@@ -1,5 +1,14 @@
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
+Given /^I am authenticated(?: as (.*))?$/ do |login|
+  login = "quentin" if login.blank?
+
+  visits "/sessions/new"
+  fills_in "login", :with => login
+  fills_in "password", :with => "test"
+  clicks_button "Ouvrir une session"
+  assert_select "#flash", "Vous avez ouvert une session"
+end
 
 When /^I press "(.*)"$/ do |button|
   clicks_button(button)
@@ -29,7 +38,7 @@ When /^I choose "(.*)"$/ do |field|
   chooses(field)
 end
 
-When /^I attach the file at "(.*)" to "(.*)" $/ do |path, field|
+When /^I attach the file at "(.*)" to "(.*)"$/ do |path, field|
   attaches_file(field, path)
 end
 
