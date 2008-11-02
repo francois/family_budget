@@ -1,67 +1,50 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TransferTest < ActiveSupport::TestCase
-  def test_scoped_to_credits
-    transfer = Transfer.new(:credit_account => accounts(:home))
-    transfer.save(false)
-    assert_include transfer, Transfer.credits
-  end
+  should_have_valid_fixtures
+  should_protect_attributes :family_id, :debit_account_id, :credit_account_id, :created_at, :updated_at
+  should_require_attributes :family_id, :debit_account_id, :credit_account_id, :posted_on
+  should_allow_attributes :family, :debit_account, :credit_account, :posted_on, :description, :amount
 
-  def test_scoped_to_debits
-    transfer = Transfer.new(:debit_account => accounts(:home))
-    transfer.save(false)
-    assert_include transfer, Transfer.debits
-  end
+  context "Scoping" do
+    setup do
+      @transfer = transfers(:checking_to_credit_card)
+    end
 
-  def test_debit_scope_does_not_include_credits
-    transfer = Transfer.new(:credit_account => accounts(:home))
-    transfer.save(false)
-    assert_does_not_include transfer, Transfer.debits
-  end
+    context "to period" do
+      should "include the transfer when scoping to the right period" do
+        assert_include @transfer, Transfer.for_period(2008, 11)
+      end
 
-  def test_credit_scope_does_not_include_debits
-    transfer = Transfer.new(:debit_account => accounts(:home))
-    transfer.save(false)
-    assert_does_not_include transfer, Transfer.credits
-  end
+      should "NOT include the transfer when scoping to the previous period" do
+        assert_does_not_include @transfer, Transfer.for_period(2008, 10)
+      end
 
-  def test_scoped_to_period
-    transfer = Transfer.new(:posted_on => Date.new(2008, 10, 13))
-    transfer.save(false)
-    assert_include transfer, Transfer.for_period(2008, 10)
-  end
+      should "NOT include the transfer when scoping to the next period" do
+        assert_does_not_include @transfer, Transfer.for_period(2008, 12)
+      end
 
-  def test_period_scope_does_not_include_next_month
-    transfer = Transfer.new(:posted_on => Date.new(2008, 11, 1))
-    transfer.save(false)
-    assert_does_not_include transfer, Transfer.for_period(2008, 10)
-  end
+      should "NOT include the transfer when scoping to the right month but next year" do
+        assert_does_not_include @transfer, Transfer.for_period(2009, 11)
+      end
 
-  def test_period_scope_does_not_include_previous_month
-    transfer = Transfer.new(:posted_on => Date.new(2008, 9, 30))
-    transfer.save(false)
-    assert_does_not_include transfer, Transfer.for_period(2008, 10)
-  end
+      should "NOT include the transfer when scoping to the right month but previous year" do
+        assert_does_not_include @transfer, Transfer.for_period(2007, 11)
+      end
+    end
 
-  def test_scoped_to_credit_account
-    transfer = Transfer.new(:credit_account => accounts(:home))
-    transfer.save(false)
-    assert_include transfer, Transfer.for_account(accounts(:home))
-  end
+    context "to account" do
+      should "include the transfer when the account is a debit" do
+        assert_include @transfer, Transfer.for_account(accounts(:credit_card_repayment))
+      end
 
-  def test_scoped_to_debit_account
-    transfer = Transfer.new(:debit_account => accounts(:home))
-    transfer.save(false)
-    assert_include transfer, Transfer.for_account(accounts(:home))
-  end
+      should "include the transfer when the account is a credit" do
+        assert_include @transfer, Transfer.for_account(accounts(:home))
+      end
 
-  def test_account_scope_does_not_include_other_account
-    transfer = Transfer.new(:debit_account => accounts(:home))
-    transfer.save(false)
-    assert_does_not_include transfer, Transfer.for_account(accounts(:credit_card))
-  end
-
-  def test_bad_scoping
-    flunk "Can't scope Transfer.debits or Transfer.credits the way they are done now: they will fail because both account_ids aren't NULL (it's a transfer, dummy!)"
+      should "include the transfer when the account isn't mentionned" do
+        assert_does_not_include @transfer, Transfer.for_account(accounts(:credit_card))
+      end
+    end
   end
 end

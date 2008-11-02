@@ -1,11 +1,6 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  family_id: 1
-  posted_on: 2008-02-27
-  description: MyString
-
-two:
-  family_id: 1
-  posted_on: 2008-02-27
-  description: MyString
+checking_to_credit_card:
+  family: beausoleil
+  debit_account: credit_card_repayment
+  credit_account: home
+  amount: 141.29
+  posted_on: 2008-11-01
