@@ -1,0 +1,10 @@
+credit_card_repayment:
+  family: beausoleil
+  bank_account: checking
+  credit_account: checking
+  debit_account:
+  amount: 123.12
+  posted_on: 2008-11-02
+  name: Transfer
+  memo: TRANSFER W3 - 0056
+  fitid: 912830912390218299
