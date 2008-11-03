@@ -56,7 +56,8 @@ module ThoughtBot # :nodoc:
           klass = model_class
           should "have valid fixtures" do
             klass.all.each do |object|
-              assert object.valid?, "Fixture #{object.inspect} is invalid"
+              valid = object.valid?
+              assert valid, "Fixture #{object.inspect} is invalid: #{object.errors.full_messages}"
             end
           end
         end
