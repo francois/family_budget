@@ -2,9 +2,17 @@ require File.dirname(__FILE__) + "/../test_helper"
 
 class ImportTest < Test::Unit::TestCase
   context "An import" do
-    context "referring to a new bank and account" do
+    context "referring to a new bank, account and transaction" do
       setup do
-        @import = Import.new(:data => qfx(:bankid => "1221", :acctid => "77321812"), :family => families(:beausoleil))
+        @import = Import.new(:data => qfx(:bankid => "1221", :acctid => "77321812", :fitid => "992381928211"), :family => families(:beausoleil))
+      end
+
+      context "calling #create_transactions!" do
+        setup do
+          @import.create_transactions!
+        end
+
+        should_change "Transaction.count", :by => 1
       end
 
       context "calling #create_bank_accounts!" do
@@ -16,9 +24,17 @@ class ImportTest < Test::Unit::TestCase
       end
     end
 
-    context "referring to an existing bank and account" do
+    context "referring to an existing bank, account and transaction" do
       setup do
         @import = Import.new(:data => qfx, :family => families(:beausoleil))
+      end
+
+      context "calling #create_transactions!" do
+        setup do
+          @import.create_transactions!
+        end
+
+        should_not_change "Transaction.count"
       end
 
       context "calling #create_bank_accounts!" do
@@ -53,28 +69,32 @@ class ImportTest < Test::Unit::TestCase
         assert_include "<ACCTTYPE>CHECKING", @qfx
       end
 
-      should "contain <DTSTART>[today]" do
-        assert_include "<DTSTART>#{Date.today.to_time.strftime("%Y%m%d%H%M%S")}", @qfx
+      should "contain <DTSTART>20081102120000" do
+        assert_include "<DTSTART>#{qfx_timestamp(transactions(:credit_card_payment).posted_on)}", @qfx
       end
 
-      should "contain <DTEND>[today]" do
-        assert_include "<DTEND>#{Date.today.to_time.strftime("%Y%m%d%H%M%S")}", @qfx
+      should "contain <DTEND>20081102120000" do
+        assert_include "<DTEND>#{qfx_timestamp(transactions(:credit_card_payment).posted_on)}", @qfx
       end
 
-      should "contain <DTPOSTED>[today]" do
-        assert_include "<DTPOSTED>#{Date.today.to_time.strftime("%Y%m%d%H%M%S")}", @qfx
+      should "contain <DTPOSTED>20081102120000" do
+        assert_include "<DTPOSTED>#{qfx_timestamp(transactions(:credit_card_payment).posted_on)}", @qfx
       end
 
-      should "contain <TRNAMT>-291.99" do
-        assert_include "<TRNAMT>-291.99", @qfx
+      should "contain <FITID>912830912390218299" do
+        assert_include "<FITID>912830912390218299", @qfx
       end
 
-      should "contain <NAME>ACCOUNT TRANSFER" do
-        assert_include "<NAME>ACCOUNT TRANSFER", @qfx
+      should "contain <TRNAMT>123.12" do
+        assert_include "<TRNAMT>#{transactions(:credit_card_payment).amount}", @qfx
       end
 
-      should "contain <MEMO>W3 TRANSFER - 9382\\s" do
-        assert_include "<MEMO>W3 TRANSFER - 9382 ", @qfx
+      should "contain <NAME>PAYMENT" do
+        assert_include "<NAME>#{transactions(:credit_card_payment).name}", @qfx
+      end
+
+      should "contain <MEMO>TRANSFER W3 - 0056" do
+        assert_include "<MEMO>#{transactions(:credit_card_payment).memo}", @qfx
       end
     end
 
@@ -186,15 +206,16 @@ class ImportTest < Test::Unit::TestCase
       "acctid"   => bank_accounts(:checking).account_number,
       "bankid"   => bank_accounts(:checking).bank_number, 
       "accttype" => "CHECKING",
-      "dtstart"  => Date.today,
-      "dtend"    => Date.today,
-      "dtposted" => Date.today,
-      "trnamt"   => "-291.99",
-      "name"     => "ACCOUNT TRANSFER",
-      "memo"     => "W3 TRANSFER - 9382 ")
+      "dtstart"  => transactions(:credit_card_payment).posted_on,
+      "dtend"    => transactions(:credit_card_payment).posted_on,
+      "dtposted" => transactions(:credit_card_payment).posted_on,
+      "trnamt"   => transactions(:credit_card_payment).amount.to_s,
+      "fitid"    => transactions(:credit_card_payment).fitid,
+      "name"     => transactions(:credit_card_payment).name,
+      "memo"     => transactions(:credit_card_payment).memo)
     options.each_pair do |key, value|
       next unless key.starts_with?("dt")
-      options[key] = value.to_time.strftime("%Y%m%d%H%M%S")
+      options[key] = qfx_timestamp(value)
     end
 
     returning(File.read(File.join(Rails.root, "test", "fixtures", "single_transaction.qfx"))) do |data|
@@ -202,5 +223,9 @@ class ImportTest < Test::Unit::TestCase
         data.gsub!("__#{field.upcase}__", options[field]) if options.has_key?(field)
       end
     end
+  end
+
+  def qfx_timestamp(value)
+    value.to_time.strftime("%Y%m%d%H%M%S")
   end
 end

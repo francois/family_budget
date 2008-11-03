@@ -20,6 +20,10 @@ class Import
     end
   end
 
+  def create_transactions!
+    
+  end
+
   private
   def assert_family_present
     raise ArgumentError, "No family assigned to #{inspect}" unless family
