@@ -39,7 +39,7 @@ class TransferTest < ActiveSupport::TestCase
       end
 
       should "include the transfer when the account is a credit" do
-        assert_include @transfer, Transfer.for_account(accounts(:home))
+        assert_include @transfer, Transfer.for_account(accounts(:checking))
       end
 
       should "include the transfer when the account isn't mentionned" do

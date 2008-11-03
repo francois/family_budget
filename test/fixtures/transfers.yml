@@ -1,6 +1,6 @@
 checking_to_credit_card:
   family: beausoleil
   debit_account: credit_card_repayment
-  credit_account: home
+  credit_account: checking
   amount: 141.29
   posted_on: 2008-11-01
