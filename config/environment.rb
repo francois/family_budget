@@ -61,6 +61,7 @@ Rails::Initializer.run do |config|
   config.gem "chronic"
   config.gem "mocha"
   config.gem "andand"
+  config.gem "quicken_parser"
 
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
