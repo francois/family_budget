@@ -29,7 +29,7 @@ class BankAccountsController < ApplicationController
 
   protected
   def bank_accounts
-    @bank_accounts ||= current_family.bank_accounts.all
+    @bank_accounts ||= current_family.bank_accounts
   end
 
   def bank_account
