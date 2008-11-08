@@ -1,6 +1,5 @@
 class BankAccountsController < ApplicationController
-  
-  helper_method :bank_account
+  helper_method :bank_account, :bank_accounts, :accounts
 
   def index
     respond_to do |wants|
