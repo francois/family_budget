@@ -1,8 +1,8 @@
 <ul>
-  <li class="welcomes first"><%= link_to "Ajouter des transactions", welcome_path %></li>
+  <li class="welcomes first"><%= link_to "Importer des transactions", new_import_path %></li>
+  <li class="transactions"><%= link_to "Gérer mes transactions", transactions_path %></li>
   <li class="budgets"><%= link_to "Gérer mon budget", budget_path %></li>
   <li class="accounts"><%= link_to "Gérer mes comptes", accounts_path %></li>
-  <li class="transfers"><%= link_to "Gérer mes transactions", transfers_path %></li>
   <li class="people"><%= link_to "Ma famille", people_path %></li>
   <li class="sessions last"><%= link_to "Fermer ma session", session_path, :method => :delete %></li>
 </ul>

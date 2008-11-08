@@ -1,31 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title><%=h @page_title %></title>
-  <%= stylesheet_link_tag "scaffold", "application" %>
-  <%= javascript_include_tag :defaults %>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "jquery", "application" %>
 </head>
-<body class="<%= body_classes %>">
-  <table id="container" cellspacing="0" cellpadding="0">
-    <tr>
-      <td id="header" colspan="3">
-        Notre Budget
-        <span>Gérer son argent, simplement</span>
-      </td>
-    </tr>
-    <tr>
-      <td id="nav">
-        <%= render :partial => current_family ? "shared/navigation" : "shared/unauthenticated" %>
-      </td>
-      <td id="main">
-        <%= render_flash_notices %>
-        <%= yield  %>
-      </td>
-      <td id="calendar">
-        <%= calendar %>
-      </td>
-    </tr>
-  </table>
+<body>
+  <div id="doc2" class="yui-t1">
+    <div id="hd"><h1>NotreBudget.com</h1><h2>Gérer son argent, simplement</h2></div>
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b"><div class="yui-ge">
+          <div class="yui-u first">
+            <%= yield %>
+          </div>
+          <div class="yui-u">
+            <!-- YOUR DATA GOES HERE -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="yui-b">
+      <% when_logged_in? do -%>
+      <%= render :partial => "shared/navigation" %>
+      <% end -%>
+      <% when_not_logged_in? do -%>
+      <%= render :partial => "shared/login" %>
+      <% end -%>
+    </div>
+
+  </div>
+  <div id="ft">
+    <p>Copyright 2008, Solutions Technologiques Internationales.</p>
+    <p>Tous droits réservés.</p>
+  </div>
+</div>
 </body>
 </html>

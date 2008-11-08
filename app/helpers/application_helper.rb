@@ -59,4 +59,14 @@ module ApplicationHelper
   def amount(value, default="")
     value && value.nonzero? ?  "%0.2f"%value : default
   end
+
+  def when_logged_in?(&block)
+    return nil unless logged_in?
+    concat(capture(&block), block.binding)
+  end
+
+  def when_not_logged_in?(&block)
+    return nil if logged_in?
+    concat(capture(&block), block.binding)
+  end
 end
