@@ -7,14 +7,7 @@ class Import
     end
   end
 
-  def create_bank_accounts!
-    accounts.each do |account|
-      bank_account = bank_account_of(account)
-      bank_account.save! if bank_account.new_record?
-    end
-  end
-
-  def create_transactions!
+  def process!
     accounts.each do |account|
       bank_account = bank_account_of(account)
       account.transactions.each do |txn|

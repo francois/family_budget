@@ -7,20 +7,13 @@ class ImportTest < Test::Unit::TestCase
         @import = Import.new(:data => qfx(:bankid => "1221", :acctid => "77321812", :fitid => "992381928211"), :family => families(:beausoleil))
       end
 
-      context "calling #create_transactions!" do
+      context "calling #process!" do
         setup do
-          @import.create_transactions!
-        end
-
-        should_change "Transaction.count", :by => 1
-      end
-
-      context "calling #create_bank_accounts!" do
-        setup do
-          @import.create_bank_accounts!
+          @import.process!
         end
 
         should_change "BankAccount.count", :by => 1
+        should_change "Transaction.count", :by => 1
       end
     end
 
@@ -29,20 +22,13 @@ class ImportTest < Test::Unit::TestCase
         @import = Import.new(:data => qfx, :family => families(:beausoleil))
       end
 
-      context "calling #create_transactions!" do
+      context "calling #process!" do
         setup do
-          @import.create_transactions!
-        end
-
-        should_not_change "Transaction.count"
-      end
-
-      context "calling #create_bank_accounts!" do
-        setup do
-          @import.create_bank_accounts!
+          @import.process!
         end
 
         should_not_change "BankAccount.count"
+        should_not_change "Transaction.count"
       end
     end
   end
