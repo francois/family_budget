@@ -35,4 +35,8 @@ class BankAccountsController < ApplicationController
   def bank_account
     @bank_account ||= current_family.bank_accounts.find(params[:id])
   end
+
+  def accounts
+    @accounts ||= current_family.accounts
+  end
 end
