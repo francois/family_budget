@@ -1,5 +1,3 @@
-require "generator"
-
 class Import
   attr_accessor :family, :data
 
