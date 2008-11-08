@@ -17,7 +17,7 @@ class BankAccountsControllerTest < ActionController::TestCase
       should_respond_with_content_type "text/html"
     end
 
-    context "on GET to /bank_accounts/:id" do
+    context "on GET to /bank_accounts/:id/edit" do
       setup do
         get :edit, :id => @bank_account.id
       end
@@ -43,7 +43,7 @@ class BankAccountsControllerTest < ActionController::TestCase
 
     context "on GET to /bank_accounts/:id.js" do
       setup do
-        get :edit, :id => @bank_account.id, :format => "js"
+        get :show, :id => @bank_account.id, :format => "js"
       end
 
       should_respond_with :success

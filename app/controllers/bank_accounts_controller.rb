@@ -9,10 +9,15 @@ class BankAccountsController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |wants|
+      wants.js { render :json => bank_account, :content_type => "text/javascript" }
+    end
+  end
+
   def edit
     respond_to do |wants|
       wants.html
-      wants.js { render :json => bank_account, :content_type => "text/javascript" }
     end
   end
 
