@@ -4,4 +4,8 @@ class BankAccount < ActiveRecord::Base
   validates_presence_of :family_id, :bank_number, :account_number
   attr_accessible :family, :account, :bank_number, :account_number
   has_many :transactions
+
+  def to_s
+    account ? account.name : account_number
+  end
 end
