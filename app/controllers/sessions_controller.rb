@@ -20,14 +20,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  def update
-    self.current_date = Date.parse(params[:session][:current_date])
-    respond_to do |format|
-      format.html { redirect_to_back_or_default("/") }
-      format.js
-    end
-  end
-
   def destroy
     self.current_person.forget_me if logged_in?
     cookies.delete :auth_token
