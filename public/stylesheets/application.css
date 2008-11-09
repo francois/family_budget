@@ -61,6 +61,11 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 #transactions .handle { float: right; padding: 2px; border: 1px solid #383B2A; background: #93722F; color: #383B2A; font-size: .8em; cursor: move; }
 #transactions p { margin: 0; }
 
+#flash { margin: 1em auto; padding: .5em; width: 90%; border: 1px solid #365C4A; color: #365C4A; }
+#flash .notice, #flash .message { padding-left: 32px; background: left no-repeat; margin: .5em 0; line-height: 1; }
+#flash .notice { background-image: url(../images/error.png); }
+#flash .message { background-image: url(../images/emoticon_happy.png); }
+
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
    dark green:          #365C4A

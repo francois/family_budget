@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
       redirect_back_or_default('/')
       flash[:notice] = "Vous avez ouvert une session"
     else
+      flash.now[:notice] = "Soit le nom d'utilisateur ou le mot de passe est incorrect.  Essayez à nouveau."
       render :action => 'new'
     end
   end

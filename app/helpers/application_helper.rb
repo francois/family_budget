@@ -7,9 +7,11 @@ module ApplicationHelper
   def body_classes
   end
 
-  def render_flash_notices
-    return nil if flash[:notice].blank?
-    render :partial => "shared/notice"
+  def render_flash_messages
+    %w(notice message).map do |key|
+      next if flash[key.to_sym].blank?
+      content_tag(:p, h(flash[key.to_sym]), :class => key)
+    end.join("\n")
   end
 
   def calendar
