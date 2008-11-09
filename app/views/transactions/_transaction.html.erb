@@ -1,6 +1,7 @@
-<tr>
+<tr id="<%= dom_id(transaction) %>">
   <td><abbr title="<%= transaction.posted_on.to_s(:db) %>"><%= i18n_date(transaction.posted_on) %></abbr></td>
   <td>
+    <span class="handle">Transfert</span>
     <span class="account"><%=h transaction.bank_account %></span>
     <p><%= [transaction.name, transaction.memo].reject(&:blank?).join("<br/>") %></p>
   </td>

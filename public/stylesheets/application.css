@@ -58,6 +58,7 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 .static { position: fixed; }
 
 #transactions .account { color: #5C5E42; display: block; }
+#transactions .handle { float: right; padding: 2px; border: 1px solid #383B2A; background: #93722F; color: #383B2A; font-size: .8em; cursor: move; }
 #transactions p { margin: 0; }
 
 /* 
