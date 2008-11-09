@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  helper_method :transactions, :transaction, :accounts
+  helper_method :transactions, :transaction, :accounts, :income_and_expense_accounts
 
   def index
   end
