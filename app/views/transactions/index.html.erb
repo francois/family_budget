@@ -1,0 +1,22 @@
+<% page_title "Liste des transactions à traiter" %>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Nom / Mémo</th>
+      <th>Montant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => transactions %>
+  </tbody>
+</table>
+
+<% content_for :sidebar do -%>
+<div class="static">
+  <h3>Compte de budget à assigner</h3>
+  <ul class="navigation">
+    <%= render :partial => "account", :collection => accounts %>
+  </ul>
+</div>
+<% end -%>

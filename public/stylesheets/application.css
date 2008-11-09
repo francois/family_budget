@@ -55,6 +55,8 @@ q { font-family: "Georgia", serif; }
 q:before { content: "\201C"; padding-right: 0.1em; }
 q:after { content: "\201D"; padding-left: 0.1em; }
 
+.static { position: fixed; }
+
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
    dark green:          #365C4A

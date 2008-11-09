@@ -77,4 +77,15 @@ module ApplicationHelper
       ["jquery-min.js"]
     end
   end
+
+  FRENCH_DAY_NAMES   = %w(Dim Lun Mar Mer Jeu Ven Sam)
+  FRENCH_MONTH_NAMES = %w(Jan Fév Mar Avr Mai Jui Jui Aoû Sep Oct Nov Dec)
+
+  def i18n_date(date)
+    "%s %d" % [FRENCH_DAY_NAMES[date.wday], date.day]
+  end
+
+  def format_money(amount)
+    number_with_delimiter(amount, "&nbsp;")
+  end
 end
