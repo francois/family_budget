@@ -6,10 +6,7 @@ class AccountsController < ApplicationController
     @purpose = params[:purpose]
     return redirect_to(accounts_path) if @purpose.blank? and params.has_key?(:purpose)
 
-    options = Hash.new
-    options[:conditions] = ["purpose = ?", @purpose] unless @purpose.blank?
-    options[:order] = "name"
-    @accounts = current_family.accounts.by_type_and_name
+    @accounts = current_family.accounts.purposes(@purpose.blank? ? Account::ValidPurposes : @purpose)
 
     @purposes.unshift ["Tous", ""]
     respond_to do |format|

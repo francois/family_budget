@@ -20,7 +20,7 @@ class Account < ActiveRecord::Base
   named_scope :incomes, :conditions => {:purpose => Income}
   named_scope :expenses, :conditions => {:purpose => Expense}
   named_scope :by_type_and_name, :order => "purpose, name"
-  named_scope :purposes, lambda {|*purposes| {:conditions => {:purpose => purposes}}}
+  named_scope :purposes, lambda {|*purposes| {:conditions => {:purpose => purposes.flatten.compact}}}
 
   attr_accessible :name, :purpose, :family
 
