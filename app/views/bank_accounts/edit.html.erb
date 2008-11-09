@@ -1,0 +1,6 @@
+<% page_title "Modification d'un compte de banque" %>
+<% form_for(bank_account) do |f| %>
+<p><%= f.label :account, "Compte Budget" %><br/>
+<%= f.select :account, accounts.to_selection_list %></p>
+<p><%= submit_tag "Enregister" %>
+<% end %>

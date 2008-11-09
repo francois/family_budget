@@ -21,6 +21,7 @@ class BankAccountsController < ApplicationController
   end
 
   def update
+    transform_account!
     bank_account.update_attributes!(params[:bank_account])
     flash[:notice] = "Bank account #{bank_account} updated"
     redirect_to bank_accounts_path
@@ -37,5 +38,9 @@ class BankAccountsController < ApplicationController
 
   def accounts
     @accounts ||= current_family.accounts
+  end
+
+  def transform_account!
+    params[:bank_account][:account] = current_family.accounts.find(params[:bank_account].delete(:account))
   end
 end

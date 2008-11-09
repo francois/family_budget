@@ -54,5 +54,19 @@ class BankAccountsControllerTest < ActionController::TestCase
         assert_equal @bank_account.to_json, @response.body
       end
     end
+
+    context "on PUT to /bank_accounts/:id" do
+      setup do
+        @account = @bank_account.family.accounts.create!(:purpose => "asset", :name => "Special Purpose")
+        put :update, :id => @bank_account.id, :bank_account => {:account => @account.id}
+      end
+
+      should_respond_with :redirect
+      should_redirect_to "bank_accounts_path"
+
+      should "assign the correct account" do
+        assert_equal @account, @bank_account.reload.account
+      end
+    end
   end
 end

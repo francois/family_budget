@@ -1,0 +1,5 @@
+<tr>
+  <td><%=h bank_account.bank_number %></td>
+  <td><%=h bank_account.account_number %></td>
+  <td><%= link_to(h(bank_account.account.if_nil {"Non-assigné"}), edit_bank_account_path(bank_account)) %></td>
+</tr>
