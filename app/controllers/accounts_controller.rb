@@ -9,7 +9,7 @@ class AccountsController < ApplicationController
     options = Hash.new
     options[:conditions] = ["purpose = ?", @purpose] unless @purpose.blank?
     options[:order] = "name"
-    @accounts = current_family.accounts.all_by_type_and_name
+    @accounts = current_family.accounts.by_type_and_name
 
     @purposes.unshift ["Tous", ""]
     respond_to do |format|
