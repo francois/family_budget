@@ -1,10 +1,14 @@
 module ApplicationHelper
-  def page_title(title)
-    @page_title = title
-    content_tag(:h1, h(@page_title))
+  def page_title(title=nil)
+    if title then
+      @page_title = title
+    else
+      [h(@page_title), "NotreBudget.com"].reject(&:blank?).join(" &mdash; ")
+    end
   end
 
   def body_classes
+    [controller.controller_name, controller.action_name] * " "
   end
 
   def render_flash_messages
@@ -25,11 +29,11 @@ module ApplicationHelper
       buffer << %Q(<caption>#{month_name(month)} #{year}</caption>)
       buffer << %q(<thead>)
       buffer << %q(<tr>)
-        %w(Dim Lun Mar Mer Jeu Ven Sam).each do |dayname|
+      %w(Dim Lun Mar Mer Jeu Ven Sam).each do |dayname|
         buffer << %q(<th>)
         buffer << dayname
         buffer << %q(</th>)
-        end
+      end
       buffer << %q(</tr>)
       buffer << %q(</thead>)
       buffer << %q(<tbody>)
