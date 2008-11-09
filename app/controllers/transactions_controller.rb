@@ -6,7 +6,7 @@ class TransactionsController < ApplicationController
 
   protected
   def transactions
-    @transactions ||= current_family.transactions
+    @transactions ||= current_family.transactions.by_posted_on
   end
 
   def transation
