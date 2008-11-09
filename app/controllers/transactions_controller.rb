@@ -16,4 +16,8 @@ class TransactionsController < ApplicationController
   def accounts
     @accounts ||= current_family.accounts
   end
+
+  def income_and_expense_accounts
+    @accounts ||= current_family.accounts.purposes(Account::Income, Account::Expense).by_type_and_name
+  end
 end

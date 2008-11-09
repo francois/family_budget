@@ -2,4 +2,7 @@
   <td><abbr title="<%= transaction.posted_on.to_s(:db) %>"><%= i18n_date(transaction.posted_on) %></abbr></td>
   <td><%= [transaction.name, transaction.memo].compact.join("<br/>") %></td>
   <td class="amount"><%= format_money(transaction.amount) %></td>
+  <td>
+    <%= submit_tag "Traiter", :class => "process", :name => "" %>
+  </td>
 </tr>
