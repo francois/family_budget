@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
         cookies[:auth_token] = { :value => self.current_person.remember_token , :expires => self.current_person.remember_token_expires_at }
       end
       redirect_back_or_default('/')
-      flash[:notice] = "Vous avez ouvert une session"
+      flash[:message] = "Vous avez ouvert une session"
     else
       flash.now[:notice] = "Soit le nom d'utilisateur ou le mot de passe est incorrect.  Essayez à nouveau."
       render :action => 'new'
