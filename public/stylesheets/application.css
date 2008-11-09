@@ -31,7 +31,7 @@ ol li { list-style-type: decimal; }
 form label, form legend { letter-spacing: -0.05em; }
 form p.radio { margin: 0; }
 
-table { border-collapse: collapse; font-size: .9em; width: 100%; }
+table { border-collapse: collapse; font-size: .9em; width: 100%; color: #383B2A; }
 table caption { font-size: 1.1em; }
 table thead { background: #93722F; line-height: 1; }
 table thead th { text-align: center; color: #383B2A; }
@@ -56,6 +56,9 @@ q:before { content: "\201C"; padding-right: 0.1em; }
 q:after { content: "\201D"; padding-left: 0.1em; }
 
 .static { position: fixed; }
+
+#transactions .account { color: #5C5E42; display: block; }
+#transactions p { margin: 0; }
 
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
