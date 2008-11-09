@@ -1,4 +1,5 @@
-<ul>
+<%= yield :navbar %>
+<ul class="navigation">
   <li class="welcomes first"><%= link_to "Importer des transactions", new_import_path %></li>
   <li class="transactions"><%= link_to "Gérer mes transactions", transactions_path %></li>
   <li class="budgets"><%= link_to "Gérer mon budget", budget_path %></li>

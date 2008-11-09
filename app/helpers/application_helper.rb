@@ -69,4 +69,12 @@ module ApplicationHelper
     return nil if logged_in?
     concat(capture(&block), block.binding)
   end
+
+  def jquery_files
+    if Rails.env == "development" then
+      ["jquery.js"]
+    else
+      ["jquery-min.js"]
+    end
+  end
 end
