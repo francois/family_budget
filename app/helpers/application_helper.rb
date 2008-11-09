@@ -86,6 +86,6 @@ module ApplicationHelper
   end
 
   def format_money(amount)
-    number_with_delimiter(amount, "&nbsp;")
+    "%.2f" % amount
   end
 end
