@@ -47,6 +47,7 @@ ul.navigation { margin: 0; letter-spacing: -0.12em; list-style-type: none; }
 ul.navigation li { list-style-type: none; }
 .yui-u { font-size: .8em; }
 .yui-u.first { font-size: 1em; }
+.yui-b { padding-left: .5em; }
 
 #ft { font-size: 0.67em; color: #383B2A; }
 #ft p { text-align: center; margin: 0; line-height: 1.2; }
@@ -61,8 +62,8 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 #transactions .handle { float: right; padding: 2px; border: 1px solid #383B2A; background: #93722F; color: #383B2A; font-size: .8em; cursor: move; }
 #transactions p { margin: 0; }
 
-#flash { margin: 1em auto; padding: .5em; width: 90%; border: 1px solid #365C4A; color: #365C4A; }
-#flash .notice, #flash .message { padding-left: 32px; background: left no-repeat; margin: .5em 0; line-height: 1; }
+#flash { margin: 1em auto; padding: .5em; width: 90%; color: #365C4A; }
+#flash .notice, #flash .message { padding: 1em 32px; border: 1px solid #365C4A; background: left no-repeat; margin: .5em 0; line-height: 1; }
 #flash .notice { background-image: url(../images/error.png); }
 #flash .message { background-image: url(../images/emoticon_happy.png); }
 
