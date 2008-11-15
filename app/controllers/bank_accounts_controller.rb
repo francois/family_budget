@@ -23,7 +23,7 @@ class BankAccountsController < ApplicationController
   def update
     transform_account!
     bank_account.update_attributes!(params[:bank_account])
-    flash[:notice] = "Bank account #{bank_account} updated"
+    flash[:notice] = "Compte #{bank_account} mis à jour"
     redirect_to bank_accounts_path
   end
 
@@ -37,7 +37,7 @@ class BankAccountsController < ApplicationController
   end
 
   def accounts
-    @accounts ||= current_family.accounts
+    @accounts ||= current_family.accounts.assets + current_family.accounts.liabilities
   end
 
   def transform_account!
