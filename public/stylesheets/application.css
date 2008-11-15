@@ -63,9 +63,9 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 #transactions p { margin: 0; }
 
 #flash { margin: 1em auto; padding: .5em; width: 90%; color: #365C4A; }
-#flash .notice, #flash .message { padding: 1em 32px; border: 1px solid #365C4A; background: left no-repeat; margin: .5em 0; line-height: 1; }
-#flash .notice { background-image: url(../images/error.png); }
-#flash .message { background-image: url(../images/emoticon_happy.png); }
+#flash .notice, #flash .error { padding: 1em 32px; border: 1px solid #365C4A; background: left no-repeat; margin: .5em 0; line-height: 1; }
+#flash .notice { background-image: url(../images/emoticon_happy.png); }
+#flash .error { background-image: url(../images/error.png); }
 
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
