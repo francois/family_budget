@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081103020142) do
+ActiveRecord::Schema.define(:version => 20081116042818) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id",  :limit => 11
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20081103020142) do
     t.integer  "debit_account_id",  :limit => 11
     t.integer  "credit_account_id", :limit => 11
     t.decimal  "amount",                          :precision => 9, :scale => 2
+    t.integer  "transaction_id",    :limit => 11
   end
 
 end

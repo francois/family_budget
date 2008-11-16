@@ -2,9 +2,39 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class TransferTest < ActiveSupport::TestCase
   should_have_valid_fixtures
-  should_protect_attributes :family_id, :debit_account_id, :credit_account_id, :created_at, :updated_at
-  should_require_attributes :family_id, :debit_account_id, :credit_account_id, :posted_on
-  should_allow_attributes :family, :debit_account, :credit_account, :posted_on, :description, :amount
+  should_protect_attributes :family, :family_id, :debit_account_id, :credit_account_id, :transaction_id, :created_at, :updated_at
+  should_require_attributes :family_id, :posted_on
+  should_allow_attributes :debit_account, :credit_account, :transaction, :posted_on, :description, :amount
+
+  context "A transfer" do
+    setup do
+      @transfer = families(:beausoleil).transfers.build
+      @transfer.valid?
+    end
+
+    should "be missing a debit account" do
+      assert_include "Debit account can't be blank", @transfer.errors.full_messages
+    end
+
+    should "be missing a credit account" do
+      assert_include "Credit account can't be blank", @transfer.errors.full_messages
+    end
+
+    context "with a transaction" do
+      setup do
+        @transfer.transaction = transactions(:credit_card_payment)
+        @transfer.valid?
+      end
+
+      should "be missing a debit account" do
+        assert_include "Debit account can't be blank", @transfer.errors.full_messages
+      end
+
+      should "NOT be missing a credit account" do
+        assert_does_not_include "Credit account can't be blank", @transfer.errors.full_messages
+      end
+    end
+  end
 
   context "Scoping" do
     setup do
