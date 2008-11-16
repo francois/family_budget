@@ -17,6 +17,14 @@ module ThoughtBot # :nodoc:
           assert obj.valid?, "Errors: #{pretty_error_messages obj}"
         end
 
+        # Asserts that the given object is invalid, in the ActiveRecord sense.
+        # Calls #valid? on the object, and fails the assertion if the value is true.
+        #
+        #  assert_invalid User.new(params)
+        def assert_invalid(obj)
+          assert !obj.valid?, "<#{obj.inspect}> should have been invalid"
+        end
+
         # Asserts that an Active Record model validates with the passed
         # <tt>value</tt> by making sure the <tt>error_message_to_avoid</tt> is not
         # contained within the list of errors for that attribute.

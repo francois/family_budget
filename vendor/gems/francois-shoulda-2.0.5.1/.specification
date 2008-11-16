@@ -1,7 +1,7 @@
 --- !ruby/object:Gem::Specification 
 name: francois-shoulda
 version: !ruby/object:Gem::Version 
-  version: 2.0.5.0
+  version: 2.0.5.1
 platform: ruby
 authors: 
 - Tammer Saleh
