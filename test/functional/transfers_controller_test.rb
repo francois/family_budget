@@ -54,9 +54,9 @@ class TransfersControllerTest < ActionController::TestCase
         end
       end
 
-      context "with transaction and debit account" do
+      context "with bank_transaction and debit account" do
         setup do
-          post :create, :transfer => {:transaction_id => transactions(:credit_card_payment), :debit_account_id => accounts(:checking), :description => "Pay credit card", :amount => "123.41"}
+          post :create, :transfer => {:bank_transaction_id => bank_transactions(:credit_card_payment), :debit_account_id => accounts(:checking), :description => "Pay credit card", :amount => "123.41"}
         end
 
         should_redirect_to "transfers_path"

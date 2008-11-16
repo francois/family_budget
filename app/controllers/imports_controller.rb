@@ -6,6 +6,6 @@ class ImportsController < ApplicationController
     @import = Import.new(params[:import])
     @import.family = current_family
     @import.process!
-    redirect_to transactions_url
+    redirect_to bank_transactions_url
   end
 end

@@ -58,9 +58,9 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 
 .static { position: fixed; }
 
-#transactions .account { color: #5C5E42; display: block; }
-#transactions .handle { float: right; padding: 2px; border: 1px solid #383B2A; background: #93722F; color: #383B2A; font-size: .8em; cursor: move; }
-#transactions p { margin: 0; }
+#bank_transactions .account { color: #5C5E42; display: block; }
+#bank_transactions .handle { float: right; padding: 2px; border: 1px solid #383B2A; background: #93722F; color: #383B2A; font-size: .8em; cursor: move; }
+#bank_transactions p { margin: 0; }
 
 #flash { margin: 1em auto; padding: .5em; width: 90%; color: #365C4A; }
 #flash .notice, #flash .error { padding: 1em 32px; border: 1px solid #365C4A; background: left no-repeat; margin: .5em 0; line-height: 1; }

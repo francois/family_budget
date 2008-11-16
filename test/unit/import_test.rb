@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/../test_helper"
 
 class ImportTest < Test::Unit::TestCase
   context "An import" do
-    context "referring to a new bank, account and transaction" do
+    context "referring to a new bank, account and bank_transaction" do
       setup do
         @import = Import.new(:data => qfx(:bankid => "1221", :acctid => "77321812", :fitid => "992381928211"), :family => families(:beausoleil))
       end
@@ -13,11 +13,11 @@ class ImportTest < Test::Unit::TestCase
         end
 
         should_change "BankAccount.count", :by => 1
-        should_change "Transaction.count", :by => 1
+        should_change "BankTransaction.count", :by => 1
       end
     end
 
-    context "referring to an existing bank, account and transaction" do
+    context "referring to an existing bank, account and bank_transaction" do
       setup do
         @import = Import.new(:data => qfx, :family => families(:beausoleil))
       end
@@ -28,7 +28,7 @@ class ImportTest < Test::Unit::TestCase
         end
 
         should_not_change "BankAccount.count"
-        should_not_change "Transaction.count"
+        should_not_change "BankTransaction.count"
       end
     end
   end
@@ -56,15 +56,15 @@ class ImportTest < Test::Unit::TestCase
       end
 
       should "contain <DTSTART>20081102120000" do
-        assert_include "<DTSTART>#{qfx_timestamp(transactions(:credit_card_payment).posted_on)}", @qfx
+        assert_include "<DTSTART>#{qfx_timestamp(bank_transactions(:credit_card_payment).posted_on)}", @qfx
       end
 
       should "contain <DTEND>20081102120000" do
-        assert_include "<DTEND>#{qfx_timestamp(transactions(:credit_card_payment).posted_on)}", @qfx
+        assert_include "<DTEND>#{qfx_timestamp(bank_transactions(:credit_card_payment).posted_on)}", @qfx
       end
 
       should "contain <DTPOSTED>20081102120000" do
-        assert_include "<DTPOSTED>#{qfx_timestamp(transactions(:credit_card_payment).posted_on)}", @qfx
+        assert_include "<DTPOSTED>#{qfx_timestamp(bank_transactions(:credit_card_payment).posted_on)}", @qfx
       end
 
       should "contain <FITID>912830912390218299" do
@@ -72,15 +72,15 @@ class ImportTest < Test::Unit::TestCase
       end
 
       should "contain <TRNAMT>123.12" do
-        assert_include "<TRNAMT>#{transactions(:credit_card_payment).amount}", @qfx
+        assert_include "<TRNAMT>#{bank_transactions(:credit_card_payment).amount}", @qfx
       end
 
       should "contain <NAME>PAYMENT" do
-        assert_include "<NAME>#{transactions(:credit_card_payment).name}", @qfx
+        assert_include "<NAME>#{bank_transactions(:credit_card_payment).name}", @qfx
       end
 
       should "contain <MEMO>TRANSFER W3 - 0056" do
-        assert_include "<MEMO>#{transactions(:credit_card_payment).memo}", @qfx
+        assert_include "<MEMO>#{bank_transactions(:credit_card_payment).memo}", @qfx
       end
     end
 
@@ -192,13 +192,13 @@ class ImportTest < Test::Unit::TestCase
       "acctid"   => bank_accounts(:checking).account_number,
       "bankid"   => bank_accounts(:checking).bank_number, 
       "accttype" => "CHECKING",
-      "dtstart"  => transactions(:credit_card_payment).posted_on,
-      "dtend"    => transactions(:credit_card_payment).posted_on,
-      "dtposted" => transactions(:credit_card_payment).posted_on,
-      "trnamt"   => transactions(:credit_card_payment).amount.to_s,
-      "fitid"    => transactions(:credit_card_payment).fitid,
-      "name"     => transactions(:credit_card_payment).name,
-      "memo"     => transactions(:credit_card_payment).memo)
+      "dtstart"  => bank_transactions(:credit_card_payment).posted_on,
+      "dtend"    => bank_transactions(:credit_card_payment).posted_on,
+      "dtposted" => bank_transactions(:credit_card_payment).posted_on,
+      "trnamt"   => bank_transactions(:credit_card_payment).amount.to_s,
+      "fitid"    => bank_transactions(:credit_card_payment).fitid,
+      "name"     => bank_transactions(:credit_card_payment).name,
+      "memo"     => bank_transactions(:credit_card_payment).memo)
     options.each_pair do |key, value|
       next unless key.starts_with?("dt")
       options[key] = qfx_timestamp(value)

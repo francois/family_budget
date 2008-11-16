@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class TransactionTest < Test::Unit::TestCase
+class BankTransactionTest < Test::Unit::TestCase
   should_have_valid_fixtures
   should_belong_to :family, :bank_account, :credit_account, :debit_account
   should_protect_attributes :family_id, :bank_account_id, :credit_account_id, :debit_account_id, :fitid

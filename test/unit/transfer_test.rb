@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class TransferTest < ActiveSupport::TestCase
   should_have_valid_fixtures
-  should_protect_attributes :family, :family_id, :debit_account_id, :credit_account_id, :transaction_id, :created_at, :updated_at
+  should_protect_attributes :family, :family_id, :debit_account_id, :credit_account_id, :bank_transaction_id, :created_at, :updated_at
   should_require_attributes :family_id, :posted_on
-  should_allow_attributes :debit_account, :credit_account, :transaction, :posted_on, :description, :amount
+  should_allow_attributes :debit_account, :credit_account, :bank_transaction, :posted_on, :description, :amount
 
   context "A transfer" do
     setup do
@@ -20,9 +20,9 @@ class TransferTest < ActiveSupport::TestCase
       assert_include "Credit account can't be blank", @transfer.errors.full_messages
     end
 
-    context "with a transaction" do
+    context "with a bank_transaction" do
       setup do
-        @transfer.transaction = transactions(:credit_card_payment)
+        @transfer.bank_transaction = bank_transactions(:credit_card_payment)
         @transfer.valid?
       end
 
@@ -35,28 +35,28 @@ class TransferTest < ActiveSupport::TestCase
       end
     end
 
-    context "with a transaction reducing an asset bank account" do
+    context "with a bank_transaction reducing an asset bank account" do
       context "with a debit account that is an expense" do
         should "set the bank account's account as the credit account"
         should "leave the debit account as-is"
       end
     end
 
-    context "with a transaction increasing an asset bank account" do
+    context "with a bank_transaction increasing an asset bank account" do
       context "with a debit account that is an income" do
         should "set the bank account's account as the debit account"
         should "set the income account as the credit account"
       end
     end
 
-    context "with a transaction reducing a liability bank account" do
+    context "with a bank_transaction reducing a liability bank account" do
       context "with a debit account that is an asset account" do
         should "set the bank account's account as the debit account"
         should "set the asset's account to the credit account"
       end
     end
 
-    context "with a transaction increasing a liability bank account" do
+    context "with a bank_transaction increasing a liability bank account" do
       context "with a debit account that is an expense" do
         should "set the bank account's account as the credit account"
         should "set the expense account as the debit account"

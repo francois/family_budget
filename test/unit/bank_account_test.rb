@@ -6,7 +6,7 @@ class BankAccountTest < Test::Unit::TestCase
   should_protect_attributes :family_id, :account_id
   should_allow_attributes :family, :account, :bank_number, :account_number
   should_belong_to :account, :family
-  should_have_many :transactions
+  should_have_many :bank_transactions
 
   context "BankAccount#to_s" do
     context "on a bank account with associated account" do

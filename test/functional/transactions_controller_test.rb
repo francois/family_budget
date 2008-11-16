@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class TransactionsControllerTest < ActionController::TestCase
+class BankTransactionsControllerTest < ActionController::TestCase
   logged_in_as :quentin do
     context "on GET to /index" do
       setup do

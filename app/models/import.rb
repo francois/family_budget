@@ -11,8 +11,8 @@ class Import
     accounts.each do |account|
       bank_account = bank_account_of(account)
       account.transactions.each do |txn|
-        transaction = family.transactions.find_or_initialize_by_fitid(txn.number)
-        transaction.update_attributes!(:bank_account => bank_account, :amount => txn.amount, :name => txn.name, :memo => txn.memo, :posted_on => txn.timestamp) if transaction.new_record?
+        bank_transaction = family.bank_transactions.find_or_initialize_by_fitid(txn.number)
+        bank_transaction.update_attributes!(:bank_account => bank_account, :amount => txn.amount, :name => txn.name, :memo => txn.memo, :posted_on => txn.timestamp) if bank_transaction.new_record?
       end
     end
   end
