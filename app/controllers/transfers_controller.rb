@@ -1,17 +1,14 @@
 class TransfersController < ApplicationController
-  before_filter :load_transfer, :only => %w(show edit update destroy)
-  before_filter :load_accounts, :only => %w(new edit)
+  helper_method :transfers, :transfer, :accounts
 
   def index
-    @transfers = current_family.transfers.find(:all, :order => "posted_on, created_at")
-
     respond_to do |format|
       format.html
     end
   end
 
   def new
-    @transfer = current_family.transfers.build
+    @transfer = transfer
 
     respond_to do |format|
       format.html
@@ -23,14 +20,17 @@ class TransfersController < ApplicationController
   end
 
   def create
-    @transfer = current_family.transfers.build(params[:transfer])
-    @transfer.posted_on = current_date
+    transfer.debit_account  = current_family.accounts.find_by_id(params[:transfer][:debit_account_id])
+    transfer.credit_account = current_family.accounts.find_by_id(params[:transfer][:credit_account_id])
+    transfer.transaction    = current_family.transactions.find_by_id(params[:transfer][:transaction_id])
+    transfer.posted_on      = current_date
     Transfer.transaction do
       respond_to do |format|
-        if @transfer.save
-          flash[:notice] = "Transféré #{@transfer.amount} de #{@transfer.debit_account.name} à #{@transfer.credit_account.name}, en date du #{@transfer.posted_on}"
-          format.html { redirect_to welcome_path }
+        if transfer.save
+          flash[:notice] = "Transféré #{transfer.amount} de #{transfer.debit_account} à #{transfer.credit_account}, en date du #{transfer.posted_on}"
+          format.html { redirect_to transfers_path }
         else
+          transfer.save!
           format.html { render :action => "new" }
         end
       end
@@ -39,7 +39,7 @@ class TransfersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @transfer.update_attributes(params[:transfer])
+      if transfer.update_attributes(params[:transfer])
         flash[:notice] = "Transfer mis à jour"
         format.html { redirect_to transfers_path }
       else
@@ -49,8 +49,7 @@ class TransfersController < ApplicationController
   end
 
   def destroy
-    @transfer.destroy
-
+    transfer.destroy
     respond_to do |format|
       flash[:notice] = "Transfer détruit"
       format.html { redirect_to transfers_path }
@@ -58,11 +57,15 @@ class TransfersController < ApplicationController
   end
 
   protected
-  def load_transfer
-    @transfer = current_family.transfers.find(params[:id])
+  def transfers
+    @transfers ||= current_family.transfers.all
   end
 
-  def load_accounts
-    @accounts = current_family.accounts.find(:all).map {|a| [a.name, a.id]}
+  def transfer
+    @transfer ||= params.has_key?(:id) ? current_family.transfers.find(params[:id]) : current_family.transfers.build(params[:transfer])
+  end
+
+  def accounts
+    @accounts ||= current_family.accounts.all
   end
 end

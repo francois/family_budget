@@ -1,6 +1,6 @@
-<%= error_messages_for :transfer %>
+<%= error_messages_for :transfer, :object => transfer %>
 
-<% fields_for(@transfer) do |f| %>
+<% fields_for(:transfer, transfer) do |f| %>
 <p>
   <label for="transfer_posted_on">En date du</label><br />
   <%= f.date_select :posted_on %>
@@ -8,17 +8,17 @@
 
 <p>
   <label for="transfer_debit_account_id">Débiter</label><br/>
-  <%= f.select :debit_account_id, @accounts %>
+  <%= f.select :debit_account_id, accounts %>
 </p>
 
 <p>
   <label for="transfer_credit_account_id">Créditer</label><br/>
-  <%= f.select :credit_account_id, @accounts %>
+  <%= f.select :credit_account_id, accounts %>
 </p>
 
 <p>
   <label for="transfer_amount">Montant</label><br/>
-  <%= f.text_field :amount, :value => amount(@transfer.amount) %>
+  <%= f.text_field :amount, :value => amount(transfer.amount) %>
 </p>
 
 <p>
