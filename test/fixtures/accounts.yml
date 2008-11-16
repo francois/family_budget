@@ -12,3 +12,8 @@ credit_card_repayment:
   family: beausoleil
   name: Credit Card Repayment
   purpose: expense
+
+cell_phone_service:
+  family: beausoleil
+  name: Cell Phone Service
+  purpose: expense

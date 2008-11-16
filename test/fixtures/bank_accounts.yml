@@ -3,3 +3,9 @@ checking:
   account: checking
   bank_number: 0912039
   account_number: 928192828
+
+credit_card:
+  family: beausoleil
+  account: credit_card
+  bank_number: 0912039
+  account_number: 4510xxxxxxxxxxxx
