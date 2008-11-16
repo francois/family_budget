@@ -5,6 +5,7 @@ class Transfer < ActiveRecord::Base
   belongs_to :bank_transaction
 
   before_validation :copy_amount_from_bank_transaction
+  before_validation :copy_posted_on_from_bank_transaction
   after_validation :normalize_accounts_on_transaction
   after_validation :swap_accounts_on_negative_amount
   validates_presence_of :family_id, :debit_account_id, :posted_on
@@ -20,6 +21,10 @@ class Transfer < ActiveRecord::Base
     self.amount = self.bank_transaction.amount if self.amount.blank? && !self.bank_transaction.blank?
   end
 
+  def copy_posted_on_from_bank_transaction
+    self.posted_on = self.bank_transaction.posted_on if self.posted_on.blank? && !self.bank_transaction.blank?
+  end
+
   def swap_accounts_on_negative_amount
     return if self.amount.blank? || self.amount >= 0
     self.amount = self.amount.abs
@@ -32,7 +37,7 @@ class Transfer < ActiveRecord::Base
     if self.amount < 0 then
       # Reducing the asset's value (withdrawing money from the account)
       self.credit_account = self.bank_transaction.account
-      self.amount = self.amount.abs
+      self.amount         = self.amount.abs
     else
       # Increasing the asset's value (depositing money into the account)
       self.debit_account, self.credit_account = self.bank_transaction.account, self.debit_account
