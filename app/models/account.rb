@@ -46,4 +46,12 @@ class Account < ActiveRecord::Base
   def to_s
     name
   end
+
+  ValidPurposes.each do |purpose|
+    class_eval <<-EOF
+      def #{purpose}?
+        purpose == #{purpose.titleize}
+      end
+    EOF
+  end
 end

@@ -9,4 +9,56 @@ class AccountTest < ActiveSupport::TestCase
   should_protect_attributes :family_id, :budget_ids
   should_not_allow_values_for :purpose, "foo", :message => "is not included in the list"
   should_allow_values_for :purpose, *Account::ValidPurposes
+
+  context "An asset account" do
+    setup do
+      @account = Account.new(:purpose => Account::Asset)
+    end
+
+    should "return true for #asset?" do
+      assert @account.asset?
+    end
+
+    should "return false for #liability?" do
+      assert_equal false, @account.liability?
+    end
+
+    should "return false for #equity?" do
+      assert_equal false, @account.equity?
+    end
+
+    should "return false for #income?" do
+      assert_equal false, @account.income?
+    end
+
+    should "return false for #expense?" do
+      assert_equal false, @account.expense?
+    end
+  end
+
+  context "An expense account" do
+    setup do
+      @account = Account.new(:purpose => Account::Expense)
+    end
+
+    should "return false for #asset?" do
+      assert_equal false, @account.asset?
+    end
+
+    should "return false for #liability?" do
+      assert_equal false, @account.liability?
+    end
+
+    should "return false for #equity?" do
+      assert_equal false, @account.equity?
+    end
+
+    should "return false for #income?" do
+      assert_equal false, @account.income?
+    end
+
+    should "return true for #expense?" do
+      assert @account.expense?
+    end
+  end
 end
