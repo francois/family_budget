@@ -81,6 +81,7 @@ class TransferTest < ActiveSupport::TestCase
 
     context "with a bank transaction reducing an asset bank account" do
       setup do
+        # Pay for cell phone service using checking account
         @bank_transaction = families(:beausoleil).bank_transactions.create!(:amount => "-99.87", :bank_account => bank_accounts(:checking), :name => "CELL PHONE PAYMENT", :fitid => "J123J", :posted_on => Date.today)
         @transfer.bank_transaction = @bank_transaction
       end
@@ -95,6 +96,8 @@ class TransferTest < ActiveSupport::TestCase
             @transfer.save!
           end
 
+          should_change "@transfer.amount", :to => 99.87
+
           should "set the bank account's account as the credit account" do
             assert_equal bank_accounts(:checking).account, @transfer.credit_account
           end
@@ -108,6 +111,7 @@ class TransferTest < ActiveSupport::TestCase
 
     context "with a bank transaction increasing an asset bank account" do
       setup do
+        # Receive salary and deposit to checking account
         @bank_transaction = families(:beausoleil).bank_transactions.create!(:amount => "1876.99", :bank_account => bank_accounts(:checking), :name => "DIRECT DEPOSIT", :memo => "37SIGNALS", :fitid => "9911209", :posted_on => Date.today)
         @transfer.bank_transaction = @bank_transaction
       end
@@ -122,6 +126,8 @@ class TransferTest < ActiveSupport::TestCase
             @transfer.save!
           end
 
+          should_change "@transfer.amount", :to => 1876.99
+
           should "set the bank account's account as the debit account" do
             assert_equal bank_accounts(:checking).account, @transfer.debit_account
           end
@@ -133,17 +139,63 @@ class TransferTest < ActiveSupport::TestCase
       end
     end
 
-    context "with a bank transaction reducing a liability bank account" do
-      context "with a debit account that is an asset account" do
-        should "set the bank account's account as the debit account"
-        should "set the asset's account to the credit account"
+    context "with a bank transaction increasing a liability bank account" do
+      setup do
+        @bank_transaction = families(:beausoleil).bank_transactions.create!(:amount => "-99.87", :bank_account => bank_accounts(:credit_card), :name => "CELL PHONE PAYMENT", :fitid => "J123J", :posted_on => Date.today)
+        @transfer.bank_transaction = @bank_transaction
+      end
+
+      context "with a debit account that is an expense account" do
+        setup do
+          # Pay for cell phone service using credit card
+          @transfer.debit_account = accounts(:cell_phone_service)
+        end
+
+        context "on save" do
+          setup do
+            @transfer.save!
+          end
+
+          should_change "@transfer.amount", :to => 99.87
+
+          should "set the bank account's account as the credit account" do
+            assert_equal bank_accounts(:credit_card).account, @transfer.credit_account
+          end
+
+          should "set the asset's account to the debit account" do
+            assert_equal accounts(:cell_phone_service), @transfer.debit_account
+          end
+        end
       end
     end
 
-    context "with a bank transaction increasing a liability bank account" do
-      context "with a debit account that is an expense" do
-        should "set the bank account's account as the credit account"
-        should "set the expense account as the debit account"
+    context "with a bank transaction decreasing a liability bank account" do
+      setup do
+        # Repay credit card using checking account
+        @bank_transaction = families(:beausoleil).bank_transactions.create!(:amount => "250.00", :bank_account => bank_accounts(:credit_card), :name => "BANK TRANSFER", :fitid => "K2221", :posted_on => Date.today)
+        @transfer.bank_transaction = @bank_transaction
+      end
+
+      context "with a debit account that is an asset" do
+        setup do
+          @transfer.debit_account = accounts(:checking)
+        end
+
+        context "on save" do
+          setup do
+            @transfer.save!
+          end
+
+          should_change "@transfer.amount", :to => 250
+
+          should "set the bank account's account as the credit account" do
+            assert_equal accounts(:checking), @transfer.credit_account
+          end
+
+          should "set the expense account as the debit account" do
+            assert_equal accounts(:credit_card), @transfer.debit_account
+          end
+        end
       end
     end
   end
