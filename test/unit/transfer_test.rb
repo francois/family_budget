@@ -34,6 +34,34 @@ class TransferTest < ActiveSupport::TestCase
         assert_does_not_include "Credit account can't be blank", @transfer.errors.full_messages
       end
     end
+
+    context "with a transaction reducing an asset bank account" do
+      context "with a debit account that is an expense" do
+        should "set the bank account's account as the credit account"
+        should "leave the debit account as-is"
+      end
+    end
+
+    context "with a transaction increasing an asset bank account" do
+      context "with a debit account that is an income" do
+        should "set the bank account's account as the debit account"
+        should "set the income account as the credit account"
+      end
+    end
+
+    context "with a transaction reducing a liability bank account" do
+      context "with a debit account that is an asset account" do
+        should "set the bank account's account as the debit account"
+        should "set the asset's account to the credit account"
+      end
+    end
+
+    context "with a transaction increasing a liability bank account" do
+      context "with a debit account that is an expense" do
+        should "set the bank account's account as the credit account"
+        should "set the expense account as the debit account"
+      end
+    end
   end
 
   context "Scoping" do
