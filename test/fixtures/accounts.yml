@@ -17,3 +17,8 @@ cell_phone_service:
   family: beausoleil
   name: Cell Phone Service
   purpose: expense
+
+salary:
+  family: beausoleil
+  name: Salary
+  purpose: income

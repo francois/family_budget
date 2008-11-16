@@ -107,9 +107,29 @@ class TransferTest < ActiveSupport::TestCase
     end
 
     context "with a bank transaction increasing an asset bank account" do
+      setup do
+        @bank_transaction = families(:beausoleil).bank_transactions.create!(:amount => "1876.99", :bank_account => bank_accounts(:checking), :name => "DIRECT DEPOSIT", :memo => "37SIGNALS", :fitid => "9911209", :posted_on => Date.today)
+        @transfer.bank_transaction = @bank_transaction
+      end
+
       context "with a debit account that is an income" do
-        should "set the bank account's account as the debit account"
-        should "set the income account as the credit account"
+        setup do
+          @transfer.debit_account = accounts(:salary)
+        end
+
+        context "on save" do
+          setup do
+            @transfer.save!
+          end
+
+          should "set the bank account's account as the debit account" do
+            assert_equal bank_accounts(:checking).account, @transfer.debit_account
+          end
+
+          should "set the income account as the credit account" do
+            assert_equal accounts(:salary), @transfer.credit_account
+          end
+        end
       end
     end
 
