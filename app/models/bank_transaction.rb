@@ -1,6 +1,7 @@
 class BankTransaction < ActiveRecord::Base
   belongs_to :family
   belongs_to :bank_account
+  delegate :account, :to => :bank_account
   belongs_to :debit_account, :class_name => "Account"
   belongs_to :credit_account, :class_name => "Account"
 

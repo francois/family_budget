@@ -8,4 +8,14 @@ class BankTransactionTest < Test::Unit::TestCase
   should_require_attributes :family_id, :bank_account_id, :posted_on, :name, :fitid
   should_only_allow_numeric_values_for :amount
   should_allow_values_for :amount, 0, -100, 100, -99.99, 99.99
+
+  context "A bank transaction with assigned bank account" do
+    setup do
+      @bank_transaction = BankTransaction.new(:bank_account => bank_accounts(:checking))
+    end
+
+    should "return the bank account's account when asked for #account" do
+      assert_equal bank_accounts(:checking).account, @bank_transaction.account
+    end
+  end
 end
