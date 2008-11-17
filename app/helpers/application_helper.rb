@@ -78,9 +78,9 @@ module ApplicationHelper
 
   def jquery_files
     if Rails.env == "development" then
-      ["jquery.js"]
+      ["jquery.js", "jquery-ui.js"]
     else
-      ["jquery.min.js"]
+      ["jquery.min.js", "jquery-ui.min.js"]
     end
   end
 
