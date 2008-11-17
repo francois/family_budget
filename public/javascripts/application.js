@@ -1,5 +1,13 @@
-$(function() {
+$(document).ready(function() {
   var insecureProcess = function(data) { eval(data); };
+  var handleTransfer = function(e, ui) {
+    // this == droppable, ui.draggable == draggable
+    var sourceBankTransactionId = $(ui.draggable).attr("id").replace("bank_transaction_", "");
+    var targetBankTransactionId = $(this).attr("id").replace("bank_transaction_", "");
+  };
+
+  $("#bank_transactions tr.bank_transaction").draggable({revert: true, helper: 'clone', opacity: 0.7, scroll: true, handle: ".handle"});
+  $("#bank_transactions tr.bank_transaction").droppable({accept: "#bank_transactions .handle", drop: handleTransfer});
 
   $("#bank_transactions td.actions input[type=submit]").bind("click", function() {
     if (this.getAttribute("class").match(/process/)) {
