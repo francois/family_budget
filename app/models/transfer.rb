@@ -1,4 +1,6 @@
 class Transfer < ActiveRecord::Base
+  class MulitpleBankTransactionsNotHandledYet < RuntimeError; end
+
   belongs_to :family
   belongs_to :debit_account, :class_name => "Account"
   belongs_to :credit_account, :class_name => "Account"
@@ -6,7 +8,7 @@ class Transfer < ActiveRecord::Base
 
   before_validation :copy_amount_from_bank_transactions
   before_validation :copy_posted_on_from_bank_transactions
-  after_validation :normalize_accounts_with_bank_transactions
+  before_validation :normalize_accounts_with_bank_transactions
   after_validation :swap_accounts_on_negative_amount
   validates_presence_of :family_id, :debit_account_id, :posted_on
   # validate :presence_of_bank_transaction_or_credit_account
@@ -46,8 +48,16 @@ class Transfer < ActiveRecord::Base
         # Increasing the asset's value (depositing money into the account)
         self.debit_account, self.credit_account = self.bank_transactions.first.account, self.debit_account
       end
+    when 2
+      bt0 = self.bank_transactions.first
+      bt1 = self.bank_transactions.last
+      if bt0.amount < 0 then
+        self.debit_account, self.credit_account = bt0.account, bt1.account
+      else
+        self.debit_account, self.credit_account = bt1.account, bt0.account
+      end
     else
-      raise "Don't know how to handle multiple bank transactions case yet"
+      raise MulitpleBankTransactionsNotHandledYet
     end
   end
 

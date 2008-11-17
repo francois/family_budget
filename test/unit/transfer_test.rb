@@ -7,6 +7,70 @@ class TransferTest < ActiveSupport::TestCase
   should_allow_attributes :debit_account, :credit_account, :bank_transaction, :posted_on, :description, :amount
   should_have_many :bank_transactions
 
+  context "Two bank transactions withdrawing 250 from the checking account and depositing to credit card" do
+    setup do
+      @bt0 = create_bank_transaction(:bank_account => bank_accounts(:credit_card), :amount => "250")
+      @bt1 = create_bank_transaction(:bank_account => bank_accounts(:checking), :amount => "-250", :posted_on => Date.today - 3)
+    end
+
+    context "used to repay said credit card" do
+      setup do
+        @transfer = families(:beausoleil).transfers.build
+        @transfer.bank_transactions << @bt0
+        @transfer.bank_transactions << @bt1
+      end
+
+      context "on save" do
+        setup do
+          @transfer.save!
+        end
+
+        should_change "@transfer.amount", :to => BigDecimal.new("250")
+        should_change "@transfer.posted_on", :to => Date.today - 3
+
+        should "debit the credit card account" do
+          assert_equal accounts(:credit_card), @transfer.debit_account
+        end
+
+        should "credit the checking account" do
+          assert_equal accounts(:checking), @transfer.credit_account
+        end
+      end
+    end
+  end
+
+  context "Two bank transactions withdrawing 250 from the credit card account and depositing to the checking account" do
+    setup do
+      @bt0 = create_bank_transaction(:bank_account => bank_accounts(:checking), :amount => "250")
+      @bt1 = create_bank_transaction(:bank_account => bank_accounts(:credit_card), :amount => "-250")
+    end
+
+    context "used to repay said credit card" do
+      setup do
+        @transfer = families(:beausoleil).transfers.build
+        @transfer.bank_transactions << @bt0
+        @transfer.bank_transactions << @bt1
+      end
+
+      context "on save" do
+        setup do
+          @transfer.save!
+        end
+
+        should_change "@transfer.amount", :to => BigDecimal.new("250")
+        should_change "@transfer.posted_on", :to => Date.today
+
+        should "credit the credit card account" do
+          assert_equal accounts(:credit_card), @transfer.credit_account
+        end
+
+        should "debit the checking account" do
+          assert_equal accounts(:checking), @transfer.debit_account
+        end
+      end
+    end
+  end
+
   context "A bank transaction of -58.98 to AT&T from my credit card" do
     setup do
       @bank_transaction = create_bank_transaction(:bank_account => bank_accounts(:credit_card), :amount => "-58.98")
