@@ -153,26 +153,30 @@ class TransferTest < ActiveSupport::TestCase
       end
     end
 
-    # context "with a bank transaction" do
-    #   setup do
-    #     @transfer.bank_transaction = bank_transactions(:credit_card_payment)
-    #   end
-    # 
-    #   context "on save" do
-    #     setup do
-    #       # Expect failure, so don't bang
-    #       @transfer.save
-    #     end
-    # 
-    #     should "be missing a debit account" do
-    #       assert_include "Debit account can't be blank", @transfer.errors.full_messages
-    #     end
-    # 
-    #     should "NOT be missing a credit account" do
-    #       assert_does_not_include "Credit account can't be blank", @transfer.errors.full_messages
-    #     end
-    #   end
-    # end
+    context "with a bank transaction" do
+      setup do
+        @transfer.bank_transactions << bank_transactions(:credit_card_payment)
+      end
+    
+      context "on save" do
+        setup do
+          # Expect failure, so don't bang
+          @transfer.valid?
+        end
+
+        should "be invalid" do
+          assert_invalid @transfer
+        end
+    
+        should "be missing a debit account" do
+          assert_include "Debit account can't be blank", @transfer.errors.full_messages
+        end
+    
+        should "NOT be missing a credit account" do
+          assert_does_not_include "Credit account can't be blank", @transfer.errors.full_messages
+        end
+      end
+    end
   end
 
   # context "A new, empty, transfer" do

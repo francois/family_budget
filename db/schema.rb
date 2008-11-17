@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081117144653) do
+ActiveRecord::Schema.define(:version => 20081117155324) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id",  :limit => 11
@@ -31,18 +31,16 @@ ActiveRecord::Schema.define(:version => 20081117144653) do
   add_index "bank_accounts", ["family_id", "bank_number", "account_number"], :name => "by_family_bank_account", :unique => true
 
   create_table "bank_transactions", :force => true do |t|
-    t.integer  "family_id",         :limit => 11
-    t.integer  "bank_account_id",   :limit => 11
-    t.integer  "debit_account_id",  :limit => 11
-    t.integer  "credit_account_id", :limit => 11
+    t.integer  "family_id",       :limit => 11
+    t.integer  "bank_account_id", :limit => 11
     t.date     "posted_on"
-    t.decimal  "amount",                          :precision => 12, :scale => 2
+    t.decimal  "amount",                        :precision => 12, :scale => 2
     t.string   "name"
     t.string   "memo"
     t.string   "fitid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "transfer_id",       :limit => 11
+    t.integer  "transfer_id",     :limit => 11
   end
 
   add_index "bank_transactions", ["family_id", "fitid"], :name => "by_family_fitid", :unique => true

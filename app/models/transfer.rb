@@ -10,8 +10,9 @@ class Transfer < ActiveRecord::Base
   before_validation :copy_posted_on_from_bank_transactions
   before_validation :normalize_accounts_with_bank_transactions
   after_validation :swap_accounts_on_negative_amount
-  validates_presence_of :family_id, :debit_account_id, :posted_on
-  # validate :presence_of_bank_transaction_or_credit_account
+  validates_presence_of :family_id, :posted_on, :debit_account_id, :credit_account_id
+  validate :presence_of_bank_transactions_or_debit_and_credit_account
+  validate :no_transfer_between_same_accounts
 
   attr_accessible :debit_account, :credit_account, :bank_transaction, :posted_on, :description, :amount
 
@@ -38,6 +39,7 @@ class Transfer < ActiveRecord::Base
   def normalize_accounts_with_bank_transactions
     return if [self.credit_account, self.debit_account].all?
     return if self.bank_transactions.empty?
+
     case self.bank_transactions.length
     when 1
       if self.amount < 0 then
@@ -61,11 +63,20 @@ class Transfer < ActiveRecord::Base
     end
   end
 
-  def presence_of_bank_transaction_or_credit_account
-    if self.bank_transaction.blank? then
+  def presence_of_bank_transactions_or_debit_and_credit_account
+    if self.bank_transactions.empty? then
+      errors.add_on_blank("debit_account_id")
       errors.add_on_blank("credit_account_id")
-    else
-      errors.add_on_blank("bank_transaction_id")
+    elsif self.bank_transactions.length == 1 then
+      errors.add_on_blank("debit_account_id")
+    elsif self.bank_transactions.length > 2 then
+      errors.add_to_base("Cannot handle multiple bank transations at this time -- call François")
     end
+  end
+
+  def no_transfer_between_same_accounts
+    return unless debit_account == credit_account
+    errors.add("debit_account_id", "cannot be the same as the credit account")
+    errors.add("credit_account_id", "cannot be the same as the debit account")
   end
 end

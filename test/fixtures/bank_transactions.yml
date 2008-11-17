@@ -1,9 +1,7 @@
 credit_card_payment:
   family: beausoleil
   bank_account: checking
-  credit_account: checking
-  debit_account:
-  amount: 123.12
+  amount: -123.12
   posted_on: 2008-11-02 12:00:00
   name: PAYMENT
   memo: TRANSFER W3 - 0056
