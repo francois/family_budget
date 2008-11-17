@@ -11,11 +11,27 @@ class BankTransactionTest < Test::Unit::TestCase
 
   context "A bank transaction with assigned bank account" do
     setup do
-      @bank_transaction = BankTransaction.new(:bank_account => bank_accounts(:checking))
+      @bank_transaction = bank_transactions(:credit_card_payment)
     end
 
     should "return the bank account's account when asked for #account" do
       assert_equal bank_accounts(:checking).account, @bank_transaction.account
+    end
+
+    context "that's been used to make a transfer" do
+      setup do
+        @transfer = families(:beausoleil).transfers.create!(:bank_transaction => @bank_transaction, :debit_account => accounts(:credit_card))
+      end
+
+      should "NOT appear in bank_transactions#pending scope" do
+        assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.pending.all
+      end
+    end
+
+    context "that hasn't been used to make a transfer" do
+      should "be in the bank_transactions#pending scope only once" do
+        assert_equal 1, families(:beausoleil).bank_transactions(true).pending.all.select {|bt| bt == @bank_transaction}.length
+      end
     end
   end
 end

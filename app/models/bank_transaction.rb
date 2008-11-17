@@ -11,4 +11,5 @@ class BankTransaction < ActiveRecord::Base
   validates_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid
 
   named_scope :by_posted_on, :order => "posted_on"
+  named_scope :pending, :select => "#{table_name}.*", :joins => "LEFT JOIN #{Transfer.table_name} ON #{Transfer.table_name}.bank_transaction_id = #{table_name}.id", :conditions => ["#{Transfer.table_name}.id IS NULL"]
 end
