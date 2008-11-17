@@ -80,7 +80,7 @@ module ApplicationHelper
     if Rails.env == "development" then
       ["jquery.js"]
     else
-      ["jquery-min.js"]
+      ["jquery.min.js"]
     end
   end
 
