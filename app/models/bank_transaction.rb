@@ -8,6 +8,7 @@ class BankTransaction < ActiveRecord::Base
 
   validates_numericality_of :amount
   validates_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
+  validates_uniqueness_of :fitid, :scope => :family_id
 
   named_scope :by_posted_on, :order => "posted_on"
   named_scope :pending, :conditions => "transfer_id IS NULL"
