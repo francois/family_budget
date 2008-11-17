@@ -4,12 +4,15 @@ class BankTransactionsController < ApplicationController
   def index
   end
 
-  protected
-  def bank_transactions
-    @bank_transactions ||= current_family.bank_transactions.by_posted_on
+  def create
   end
 
-  def transation
+  protected
+  def bank_transactions
+    @bank_transactions ||= current_family.bank_transactions.pending.by_posted_on
+  end
+
+  def bank_transaction
     @bank_transactions ||= current_family.bank_transactions.find(params[:id])
   end
 

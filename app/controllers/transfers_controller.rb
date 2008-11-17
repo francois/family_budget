@@ -1,5 +1,5 @@
 class TransfersController < ApplicationController
-  helper_method :transfers, :transfer, :accounts
+  helper_method :transfers, :transfer, :accounts, :bank_transaction
 
   def index
     respond_to do |format|
@@ -27,11 +27,18 @@ class TransfersController < ApplicationController
     Transfer.transaction do
       respond_to do |format|
         if transfer.save
-          flash[:notice] = "Transféré #{transfer.amount} de #{transfer.debit_account} à #{transfer.credit_account}, en date du #{transfer.posted_on}"
-          format.html { redirect_to transfers_path }
+          flash_message = "Transféré #{transfer.amount} de #{transfer.debit_account} à #{transfer.credit_account}, en date du #{transfer.posted_on}"
+          format.html do
+            flash[:notice] = flash_message
+            redirect_to transfers_path 
+          end
+          format.js do
+            flash.now[:notice] = flash_message
+            render
+          end
         else
-          transfer.save!
           format.html { render :action => "new" }
+          format.js { render :action => "new" }
         end
       end
     end
@@ -50,9 +57,18 @@ class TransfersController < ApplicationController
 
   def destroy
     transfer.destroy
+    @bank_transaction = transfer.bank_transaction
+
     respond_to do |format|
-      flash[:notice] = "Transfer détruit"
-      format.html { redirect_to transfers_path }
+      flash_message = "Transfer détruit"
+      format.html do
+        flash[:notice] = flash_message
+        redirect_to transfers_path
+      end
+      format.js do
+        flash.now[:notice] = flash_message
+        render
+      end
     end
   end
 
@@ -67,5 +83,9 @@ class TransfersController < ApplicationController
 
   def accounts
     @accounts ||= current_family.accounts.all
+  end
+
+  def bank_transaction
+    @bank_transaction ||= current_family.bank_transactions.find(params[:transfer][:bank_transaction_id])
   end
 end

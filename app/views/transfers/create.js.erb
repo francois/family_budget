@@ -1,0 +1,5 @@
+$("#<%= dom_id(bank_transaction) %>").addClass("processed");
+$("#<%= dom_id(bank_transaction) %> input.process").hide();
+$("#<%= dom_id(bank_transaction) %> input.transfer_id").val(<%= transfer.id.to_json %>);
+$("#<%= dom_id(bank_transaction) %> input.cancel").show();
+$("#flash").html(<%= render_flash_messages.to_json %>);

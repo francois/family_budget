@@ -4,9 +4,12 @@
     <span class="handle">Transfert</span>
     <span class="account"><%=h bank_transaction.bank_account %></span>
     <p><%= [bank_transaction.name, bank_transaction.memo].reject(&:blank?).join("<br/>") %></p>
+    <p class="errorText"></p>
   </td>
   <td class="amount"><%= format_money(bank_transaction.amount) %></td>
-  <td>
-    <%= submit_tag "Traiter", :class => "process", :name => "" %>
+  <td class="actions">
+    <%= submit_tag "Traiter", :class => "process", :name => "", :id => "#{dom_id(bank_transaction)}_process" %>
+    <%= submit_tag "Annuler", :class => "cancel", :name => "", :id => "#{dom_id(bank_transaction)}_cancel", :style => "display:none" %>
+    <%= hidden_field_tag "transfer_id", nil, :id => "#{dom_id(bank_transaction)}_transfer", :class => "transfer_id" %>
   </td>
 </tr>

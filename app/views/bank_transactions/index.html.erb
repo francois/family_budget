@@ -16,7 +16,7 @@
 <% content_for :sidebar do -%>
 <div class="static">
   <h3>Compte de budget à assigner</h3>
-  <ul class="navigation">
+  <ul id="accounts" class="navigation">
     <%= render :partial => "account", :collection => income_and_expense_accounts %>
   </ul>
 </div>
