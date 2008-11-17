@@ -56,17 +56,17 @@ class TransfersControllerTest < ActionController::TestCase
 
       context "with bank_transaction and debit account" do
         setup do
-          post :create, :transfer => {:bank_transaction_id => bank_transactions(:credit_card_payment), :debit_account_id => accounts(:checking), :description => "Pay credit card", :amount => "123.41"}
+          post :create, :transfer => {:bank_transaction_ids => [bank_transactions(:cell_phone_charge).id], :debit_account_id => accounts(:cell_phone_service)}
         end
 
         should_redirect_to "transfers_path"
 
-        should "assign the correct debit account" do
-          assert_equal accounts(:credit_card), assigns(:transfer).debit_account, @response.body
+        should "debit the cell phone service account" do
+          assert_equal accounts(:cell_phone_service), assigns(:transfer).debit_account
         end
 
-        should "assign the correct credit account" do
-          assert_equal accounts(:checking), assigns(:transfer).credit_account, @response.body
+        should "credit the credit card account" do
+          assert_equal accounts(:credit_card), assigns(:transfer).credit_account
         end
       end
     end
