@@ -24,8 +24,16 @@ class TransferTest < ActiveSupport::TestCase
         @t1.save!
       end
 
+      should "set the amount to 99.41 for the gifts transfer" do
+        assert_equal BigDecimal.new("99.41").to_s, @t0.amount.to_s
+      end
+
       should "attach the transaction to the gifts transfer (simultaneously with the movies transfer)" do
         assert_include @bank_transaction, @t0.bank_transactions(true)
+      end
+
+      should "set the amount to 33 for the movies transfer" do
+        assert_equal BigDecimal.new("33").to_s, @t1.amount.to_s
       end
 
       should "attach the transaction to the movies transfer (simultaneously with the gifts account)" do

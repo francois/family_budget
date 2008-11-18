@@ -22,6 +22,7 @@ class Transfer < ActiveRecord::Base
   protected
   def copy_amount_from_bank_transactions
     return if self.bank_transactions.empty?
+    return unless self.amount.blank?
     self.amount = self.bank_transactions.map(&:amount).min
   end
 
