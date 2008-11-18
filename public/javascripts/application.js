@@ -22,4 +22,52 @@ $(document).ready(function() {
       alert("Programming error:  don't know how to process '" + this.getAttribute("class") + "'");
     }
   });
+
+  // Split amounts page (splits/:id/edit)
+  (function() {
+    
+    function getOriginalAmount() {
+      return parseFloat($("#splits #original-amount").html());
+    }
+
+    function getTotal() {
+      var total = 0.0;
+      $("#splits input.amount").each(function() {
+        if ($(this).val() != "") {
+          total += parseFloat($(this).val());
+        }
+      });
+
+      return total;
+    }
+
+    function getBalanceAmount() {
+      return Math.abs(getOriginalAmount()) - Math.abs(getTotal());
+    }
+
+    function updateBalanceFields() {
+      $("#splits #split-amount").html(getTotal().toString());
+      $("#splits #balance-amount").html(getBalanceAmount().toString());
+    }
+
+    $("#splits .destroy").bind("click", function() {
+      $(this).parents("tr").remove();
+      updateBalanceFields();
+      return false;
+    });
+
+    $("#splits #add-another").bind("click", function() {
+      var clones = $("#splits #template").clone(true);
+      clones.insertBefore("#splits tbody tr#add-line");
+      clones.removeAttr("id");
+
+      clones.find("input.amount").val(getBalanceAmount().toString());
+      updateBalanceFields();
+      return false;
+    });
+
+    $("#splits input.amount").bind("change", function() {
+      updateBalanceFields();
+    });
+  })();
 });

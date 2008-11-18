@@ -11,5 +11,6 @@
     <%= submit_tag "Traiter", :class => "process", :name => "", :id => "#{dom_id(bank_transaction)}_process" %>
     <%= submit_tag "Annuler", :class => "cancel", :name => "", :id => "#{dom_id(bank_transaction)}_cancel", :style => "display:none" %>
     <%= hidden_field_tag "transfer_id", nil, :id => "#{dom_id(bank_transaction)}_transfer", :class => "transfer_id" %>
+    <p><%= link_to "Répartir", edit_split_path(bank_transaction) %></p>
   </td>
 </tr>

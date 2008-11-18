@@ -63,6 +63,8 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 #bank_transactions p { margin: 0; }
 #bank_transactions .processed { background: #5C5E42; }
 
+#splits #template { display: none; }
+
 #flash { margin: 1em auto; padding: .5em; width: 90%; color: #365C4A; }
 #flash .notice, #flash .error { padding: 1em 32px; border: 1px solid #365C4A; background: left no-repeat; margin: .5em 0; line-height: 1; }
 #flash .notice { background-image: url(../images/emoticon_happy.png); }

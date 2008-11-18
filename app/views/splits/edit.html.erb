@@ -1,0 +1,37 @@
+<% page_title "Répartir une transaction banquaire" %>
+
+<% form_tag(split_path(bank_transaction), :method => :put) do %>
+<h2>Détails de la transaction</h2>
+<p><%=h bank_transaction.name %></p>
+<table id="splits">
+  <thead>
+    <tr>
+      <th>Compte</th>
+      <th>Montant</th>
+    </tr>
+    <tr>
+      <td scope="row"><%=h bank_transaction.account %></td>
+      <td class="amount" id="original-amount"><%= format_money(bank_transaction.amount) %></td>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td scope="row">Montant répartit</td>
+      <td class="amount" id="split-amount"><%= format_money(0) %></td>
+    </tr>
+    <tr>
+      <td scope="row">Montant à répartir</td>
+      <td class="amount" id="balance-amount"><%= format_money(0) %></td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <%= render :partial => "template", :locals => {:is_template => true} %>
+    <%= render :partial => "template", :locals => {:is_template => false} %>
+    <tr id="add-line">
+      <td colspan="2"><%= link_to "Ajouter une ligne", "#", :id => "add-another" %></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><%= submit_tag "Répartir" %>
+<% end %>
