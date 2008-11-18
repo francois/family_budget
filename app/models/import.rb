@@ -3,7 +3,7 @@ class Import
 
   def initialize(params={})
     params.each_pair do |attr, value|
-      send("#{attr}=", value) if respond_to?("#{attr}=")
+      send("#{attr}=", value)
     end
   end
 
