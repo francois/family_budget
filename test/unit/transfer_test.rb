@@ -2,10 +2,37 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class TransferTest < ActiveSupport::TestCase
   should_have_valid_fixtures
-  should_protect_attributes :family, :family_id, :debit_account_id, :credit_account_id, :bank_transaction_id, :created_at, :updated_at
+  should_protect_attributes :family, :family_id, :debit_account_id, :credit_account_id, :created_at, :updated_at
   should_require_attributes :family_id, :debit_account_id, :posted_on
-  should_allow_attributes :debit_account, :credit_account, :bank_transaction, :posted_on, :description, :amount
-  should_have_many :bank_transactions
+  should_allow_attributes :debit_account, :credit_account, :posted_on, :description, :amount
+
+  # It should be possible to split a single bank transaction into two or more transfers
+  # A single withdrawal from a checking account could pay for two or more things:
+  # gift for the lady of the house, and groceries at Wal Mart, for example.
+  context "A bank transaction" do
+    setup do
+      @bank_transaction = families(:beausoleil).bank_transactions.create!(:amount => "-132.41", :bank_account => bank_accounts(:checking), :posted_on => Date.today, :name => "TOYS R US", :fitid => "9128391")
+    end
+
+    context "and two transfers against this transaction" do
+      setup do
+        @t0 = families(:beausoleil).transfers.build(:amount => -99.41, :debit_account => accounts(:gifts))
+        @t0.bank_transactions << @bank_transaction
+        @t0.save!
+        @t1 = families(:beausoleil).transfers.build(:amount => -33, :debit_account => accounts(:movies))
+        @t1.bank_transactions << @bank_transaction
+        @t1.save!
+      end
+
+      should "attach the transaction to the gifts transfer (simultaneously with the movies transfer)" do
+        assert_include @bank_transaction, @t0.bank_transactions(true)
+      end
+
+      should "attach the transaction to the movies transfer (simultaneously with the gifts account)" do
+        assert_include @bank_transaction, @t1.bank_transactions(true)
+      end
+    end
+  end
 
   context "Two bank transactions withdrawing 250 from the checking account and depositing to credit card" do
     setup do
@@ -353,7 +380,7 @@ class TransferTest < ActiveSupport::TestCase
 
   protected
   def hash_for_bank_transaction(attrs={})
-    {:family => families(:beausoleil), :amount => "250", :fitid => "%d.%d" % [rand(100), Time.now.utc.to_i], :name => "DEPOSIT", :posted_on => Date.today, :bank_account => bank_accounts(:checking)}.merge(attrs)
+    {:family => families(:beausoleil), :amount => "250", :fitid => "%d.%d" % [rand(100000), Time.now.utc.to_i], :name => "DEPOSIT", :posted_on => Date.today, :bank_account => bank_accounts(:checking)}.merge(attrs)
   end
 
   def create_bank_transaction(attrs={})

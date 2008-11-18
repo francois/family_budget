@@ -4,7 +4,7 @@ class Transfer < ActiveRecord::Base
   belongs_to :family
   belongs_to :debit_account, :class_name => "Account"
   belongs_to :credit_account, :class_name => "Account"
-  has_many :bank_transactions
+  has_and_belongs_to_many :bank_transactions
 
   before_validation :copy_amount_from_bank_transactions
   before_validation :copy_posted_on_from_bank_transactions

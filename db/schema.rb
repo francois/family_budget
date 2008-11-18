@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081117155324) do
+ActiveRecord::Schema.define(:version => 20081118021906) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id",  :limit => 11
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(:version => 20081117155324) do
 
   add_index "bank_transactions", ["family_id", "fitid"], :name => "by_family_fitid", :unique => true
   add_index "bank_transactions", ["family_id", "posted_on"], :name => "by_family_posted"
+
+  create_table "bank_transactions_transfers", :id => false, :force => true do |t|
+    t.integer "bank_transaction_id", :limit => 11
+    t.integer "transfer_id",         :limit => 11
+  end
+
+  add_index "bank_transactions_transfers", ["bank_transaction_id", "transfer_id"], :name => "by_bank_transaction_transfer", :unique => true
+  add_index "bank_transactions_transfers", ["transfer_id", "bank_transaction_id"], :name => "by_transfer_bank_transaction", :unique => true
 
   create_table "budgets", :force => true do |t|
     t.integer  "family_id",  :limit => 11
