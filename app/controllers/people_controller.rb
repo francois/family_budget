@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
   skip_before_filter :login_required, :only => %w(new create)
   before_filter :load_person, :only => %w(show edit update destroy)
+  ssl_required :new, :create
 
   def index
     @people = current_family.people
