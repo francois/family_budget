@@ -1,5 +1,5 @@
 <% page_title "Importer des transactions" %>
-<% form_for(:import, :url => imports_url, :method => :post, :html => {:multipart => true}) do |f| %>
+<% form_for(:import, :url => imports_url(:protocol => protocol), :method => :post, :html => {:multipart => true}) do |f| %>
 <p><%= f.label :format %><br/><%= f.select :format, %w(Quicken) %></p>
 <p><%= f.label :data %><br/><%= f.file_field :data %></p>
 <p><%= submit_tag "Import" %></p>
