@@ -54,14 +54,12 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
 
-  config.gem "tzinfo", :version => "~> 0.3"
-  config.gem "francois-shoulda", :lib => "shoulda", :source => "http://gems.github.com/"
   config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
-  config.gem "RedCloth", :lib => "redcloth"
-  config.gem "chronic"
-  config.gem "mocha"
-  config.gem "andand"
   config.gem "quicken_parser"
+
+  # Test dependencies only
+  # config.gem "francois-shoulda", :lib => "shoulda", :source => "http://gems.github.com/"
+  # config.gem "mocha"
 
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
