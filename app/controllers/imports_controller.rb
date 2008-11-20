@@ -1,4 +1,6 @@
 class ImportsController < ApplicationController
+  ssl_required :new, :create
+
   def new
   end
 

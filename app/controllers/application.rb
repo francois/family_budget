@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include ExceptionNotifiable
+  include SslRequirement
 
   helper :all
   helper_method :current_family
