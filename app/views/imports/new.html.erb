@@ -2,5 +2,5 @@
 <% form_for(:import, :url => imports_url(:protocol => protocol), :method => :post, :html => {:multipart => true}) do |f| %>
 <p><%= f.label :format %><br/><%= f.select :format, %w(Quicken) %></p>
 <p><%= f.label :data %><br/><%= f.file_field :data %></p>
-<p><%= submit_tag "Import" %></p>
+<p><%= submit_tag "Importer" %></p>
 <% end %>
