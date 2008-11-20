@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081118021906) do
+ActiveRecord::Schema.define(:version => 20081120190621) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id",  :limit => 11
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20081118021906) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "salt"
   end
 
   create_table "people", :force => true do |t|
