@@ -15,8 +15,8 @@ class BankAccount < ActiveRecord::Base
   end
 
   class << self
-    def find_by_family_and_account_number(family, number)
-      family.bank_accounts.find_by_salted_account_number(family.encrypt(number))
+    def find_by_family_and_bank_number_and_account_number(family, bank, number)
+      family.bank_accounts.find_by_bank_number_and_salted_account_number(bank, family.encrypt(number))
     end
   end
   protected

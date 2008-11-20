@@ -19,7 +19,7 @@ class BankAccountTest < Test::Unit::TestCase
       end
 
       should "be findable by the original account number" do
-        assert_equal @bank_account, BankAccount.find_by_family_and_account_number(families(:beausoleil), "4510111122223456")
+        assert_equal @bank_account, BankAccount.find_by_family_and_bank_number_and_account_number(families(:beausoleil), "92109291", "4510111122223456")
       end
 
       should_change "@bank_account.account_number", :to => nil

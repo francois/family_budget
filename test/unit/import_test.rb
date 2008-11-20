@@ -189,7 +189,7 @@ class ImportTest < Test::Unit::TestCase
   def qfx(options={})
     options.stringify_keys!
     options.reverse_merge!(
-      "acctid"   => bank_accounts(:checking).account_number,
+      "acctid"   => "912342828",
       "bankid"   => bank_accounts(:checking).bank_number, 
       "accttype" => "CHECKING",
       "dtstart"  => bank_transactions(:credit_card_payment).posted_on,
