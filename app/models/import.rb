@@ -1,3 +1,5 @@
+require "quicken_parser"
+
 class Import
   attr_accessor :family, :data, :format
 
