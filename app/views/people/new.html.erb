@@ -1,6 +1,6 @@
 <%= page_title "On s'enregistre ?" %>
 
-<% form_for @person, :url => people_path do |f| -%>
+<% form_for @person, :url => people_url(:protocol => protocol) do |f| -%>
   <%- unless logged_in? then %>
     <%= error_messages_for :family %>
     <% fields_for(@family) do |fa| %>

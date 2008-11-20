@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def protocol
+    (Rails.env == "production" ? "https" : "http") + "://"
+  end
+
   def page_title(title=nil)
     if title then
       @page_title = title
