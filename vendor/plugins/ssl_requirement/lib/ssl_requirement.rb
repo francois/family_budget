@@ -21,7 +21,7 @@
 module SslRequirement
   def self.included(controller)
     controller.extend(ClassMethods)
-    controller.before_filter(:ensure_proper_protocol)
+    controller.before_filter(:ensure_proper_protocol) if Rails.env == "production"
   end
 
   module ClassMethods
