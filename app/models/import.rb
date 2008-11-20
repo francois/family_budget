@@ -1,5 +1,5 @@
 class Import
-  attr_accessor :family, :data
+  attr_accessor :family, :data, :format
 
   def initialize(params={})
     params.each_pair do |attr, value|
