@@ -1,3 +1,4 @@
+require "digest/sha1"
 require "rails_generator/secret_key_generator"
 
 class Family < ActiveRecord::Base
@@ -14,6 +15,14 @@ class Family < ActiveRecord::Base
   before_create :generate_salt
 
   attr_accessible :name
+
+  def encrypt(*args)
+    raise ArgumentError if salt.blank?
+    args.flatten!
+    args.compact!
+    args.unshift(salt)
+    Digest::SHA1.hexdigest("--%s--" % args.join("--"))
+  end
 
   def budget_for(year, month)
     returning({}) do |hash|
