@@ -17,7 +17,7 @@ class Family < ActiveRecord::Base
   attr_accessible :name
 
   def encrypt(*args)
-    raise ArgumentError if salt.blank?
+    raise ArgumentError, "No salt defined in the family -- can't encrypt!" if salt.blank?
     args.flatten!
     args.compact!
     args.unshift(salt)

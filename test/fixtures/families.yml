@@ -1,5 +1,7 @@
 beausoleil:
   name: Beausoleil
+  salt: the-salt-of-the-beausoleil-family
 
 smith:
   name: Smith
+  salt: the-salt-of-the-smiths-family
