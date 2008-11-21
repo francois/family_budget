@@ -1,5 +1,2 @@
-$("#<%= dom_id(bank_transaction) %>").removeClass("processed");
-$("#<%= dom_id(bank_transaction) %> input.process").show();
-$("#<%= dom_id(bank_transaction) %> input.transfer_id").val(null);
-$("#<%= dom_id(bank_transaction) %> input.cancel").hide();
+<%= render :partial => "bank_transaction", :collection => transfer.bank_transactions %>
 $("#flash").html(<%= render_flash_messages.to_json %>);

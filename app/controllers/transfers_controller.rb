@@ -57,7 +57,6 @@ class TransfersController < ApplicationController
 
   def destroy
     transfer.destroy
-    @bank_transaction = transfer.bank_transaction
 
     respond_to do |format|
       flash_message = "Transfer détruit"

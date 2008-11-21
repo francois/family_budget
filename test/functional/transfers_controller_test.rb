@@ -37,6 +37,34 @@ class TransfersControllerTest < ActionController::TestCase
       should_render_template "edit"
     end
 
+    context "on DELETE to /transfers/:id" do
+      setup do
+        delete :destroy, :id => @transfer.id
+      end
+
+      should_change "families(:beausoleil).transfers.count", :by => -1
+    end
+
+    context "attached to a bank transaction" do
+      setup do
+        @bank_transaction           = families(:beausoleil).bank_transactions.build(:name => "ABC", :bank_account => bank_accounts(:checking), :amount => 100)
+        @bank_transaction.fitid     = "J938109"
+        @bank_transaction.posted_on = Date.today
+        @bank_transaction.save!
+
+        @transfer.bank_transactions << @bank_transaction
+      end
+
+      context "on DELETE to /transfers/:id" do
+        setup do
+          delete :destroy, :id => @transfer.id
+        end
+
+        should_change "families(:beausoleil).transfers.count", :by => -1
+        should_change "@bank_transaction.transfers(true).count", :to => 0
+      end
+    end
+
     context "on POST to /transfers" do
       context "with debit and credit account" do
         setup do
