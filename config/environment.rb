@@ -56,6 +56,7 @@ Rails::Initializer.run do |config|
 
   config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
   config.gem "quicken_parser"
+  config.gem "gchartrb", :lib => "google_chart"
 
   # Test dependencies only
   # config.gem "francois-shoulda", :lib => "shoulda", :source => "http://gems.github.com/"
