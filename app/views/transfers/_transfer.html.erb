@@ -2,5 +2,5 @@
   <td><%= link_to(transfer.posted_on, edit_transfer_path(transfer)) %></td>
   <td><%=h transfer.debit_account.name %></td>
   <td><%=h transfer.credit_account.name %></td>
-  <td class="money"><%=amount transfer.amount %></td>
+  <td class="amount"><%=amount transfer.amount %></td>
 </tr>

@@ -16,8 +16,21 @@ class Transfer < ActiveRecord::Base
 
   attr_accessible :debit_account, :credit_account, :bank_transaction, :posted_on, :description, :amount
 
-  named_scope :for_period, lambda {|year, month| {:conditions => ["posted_on BETWEEN ? AND ?", Date.new(year, month, 1), Date.new(year, month, 1) + 1.month - 1.day]}}
+  named_scope :in_period, lambda {|period|
+    case period
+    when /^(\d{4})-?(\d{2})/
+      year, month = $1.to_i, $2.to_i
+      start = Date.new(year, month, 1)
+      {:conditions => ["posted_on BETWEEN ? AND ?", start, (start >> 1) - 1]}
+    when /^(\d{4})/
+      year = $1.to_i
+      {:conditions => ["posted_on BETWEEN ? AND ?", Date.new(year, 1, 1), Date.new(year, 12, 31)]}
+    else
+      {}
+    end
+  }
   named_scope :for_account, lambda {|account| {:conditions => ["debit_account_id = :account_id OR credit_account_id = :account_id", {:account_id => account.id}]}}
+  named_scope :by_posted_on, :order => "posted_on"
 
   protected
   def copy_amount_from_bank_transactions

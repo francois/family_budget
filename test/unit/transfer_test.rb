@@ -351,23 +351,23 @@ class TransferTest < ActiveSupport::TestCase
 
     context "to period" do
       should "include the transfer when scoping to the right period" do
-        assert_include @transfer, Transfer.for_period(2008, 11)
+        assert_include @transfer, Transfer.in_period("200811")
       end
 
       should "NOT include the transfer when scoping to the previous period" do
-        assert_does_not_include @transfer, Transfer.for_period(2008, 10)
+        assert_does_not_include @transfer, Transfer.in_period("2008-10")
       end
 
       should "NOT include the transfer when scoping to the next period" do
-        assert_does_not_include @transfer, Transfer.for_period(2008, 12)
+        assert_does_not_include @transfer, Transfer.in_period("2008-12")
       end
 
       should "NOT include the transfer when scoping to the right month but next year" do
-        assert_does_not_include @transfer, Transfer.for_period(2009, 11)
+        assert_does_not_include @transfer, Transfer.in_period("2009-11")
       end
 
       should "NOT include the transfer when scoping to the right month but previous year" do
-        assert_does_not_include @transfer, Transfer.for_period(2007, 11)
+        assert_does_not_include @transfer, Transfer.in_period("200711")
       end
     end
 

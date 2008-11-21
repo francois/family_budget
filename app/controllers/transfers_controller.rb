@@ -2,6 +2,13 @@ class TransfersController < ApplicationController
   helper_method :transfers, :transfer, :accounts, :bank_transaction
 
   def index
+    @account_id = params[:account_id]
+    @period     = params[:period]
+    root = current_family.transfers.by_posted_on
+    root = root.for_account(current_family.accounts.find(@account_id)) unless @account_id.blank?
+    root = root.in_period(@period)
+    @transfers = root.paginate(:per_page => 200, :page => params[:page])
+    @sum_of_amounts = @transfers.map(&:amount).sum
     respond_to do |format|
       format.html
     end
@@ -74,7 +81,7 @@ class TransfersController < ApplicationController
 
   protected
   def transfers
-    @transfers ||= current_family.transfers.all
+    @transfers ||= current_family.transfers.paginate(:per_page => 200, :page => params[:page])
   end
 
   def transfer

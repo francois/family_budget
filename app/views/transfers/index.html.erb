@@ -1,6 +1,12 @@
-<%= page_title "Opérations aux comptes" %>
+<% page_title "Opérations aux comptes" %>
 
-<p><%= link_to "Nouvelle transaction", new_transfer_path %></p>
+<% form_tag(transfers_path, :method => :get, :html => {:id => "search"}) do %>
+  <h3>Filtrer</h3>
+  <p><%= label_tag "Compte:" %><br/><%= select_tag "account_id", "<option value=\"\">Tous</option>\n" + options_from_collection_for_select(accounts, :id, :name, @account_id.to_i) %></p>
+  <p><%= label_tag "Période:" %><br/><%= text_field_tag "period", @period, :size => 8 %></p>
+  <p><%= submit_tag "Filtrer", :name => nil %> <%= link_to "Enlever les filtres", transfers_path %></p>
+<% end %>
+<p><%= link_to "Nouveau transfert", new_transfer_path %></p>
 <table id="transfers">
   <thead>
     <tr>
@@ -10,7 +16,16 @@
       <th>Montant</th>
     </tr>
   </thead>
+  <tfoot>
+    <tr>
+      <th scope="row" colspan="3">Total</th>
+      <td class="amount"><%= format_money(@sum_of_amounts) %></th>
+    </tr>
+  </tfoot>
   <tbody>
     <%= render :partial => transfers %>
   </tbody>
 </table>
+
+<p><%= page_entries_info(transfers) %></p>
+<%= will_paginate(transfers) %>
