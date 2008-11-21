@@ -2,6 +2,7 @@ class BankAccount < ActiveRecord::Base
   belongs_to :account
   belongs_to :family
   validates_presence_of :family_id
+  validates_uniqueness_of :account_id, :scope => :family_id
   attr_accessible :family, :account, :bank_number, :account_number
   has_many :bank_transactions
 

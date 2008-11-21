@@ -7,6 +7,7 @@ class BankAccountTest < Test::Unit::TestCase
   should_allow_attributes :family, :account, :bank_number, :account_number
   should_belong_to :account, :family
   should_have_many :bank_transactions
+  should_require_unique_attributes :account_id, :scoped_to => :family_id
 
   context "A new BankAccount" do
     setup do
