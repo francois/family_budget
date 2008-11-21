@@ -22,6 +22,6 @@ class ApplicationController < ActionController::Base
   end
 
   def timezone
-    TZInfo::Timezone.get("America/Montreal")
+    TZInfo::Timezone.get("America/New_York")
   end
 end
