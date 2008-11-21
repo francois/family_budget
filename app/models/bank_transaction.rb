@@ -10,6 +10,9 @@ class BankTransaction < ActiveRecord::Base
   validates_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
   validates_uniqueness_of :fitid, :scope => :family_id
 
+  named_scope :with_name_or_memo_like, lambda {|text|
+    string = "%#{text}%"
+    {:conditions => ["LOWER(name) LIKE ? OR LOWER(memo) LIKE ?", string, string]}}
   named_scope :in_period, lambda {|period|
     case period
     when /^(\d{4})-?(\d{2})/

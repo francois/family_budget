@@ -30,6 +30,22 @@ class BankTransactionTest < Test::Unit::TestCase
       end
     end
 
+    should "NOT appear when filtering by text and text isn't in name or memo" do
+      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("POWER WALK")
+    end
+
+    should "appear when filtering by text and text in memo (case-insensitve search)" do
+      assert_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("TRANSFER W3")
+    end
+
+    should "appear when filtering by text and text in name (case-insensitve search)" do
+      assert_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("Payment")
+    end
+
+    should "appear when filtering by text and text in name" do
+      assert_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("PAYMENT")
+    end
+
     should "appear when filtering by bank_account_id" do
       assert_include @bank_transaction, families(:beausoleil).bank_transactions.on_bank_account(bank_transactions(:credit_card_payment).bank_account)
     end
