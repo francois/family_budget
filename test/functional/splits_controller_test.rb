@@ -13,14 +13,13 @@ class SplitsControllerTest < ActionController::TestCase
 
     context "on PUT to /splits/:id" do
       setup do
-        put :update, :id => bank_transactions(:credit_card_payment), :amount => ["41.91"], :account_id => [accounts(:cell_phone_service).id]
+        put :update, :id => bank_transactions(:credit_card_payment), :split => {:amount => ["41.91"], :account_id => [accounts(:cell_phone_service).id]}
       end
 
-      should "description" do
-        
-      end
+      should_redirect_to "bank_transactions_path"
+      should_change "families(:beausoleil).transfers.count", :by => 1
+      should_set_the_flash_to /1 transferts/
     end
-    
   end
 
   not_logged_in do

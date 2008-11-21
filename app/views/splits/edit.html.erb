@@ -3,6 +3,7 @@
 <% form_tag(split_path(bank_transaction), :method => :put) do %>
 <h2>Détails de la transaction</h2>
 <p><%=h bank_transaction.name %></p>
+<%= error_messages_for :split, :object => split %>
 <table id="splits">
   <thead>
     <tr>
