@@ -56,8 +56,6 @@ class TransfersController < ApplicationController
   end
 
   def destroy
-    transfer.destroy
-
     respond_to do |format|
       flash_message = "Transfer détruit"
       format.html do
@@ -69,6 +67,8 @@ class TransfersController < ApplicationController
         render
       end
     end
+
+    transfer.destroy
   end
 
   protected
