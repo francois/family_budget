@@ -71,6 +71,9 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 #flash .notice { background-image: url(../images/emoticon_happy.png); }
 #flash .error { background-image: url(../images/error.png); }
 
+form p { margin: .5em 0; }
+p.help { font-size: 80%; margin: .2em 0 0 0; }
+
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
    dark green:          #365C4A
