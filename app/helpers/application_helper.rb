@@ -111,4 +111,14 @@ module ApplicationHelper
       return image_tag(pc.to_url, :size => options[:size])
     end
   end
+
+  def line_chart(data, options={})
+    options.reverse_merge!(:size => "320x200", :title => "Pie Chart")
+    GoogleChart::LineChart.new(options[:size], options[:title]) do |lc|
+      data.each do |label, (points, color)|
+        lc.data label, points, color
+      end
+      return image_tag(lc.to_url, :size => options[:size])
+    end
+  end
 end

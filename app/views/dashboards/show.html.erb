@@ -42,3 +42,7 @@
     </table>
   </div>
 </div>
+
+<div id="history">
+  <%= line_chart({"Revenus" => [@historical_incomes, "00ff00"], "Dépenses" => [@historical_expenses, "ff0000"]}, :size => "480x200", :title => "Variation des revenus et dépenses") %>
+</div>
