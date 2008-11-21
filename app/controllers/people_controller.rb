@@ -13,8 +13,6 @@ class PeopleController < ApplicationController
   end
 
   def create
-    cookies.delete :auth_token
-    reset_session
     Family.transaction do
       @family = if current_family then
                   current_family
