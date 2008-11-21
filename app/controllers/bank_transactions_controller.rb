@@ -4,9 +4,11 @@ class BankTransactionsController < ApplicationController
   def index
     @period = params[:period]
     @bank_account_id = params[:bank_account_id]
+    @text = params[:text]
     root = current_family.bank_transactions.pending.by_posted_on
-    root = root.in_period(params[:period]) unless params[:period].blank?
-    root = root.on_bank_account(current_family.bank_accounts.find(params[:bank_account_id])) unless params[:bank_account_id].blank?
+    root = root.in_period(@period) unless @period.blank?
+    root = root.on_bank_account(current_family.bank_accounts.find(@bank_account_id)) unless @bank_account_id.blank?
+    root = root.with_name_or_memo_like(@text) unless @text.blank?
     @bank_transactions = root.paginate(:per_page => 200, :page => params[:page])
   end
 

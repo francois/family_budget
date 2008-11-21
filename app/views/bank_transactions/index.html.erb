@@ -1,6 +1,7 @@
 <% page_title "Liste des transactions à traiter" %>
-<% form_tag(bank_transactions_path, :method => :get) do %>
+<% form_tag(bank_transactions_path, :method => :get, :html => {:id => "search"}) do %>
   <h3>Filtrer</h3>
+  <p><%= label_tag "Texte:" %><br/><%= text_field_tag "text", @text %></p>
   <p><%= label_tag "Voir seulement le compte:" %><br/><%= select_tag "bank_account_id", "<option value=\"\">Tous</option>\n" + options_from_collection_for_select(bank_accounts, :id, :to_s, @bank_account_id.to_i) %></p>
   <p><%= label_tag "Période:" %><br/><%= text_field_tag "period", h(@period), :size => 8 %></p>
   <p class="help">Inscrivez AAAA-MM ou AAAAMM</p>
@@ -20,6 +21,9 @@
     <%= render :partial => bank_transactions %>
   </tbody>
 </table>
+
+<p><%= page_entries_info(bank_transactions) %></p>
+<%= will_paginate(bank_transactions) %>
 
 <% content_for :sidebar do -%>
 <div class="static">
