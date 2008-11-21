@@ -4,6 +4,8 @@ $(document).ready(function() {
     // this == droppable, ui.draggable == draggable
     var sourceBankTransactionId = $(ui.draggable).attr("id").replace("bank_transaction_", "");
     var targetBankTransactionId = $(this).attr("id").replace("bank_transaction_", "");
+    var accountId = $("#accounts input[checked]").val();
+    jQuery.post("/transfers.js", {"transfer[bank_transaction_id][]": [sourceBankTransactionId, targetBankTransactionId]}, insecureProcess);
   };
 
   $("#bank_transactions tr.bank_transaction").draggable({revert: true, helper: 'clone', opacity: 0.7, scroll: true, handle: ".handle"});

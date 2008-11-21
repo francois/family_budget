@@ -1,2 +1,2 @@
-<%= render :partial => "bank_transaction", :collection => transfer.bank_transactions %>
+<%= render :partial => "unprocessed_bank_transaction", :collection => transfer.bank_transactions %>
 $("#flash").html(<%= render_flash_messages.to_json %>);
