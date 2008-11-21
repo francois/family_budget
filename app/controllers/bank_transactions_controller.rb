@@ -9,7 +9,7 @@ class BankTransactionsController < ApplicationController
 
   protected
   def bank_transactions
-    @bank_transactions ||= current_family.bank_transactions.pending.by_posted_on
+    @bank_transactions ||= current_family.bank_transactions.pending.by_posted_on.paginate(:per_page => 200, :page => params[:page])
   end
 
   def bank_transaction
