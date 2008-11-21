@@ -3,7 +3,7 @@
 <div id="pie-wrap">
   <div id="expenses">
     <h3>Sommaire des dépenses</h3>
-    <%= pie_chart(@top_expenses.map {|account| [account.name, account.amount]}, :title => "Comptes de dépense les plus actifs (#{@period})", :size => "320x240") %>
+    <%= pie_chart(@top_expenses.map {|account| [account.name, account.amount]}, :title => "Comptes de dépense les plus actifs (#{@period})", :size => "320x140") %>
     <table>
       <caption>Comptes de dépenses les plus actifs</caption>
       <thead>
@@ -23,7 +23,7 @@
   </div>
   <div id="incomes">
     <h3>Sommaire des revenus</h3>
-    <%= pie_chart(@top_incomes.map {|account| [account.name, account.amount]}, :title => "Comptes de revenus les plus actifs (#{@period})", :size => "320x240") %>
+    <%= pie_chart(@top_incomes.map {|account| [account.name, account.amount]}, :title => "Comptes de revenus les plus actifs (#{@period})", :size => "320x140") %>
     <table>
       <caption>Comptes de revenus les plus actifs</caption>
       <thead>
