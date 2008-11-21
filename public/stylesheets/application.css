@@ -62,6 +62,7 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 #bank_transactions .handle { float: right; padding: 2px; border: 1px solid #383B2A; background: #93722F; color: #383B2A; font-size: .8em; cursor: move; }
 #bank_transactions p { margin: 0; }
 #bank_transactions .processed { background: #5C5E42; }
+#bank_transactions .errorText { color: red; font-size: 90%; }
 
 #splits #template { display: none; }
 
