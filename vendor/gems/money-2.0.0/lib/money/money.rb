@@ -1,64 +1,89 @@
-# === Usage with ActiveRecord
-# 
-# Use the compose_of helper to let active record deal with embedding the money
-# object in your models. The following example requires a cents and a currency field.
-# 
-#   class ProductUnit < ActiveRecord::Base
-#     belongs_to :product
-#     composed_of :price, :class_name => "Money", :mapping => [ %w(cents cents), %w(currency currency) ]
-# 
-#     private        
-#       validate :cents_not_zero
-#     
-#       def cents_not_zero
-#         errors.add("cents", "cannot be zero or less") unless cents > 0
-#       end
-#     
-#       validates_presence_of :sku, :currency
-#       validates_uniqueness_of :sku        
-#   end
-#   
+require 'money/variable_exchange_bank'
+
+# Represents an amount of money in a certain currency.
 class Money
   include Comparable
-
-  attr_reader :cents, :currency
-
-  class MoneyError < StandardError# :nodoc:
+  
+  attr_reader :cents, :currency, :bank
+  
+  class << self
+    # Each Money object is associated to a bank object, which is responsible
+    # for currency exchange. This property allows one to specify the default
+    # bank object.
+    #
+    #   bank1 = MyBank.new
+    #   bank2 = MyOtherBank.new
+    #   
+    #   Money.default_bank = bank1
+    #   money1 = Money.new(10)
+    #   money1.bank  # => bank1
+    #   
+    #   Money.default_bank = bank2
+    #   money2 = Money.new(10)
+    #   money2.bank  # => bank2
+    #   money1.bank  # => bank1
+    #
+    # The default value for this property is an instance if VariableExchangeBank.
+    # It allows one to specify custom exchange rates:
+    #
+    #   Money.default_bank.add_rate("USD", "CAD", 1.24515)
+    #   Money.default_bank.add_rate("CAD", "USD", 0.803115)
+    #   Money.us_dollar(100).exchange_to("CAD")  # => Money.ca_dollar(124)
+    #   Money.ca_dollar(100).exchange_to("USD")  # => Money.us_dollar(80)
+    attr_accessor :default_bank
+    
+    # The default currency, which is used when <tt>Money.new</tt> is called
+    # without an explicit currency argument. The default value is "USD".
+    attr_accessor :default_currency
+  end
+  
+  self.default_bank = VariableExchangeBank.instance
+  self.default_currency = "USD"
+  
+  
+  # Create a new money object with value 0.
+  def self.empty(currency = default_currency)
+    Money.new(0, currency)
   end
 
-  # Bank lets you exchange the object which is responsible for currency
-  # exchange. 
-  # The default implementation just throws an exception. However money
-  # ships with a variable exchange bank implementation which supports
-  # custom excahnge rates:
-  #
-  #  Money.bank = VariableExchangeBank.new
-  #  Money.bank.add_rate("USD", "CAD", 1.24515)
-  #  Money.bank.add_rate("CAD", "USD", 0.803115)
-  #  Money.us_dollar(100).exchange_to("CAD") => Money.ca_dollar(124)
-  #  Money.ca_dollar(100).exchange_to("USD") => Money.us_dollar(80)
-  @@bank = NoExchangeBank.new
-  cattr_accessor :bank
+  # Creates a new Money object of the given value, using the Canadian dollar currency.
+  def self.ca_dollar(cents)
+    Money.new(cents, "CAD")
+  end
 
-  @@default_currency = "USD"
-  cattr_accessor :default_currency
-
+  # Creates a new Money object of the given value, using the American dollar currency.
+  def self.us_dollar(cents)
+    Money.new(cents, "USD")
+  end
+  
+  # Creates a new Money object of the given value, using the Euro currency.
+  def self.euro(cents)
+    Money.new(cents, "EUR")
+  end
+  
+  def self.add_rate(from_currency, to_currency, rate)
+    Money.default_bank.add_rate(from_currency, to_currency, rate)
+  end
+  
+  
   # Creates a new money object. 
   #  Money.new(100) 
   # 
   # Alternativly you can use the convinience methods like 
   # Money.ca_dollar and Money.us_dollar 
-  def initialize(cents, currency = default_currency)
-    @cents, @currency = cents.round, currency
+  def initialize(cents, currency = Money.default_currency, bank = Money.default_bank)
+    @cents = cents.round
+    @currency = currency
+    @bank = bank
   end
 
   # Do two money objects equal? Only works if both objects are of the same currency
-  def eql?(other_money)
-    cents == other_money.cents && currency == other_money.currency
+  def ==(other_money)
+    cents == other_money.cents && bank.same_currency?(currency, other_money.currency)
   end
 
   def <=>(other_money)
-    if currency == other_money.currency
+    if bank.same_currency?(currency, other_money.currency)
       cents <=> other_money.cents
     else
       cents <=> other_money.exchange_to(currency).cents
@@ -66,9 +91,6 @@ class Money
   end
 
   def +(other_money)
-    return other_money.dup if cents.zero? 
-    return dup if other_money.cents.zero?
-
     if currency == other_money.currency
       Money.new(cents + other_money.cents, other_money.currency)
     else
@@ -77,24 +99,16 @@ class Money
   end
 
   def -(other_money)
-
     if currency == other_money.currency
       Money.new(cents - other_money.cents, other_money.currency)
     else
-      
-      return other_money.dup if self.cents.zero?
-
-      return self.dup if other_money.cents.zero?
-      
-      
       Money.new(cents - other_money.exchange_to(currency).cents, currency)
-      
     end   
   end
 
   # get the cents value of the object
   def cents
-    @cents.to_i
+    @cents
   end
 
   # multiply money by fixnum
@@ -153,55 +167,35 @@ class Money
     end
     formatted
   end
-
+  
   # Money.ca_dollar(100).to_s => "1.00"
   def to_s
-    sprintf("%.2f", cents.to_f / 100  )
+    sprintf("%.2f", cents / 100.00)
   end
-
-  # Recieve the amount of this money object in another currency   
+  
+  # Recieve the amount of this money object in another currency.
   def exchange_to(other_currency)
-    self.class.bank.reduce(self, other_currency)
+    Money.new(@bank.exchange(self.cents, currency, other_currency), other_currency)
   end  
-
-  # Create a new money object with value 0
-  def self.empty(currency = default_currency)
-    Money.new(0, currency)
-  end
-
-  # Create a new money object using the Canadian dollar currency
-  def self.ca_dollar(num)
-    Money.new(num, "CAD")
-  end
-
-  # Create a new money object using the American dollar currency
-  def self.us_dollar(num)
-    Money.new(num, "USD")
-  end
-
-  # Create a new money object using the Euro currency
-  def self.euro(num)
-    Money.new(num, "EUR")
-  end
-
+  
   # Recieve a money object with the same amount as the current Money object
   # in american dollar 
   def as_us_dollar
     exchange_to("USD")
   end
-
+  
   # Recieve a money object with the same amount as the current Money object
   # in canadian dollar 
   def as_ca_dollar
     exchange_to("CAD")
   end
-
+  
   # Recieve a money object with the same amount as the current Money object
   # in euro
-  def as_ca_euro
+  def as_euro
     exchange_to("EUR")
-  end  
-
+  end
+  
   # Conversation to self
   def to_money
     self

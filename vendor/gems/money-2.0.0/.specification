@@ -1,19 +1,21 @@
 --- !ruby/object:Gem::Specification 
 name: money
 version: !ruby/object:Gem::Version 
-  version: 1.7.1
+  version: 2.0.0
 platform: ruby
 authors: 
 - Tobias Luetke
-autorequire: money
+- Hongli Lai
+autorequire: 
 bindir: bin
-cert_chain: 
-date: 2006-02-13 00:00:00 -05:00
+cert_chain: []
+
+date: 2008-10-30 00:00:00 -04:00
 default_executable: 
 dependencies: []
 
-description: Class aiding in the handling of Money and Currencies.\nIt supports easy pluggable bank objects for customized exchange strategies.\nCan be used as composite in ActiveRecord tables.
-email: tobi@leetsoft.com
+description: Money and currency exchange support library.
+email: hongli@phusion.nl
 executables: []
 
 extensions: []
@@ -21,19 +23,20 @@ extensions: []
 extra_rdoc_files: []
 
 files: 
-- README
+- README.rdoc
 - MIT-LICENSE
-- lib/bank
-- lib/money
+- money.gemspec
+- Rakefile
 - lib/money.rb
-- lib/support
-- lib/bank/no_exchange_bank.rb
-- lib/bank/variable_exchange_bank.rb
 - lib/money/core_extensions.rb
+- lib/money/errors.rb
 - lib/money/money.rb
-- lib/support/cattr_accessor.rb
+- lib/money/variable_exchange_bank.rb
+- test/core_extensions_spec.rb
+- test/exchange_bank_spec.rb
+- test/money_spec.rb
 has_rdoc: true
-homepage: http://leetsoft.com/rails/money
+homepage: http://money.rubyforge.org/
 post_install_message: 
 rdoc_options: []
 
@@ -41,9 +44,9 @@ require_paths:
 - lib
 required_ruby_version: !ruby/object:Gem::Requirement 
   requirements: 
-  - - ">"
+  - - ">="
     - !ruby/object:Gem::Version 
-      version: 0.0.0
+      version: "0"
   version: 
 required_rubygems_version: !ruby/object:Gem::Requirement 
   requirements: 
@@ -53,10 +56,11 @@ required_rubygems_version: !ruby/object:Gem::Requirement
   version: 
 requirements: []
 
-rubyforge_project: 
+rubyforge_project: money
 rubygems_version: 1.2.0
 signing_key: 
-specification_version: 1
-summary: Class aiding in the handling of Money.
+specification_version: 2
+summary: Money and currency exchange support library
 test_files: []
+
 
