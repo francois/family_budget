@@ -20,9 +20,9 @@ class TransfersController < ApplicationController
   end
 
   def create
-    transfer.debit_account     = current_family.accounts.find_by_id(params[:transfer][:debit_account_id])
-    transfer.credit_account    = current_family.accounts.find_by_id(params[:transfer][:credit_account_id])
-    transfer.bank_transactions << current_family.bank_transactions.find_all_by_id(params[:transfer][:bank_transaction_ids])
+    transfer.debit_account     = current_family.accounts.find_by_id(params[:transfer].delete(:debit_account_id))
+    transfer.credit_account    = current_family.accounts.find_by_id(params[:transfer].delete(:credit_account_id))
+    transfer.bank_transactions << current_family.bank_transactions.find_all_by_id(params[:transfer].delete(:bank_transaction_id))
     transfer.posted_on         = current_date
     Transfer.transaction do
       respond_to do |format|

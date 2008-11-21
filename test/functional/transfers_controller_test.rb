@@ -56,7 +56,7 @@ class TransfersControllerTest < ActionController::TestCase
 
       context "with bank_transaction and debit account" do
         setup do
-          post :create, :transfer => {:bank_transaction_ids => [bank_transactions(:cell_phone_charge).id], :debit_account_id => accounts(:cell_phone_service)}
+          post :create, :transfer => {:bank_transaction_id => [bank_transactions(:cell_phone_charge).id], :debit_account_id => accounts(:cell_phone_service)}
         end
 
         should_redirect_to "transfers_path"
