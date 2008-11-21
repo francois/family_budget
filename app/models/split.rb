@@ -25,19 +25,21 @@ class Split
   def save
     return false unless valid?
 
-    transfers = []
-    Transfer.transaction do
-      SyncEnumerator.new(accounts, amounts).each do |account_id, amount|
-        next if amount.blank?
-        transfers << transfer = family.transfers.build(:debit_account => family.accounts.find(account_id), :amount => amount)
-        transfer.bank_transactions << bank_transaction
-        transfer.save!
+    begin
+      self.transfers = []
+      Transfer.transaction do
+        SyncEnumerator.new(accounts, amounts).each do |account_id, amount|
+          next if amount.blank?
+          self.transfers << transfer = family.transfers.build(:debit_account => family.accounts.find(account_id), :amount => amount)
+          transfer.bank_transactions << bank_transaction
+          transfer.save!
+        end
       end
-    end
 
-    true
-  rescue ActiveRecord::RecordInvalid
-    false
+      true
+    rescue ActiveRecord::RecordInvalid
+      false
+    end
   end
 
   def accounts

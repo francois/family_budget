@@ -18,6 +18,7 @@ class SplitTest < Test::Unit::TestCase
         end
 
         should_change "families(:beausoleil).transfers.count", :by => 1
+        should_change "@split.transfers.length", :to => 1
       end
 
       context "missing the family" do
