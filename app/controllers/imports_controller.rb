@@ -7,7 +7,8 @@ class ImportsController < ApplicationController
   def create
     @import = Import.new(params[:import])
     @import.family = current_family
-    @import.process!
+    num_transactions = @import.process!
+    flash[:notice] = "#{num_transactions} ont été ajoutées"
     redirect_to bank_transactions_url
   end
 end

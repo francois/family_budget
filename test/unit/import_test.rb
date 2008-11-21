@@ -9,11 +9,14 @@ class ImportTest < Test::Unit::TestCase
 
       context "calling #process!" do
         setup do
-          @import.process!
+          @update_count = @import.process!
         end
 
         should_change "BankAccount.count", :by => 1
         should_change "BankTransaction.count", :by => 1
+        should "report 1 update transaction" do
+          assert_equal 1, @update_count
+        end
       end
     end
 
@@ -24,11 +27,14 @@ class ImportTest < Test::Unit::TestCase
 
       context "calling #process!" do
         setup do
-          @import.process!
+          @update_count = @import.process!
         end
 
         should_not_change "BankAccount.count"
         should_not_change "BankTransaction.count"
+        should "report no transactions added" do
+          assert @update_count.zero?
+        end
       end
     end
   end
