@@ -1,3 +1,5 @@
+require "google_chart"
+
 module ApplicationHelper
   def protocol
     (Rails.env == "production" ? "https" : "http") + "://"
@@ -97,5 +99,16 @@ module ApplicationHelper
 
   def format_money(amount)
     "%.2f" % amount
+  end
+
+  def pie_chart(data, options={})
+    options.reverse_merge!(:size => "320x200", :title => "Pie Chart")
+    GoogleChart::PieChart.new(options[:size], options[:title], false) do |pc|
+      data.each do |line|
+        pc.data line.first, line.last.to_f
+      end
+
+      return image_tag(pc.to_url, :size => options[:size])
+    end
   end
 end

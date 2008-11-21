@@ -1,0 +1,44 @@
+<% page_title "Sommaire des mouvements d'argent" %>
+
+<div id="pie-wrap">
+  <div id="expenses">
+    <h3>Sommaire des dépenses</h3>
+    <%= pie_chart(@top_expenses.map {|account| [account.name, account.amount]}, :title => "Comptes de dépense les plus actifs (#{@period})", :size => "320x240") %>
+    <table>
+      <caption>Comptes de dépenses les plus actifs</caption>
+      <thead>
+        <th>Compte</th>
+        <th>Montant</th>
+      </thead>
+      <tfoot>
+        <tr>
+          <th scope="row">Total</th>
+          <td class="amount"><%= format_money(@sum_of_expenses) %></td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <%= render :partial => "account", :collection => @top_expenses %>
+      </tbody>
+    </table>
+  </div>
+  <div id="incomes">
+    <h3>Sommaire des revenus</h3>
+    <%= pie_chart(@top_incomes.map {|account| [account.name, account.amount]}, :title => "Comptes de revenus les plus actifs (#{@period})", :size => "320x240") %>
+    <table>
+      <caption>Comptes de revenus les plus actifs</caption>
+      <thead>
+        <th>Compte</th>
+        <th>Montant</th>
+      </thead>
+      <tfoot>
+        <tr>
+          <th scope="row">Total</th>
+          <td class="amount"><%= format_money(@sum_of_incomes) %></td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <%= render :partial => "account", :collection => @top_incomes %>
+      </tbody>
+    </table>
+  </div>
+</div>

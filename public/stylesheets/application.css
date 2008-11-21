@@ -74,6 +74,9 @@ q:after { content: "\201D"; padding-left: 0.1em; }
 form p { margin: .5em 0; }
 p.help { font-size: 80%; margin: .2em 0 0 0; }
 
+#pie-wrap #expenses, #pie-wrap #incomes { width: 49%; }
+#pie-wrap #expenses { float: right; margin-left: 1em; }
+
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
    dark green:          #365C4A

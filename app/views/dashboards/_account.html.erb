@@ -1,0 +1,4 @@
+<tr id="<%= dom_id(account) %>">
+  <td><%= link_to(h(account.to_s), transfers_path(:account_id => account)) %></td>
+  <td class="amount"><%= format_money(account.amount) %></td>
+</tr>
