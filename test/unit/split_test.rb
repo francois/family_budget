@@ -63,10 +63,20 @@ class SplitTest < Test::Unit::TestCase
     context "with no account ids and no amounts" do
       context "on save" do
         setup do
-          @split.save!
+          @split.save
         end
 
-        should_not_change "families(:beausoleil).transfers.count"
+        should "be invalid" do
+          assert_invalid @split
+        end
+
+        should "flag an error on amounts" do
+          assert_not_nil @split.errors.on(:amounts)
+        end
+
+        should "flag an error on account_ids" do
+          assert_not_nil @split.errors.on(:account_ids)
+        end
       end
     end
   end

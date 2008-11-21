@@ -19,7 +19,11 @@ class Split
   end
 
   def save!
-    raise ActiveRecord::RecordInvalid.new(self) unless valid?
+    raise ActiveRecord::RecordInvalid.new(self) unless save
+  end
+
+  def save
+    return false unless valid?
 
     transfers = []
     Transfer.transaction do
@@ -30,6 +34,10 @@ class Split
         transfer.save!
       end
     end
+
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   def accounts
@@ -39,6 +47,8 @@ class Split
   def validate
     errors.add_on_blank("family")
     errors.add_on_blank("bank_transaction")
+    errors.add_on_empty("amounts")
+    errors.add_on_empty("account_ids")
   end
 
   class << self
