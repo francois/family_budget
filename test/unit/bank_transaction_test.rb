@@ -15,6 +15,53 @@ class BankTransactionTest < Test::Unit::TestCase
       @bank_transaction = bank_transactions(:credit_card_payment)
     end
 
+    context "on the last day of October 2008" do
+      setup do
+        @bank_transaction.posted_on = Date.new(2008, 10, 31)
+        @bank_transaction.save!
+      end
+
+      should "NOT appear for period 2008-11" do
+        assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("200811")
+      end
+
+      should "appear for period 2008-10" do
+        assert_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("200810")
+      end
+    end
+
+    should "appear when filtering by bank_account_id" do
+      assert_include @bank_transaction, families(:beausoleil).bank_transactions.on_bank_account(bank_transactions(:credit_card_payment).bank_account)
+    end
+
+    should "NOT appear when filtering by another bank account" do
+      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.on_bank_account(bank_accounts(:credit_card))
+    end
+
+    should "NOT appear when filtering by posted_on for the previous year" do
+      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2007")
+    end
+
+    should "NOT appear when filtering by posted_on for the next year" do
+      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2009")
+    end
+
+    should "NOT appear when filtering by posted_on for the next period" do
+      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("200812")
+    end
+
+    should "NOT appear when filtering by posted_on for the previous period" do
+      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2008-10")
+    end
+
+    should "appear when filtering by posted_on for the correct year/month" do
+      assert_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2008-11")
+    end
+
+    should "appear when filtering by posted_on for the correct year" do
+      assert_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2008")
+    end
+
     should "return the bank account's account when asked for #account" do
       assert_equal bank_accounts(:checking).account, @bank_transaction.account
     end
