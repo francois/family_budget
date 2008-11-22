@@ -69,4 +69,16 @@ class Account < ActiveRecord::Base
       end
     EOF
   end
+
+  class << self
+    def most_active_income_in_period(period, options={})
+      options.reverse_merge!(:per_page => 10, :page => 1)
+      in_period(period).purposes(Account::Income).by_most_credited.paginate(options)
+    end
+
+    def most_active_expense_in_period(period, options={})
+      options.reverse_merge!(:per_page => 10, :page => 1)
+      in_period(period).purposes(Account::Expense).by_most_debited.paginate(options)
+    end
+  end
 end
