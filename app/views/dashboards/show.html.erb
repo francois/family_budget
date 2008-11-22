@@ -3,7 +3,7 @@
 <div id="pie-wrap">
   <div id="expenses">
     <h3>Sommaire des dépenses</h3>
-    <%= pie_chart(@top_expenses.map {|account| [account.name, account.amount]}, :title => "Comptes de dépense les plus actifs (#{@period})", :size => "320x140") %>
+    <%= pie_chart(most_active_expense_accounts.map {|account| [account.name, account.amount]}, :title => "Comptes de dépense les plus actifs (#{current_period})", :size => "320x140") %>
     <table>
       <caption>Comptes de dépenses les plus actifs</caption>
       <thead>
@@ -13,17 +13,17 @@
       <tfoot>
         <tr>
           <th scope="row">Total</th>
-          <td class="amount"><%= format_money(@sum_of_expenses) %></td>
+          <td class="amount"><%= format_money(total_expenses_amount) %></td>
         </tr>
       </tfoot>
       <tbody>
-        <%= render :partial => "account", :collection => @top_expenses %>
+        <%= render :partial => "account", :collection => most_active_expense_accounts %>
       </tbody>
     </table>
   </div>
   <div id="incomes">
     <h3>Sommaire des revenus</h3>
-    <%= pie_chart(@top_incomes.map {|account| [account.name, account.amount]}, :title => "Comptes de revenus les plus actifs (#{@period})", :size => "320x140") %>
+    <%= pie_chart(most_active_income_accounts.map {|account| [account.name, account.amount]}, :title => "Comptes de revenus les plus actifs (#{current_period})", :size => "320x140") %>
     <table>
       <caption>Comptes de revenus les plus actifs</caption>
       <thead>
@@ -33,11 +33,11 @@
       <tfoot>
         <tr>
           <th scope="row">Total</th>
-          <td class="amount"><%= format_money(@sum_of_incomes) %></td>
+          <td class="amount"><%= format_money(total_incomes_amount) %></td>
         </tr>
       </tfoot>
       <tbody>
-        <%= render :partial => "account", :collection => @top_incomes %>
+        <%= render :partial => "account", :collection => most_active_income_accounts %>
       </tbody>
     </table>
   </div>

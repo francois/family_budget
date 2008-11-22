@@ -11,20 +11,31 @@ class DashboardsControllerTest < ActionController::TestCase
 
       should_respond_with :success
       should_render_template "show"
-      should_assign_to :top_expenses, :sum_of_expenses, :top_incomes, :sum_of_incomes
     end
 
-    context "on GET /dashboard?period=200709" do
+    context "" do
       setup do
-        get :show, :period => "200709"
+        @controller.stubs(:current_family).returns(@family = mock("family"))
+        @family.stubs(:accounts).returns(@accounts = mock("accounts"))
+        @accounts.stubs(:most_active_expense_in_period).with("200709").returns([])
+        @accounts.stubs(:most_active_income_in_period).with("200709").returns([])
       end
 
-      should_respond_with :success
-      should_render_template "show"
-      should_assign_to :top_expenses, :sum_of_expenses, :top_incomes, :sum_of_incomes
+      context "on GET /dashboard?period=200709" do
+        setup do
+          get :show, :period => "200709"
+        end
 
-      before_should "query the 200709 period" do
-        Account.expects(:in_period).with("200709").returns(Account)
+        should_respond_with :success
+        should_render_template "show"
+
+        before_should "query the most active income accounts for the 200709 period" do
+          @accounts.expects(:most_active_income_in_period).with("200709").returns([])
+        end
+
+        before_should "query the most active expense accounts for the 200709 period" do
+          @accounts.expects(:most_active_expense_in_period).with("200709").returns([])
+        end
       end
     end
   end
