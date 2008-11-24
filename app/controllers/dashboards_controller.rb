@@ -15,7 +15,7 @@ class DashboardsController < ApplicationController
   end
 
   def most_active_expense_accounts
-    @most_active_expense_accounts ||= current_family.accounts.most_active_expense_in_period(current_period)
+    @most_active_expense_accounts ||= current_family.accounts.most_active_expense_in_period(current_period).paginate(:per_page => 10, :page => 1)
   end
 
   def total_expenses_amount
@@ -23,7 +23,7 @@ class DashboardsController < ApplicationController
   end
 
   def most_active_income_accounts
-    @most_active_income_accounts ||= current_family.accounts.most_active_income_in_period(current_period)
+    @most_active_income_accounts ||= current_family.accounts.most_active_income_in_period(current_period).paginate(:per_page => 10, :page => 1)
   end
 
   def total_incomes_amount
