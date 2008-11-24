@@ -4,3 +4,4 @@
 <%= f.select :account, accounts.to_selection_list %></p>
 <p><%= submit_tag "Enregister" %></p>
 <% end %>
+<p><%= button_to("Détruite", bank_account_path(bank_account), :method => :delete, :confirm => "Ceci va détruire les transactions banquaires ET les transfers associés.  Êtes vous réellement certain de vouloir détruire ce compte?") %></p>

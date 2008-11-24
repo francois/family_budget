@@ -27,6 +27,12 @@ class BankAccountsController < ApplicationController
     redirect_to bank_accounts_path
   end
 
+  def destroy
+    bank_account.destroy
+    flash[:notice] = "Le compte #{bank_account.display_account_number} a été détruit"
+    redirect_to bank_accounts_path
+  end
+
   protected
   def bank_accounts
     @bank_accounts ||= current_family.bank_accounts

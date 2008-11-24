@@ -61,11 +61,25 @@ class BankAccountsControllerTest < ActionController::TestCase
         put :update, :id => @bank_account.id, :bank_account => {:account => @account.id}
       end
 
-      should_respond_with :redirect
       should_redirect_to "bank_accounts_path"
 
       should "assign the correct account" do
         assert_equal @account, @bank_account.reload.account
+      end
+    end
+
+    context "on DELETE to /bank_accounts/:id" do
+      setup do
+        delete :destroy, :id => bank_accounts(:checking)
+      end
+
+      should_redirect_to "bank_accounts_path"
+      should_set_the_flash_to /compte 9\*\*\*\*2828 a été détruit/
+
+      should "destroy the bank account" do
+        assert_raise ActiveRecord::RecordNotFound do
+          bank_accounts(:checking).reload
+        end
       end
     end
   end
