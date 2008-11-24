@@ -19,6 +19,8 @@ class DashboardsControllerTest < ActionController::TestCase
         @family.stubs(:accounts).returns(@accounts = mock("accounts"))
         @accounts.stubs(:most_active_expense_in_period).with("200709").returns([])
         @accounts.stubs(:most_active_income_in_period).with("200709").returns([])
+        @family.stubs(:expense_amounts_in_dates).returns([])
+        @family.stubs(:income_amounts_in_dates).returns([])
       end
 
       context "on GET /dashboard?period=200709" do
@@ -35,6 +37,14 @@ class DashboardsControllerTest < ActionController::TestCase
 
         before_should "query the most active expense accounts for the 200709 period" do
           @accounts.expects(:most_active_expense_in_period).with("200709").returns([])
+        end
+
+        before_should "tell the family to calculate the expense amounts per period" do
+          @family.expects(:expense_amounts_in_dates).with(any_parameters).returns([])
+        end
+
+        before_should "tell the family to calculate the income amounts per period" do
+          @family.expects(:income_amounts_in_dates).with(any_parameters).returns([])
         end
       end
     end

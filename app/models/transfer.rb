@@ -16,6 +16,11 @@ class Transfer < ActiveRecord::Base
 
   attr_accessible :debit_account, :credit_account, :bank_transaction, :posted_on, :description, :amount
 
+  named_scope :within_period, lambda {|period| {:conditions => {:posted_on => period}}}
+  named_scope :in_debit_accounts, lambda {|accounts| {:conditions => ["debit_account_id IN (?)", accounts]}}
+  named_scope :in_credit_accounts, lambda {|accounts| {:conditions => ["credit_account_id IN (?)", accounts]}}
+  named_scope :group_amounts_by_period, :select => "DATE_FORMAT(posted_on, '%Y-%m-01') period, SUM(amount) amount",
+                                        :group => "DATE_FORMAT(posted_on, '%Y-%m-01')"
   named_scope :in_period, lambda {|period|
     case period
     when /^(\d{4})-?(\d{2})/
