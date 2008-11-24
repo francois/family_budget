@@ -108,7 +108,7 @@ module ApplicationHelper
         pc.data line.first, line.last.to_f
       end
 
-      return image_tag(pc.to_url, :size => options[:size])
+      return image_tag(pc.to_url(options[:extras] || {}), :size => options[:size])
     end
   end
 
@@ -118,7 +118,11 @@ module ApplicationHelper
       data.each do |label, (points, color)|
         lc.data label, points, color
       end
-      return image_tag(lc.to_url, :size => options[:size])
+
+      labels = dates_for_period.map {|d| d.strftime("%b")}
+      lc.axis :x, :labels => labels
+      lc.axis :y, :range => [0, data.map(&:last).map(&:first).flatten.compact.max]
+      return image_tag(lc.to_url(options[:extras] || {}), :size => options[:size])
     end
   end
 end
