@@ -5,7 +5,7 @@
   <p><%= label_tag "Voir seulement le compte:" %><br/><%= select_tag "bank_account_id", "<option value=\"\">Tous</option>\n" + options_from_collection_for_select(bank_accounts, :id, :to_s, @bank_account_id.to_i) %></p>
   <p><%= label_tag "Période:" %><br/><%= text_field_tag "period", h(@period), :size => 8 %></p>
   <p class="help">Inscrivez AAAA-MM ou AAAAMM</p>
-  <p><%= submit_tag "Activer le filtre", :name => nil %></p>
+  <p><%= submit_tag "Activer le filtre", :name => nil %> <%= link_to("Enlever le filtre", bank_transactions_path) %></p>
 <% end %>
 <table id="bank_transactions">
   <caption>Transactions banquaires</caption>
