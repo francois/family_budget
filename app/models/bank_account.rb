@@ -4,12 +4,13 @@ class BankAccount < ActiveRecord::Base
   validates_presence_of :family_id
   validates_uniqueness_of :account_id, :scope => :family_id
   attr_accessible :family, :account, :bank_number, :account_number
-  has_many :bank_transactions
+  has_many :bank_transactions, :dependent => :destroy
 
   attr_accessor :account_number
 
   before_save :generate_salted_account_number
   before_save :generate_display_account_number
+  before_destroy :destroy_associated_transfers
 
   def to_s
     account ? account.name : display_account_number
@@ -39,5 +40,10 @@ class BankAccount < ActiveRecord::Base
 
     # For our own purposes, reset the account number to nil so we dont' attempt to reformat the value again
     self.account_number = nil
+  end
+
+  def destroy_associated_transfers
+    self.family.transfers.in_debit_accounts(self.account).each(&:destroy)
+    self.family.transfers.in_credit_accounts(self.account).each(&:destroy)
   end
 end

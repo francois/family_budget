@@ -9,6 +9,30 @@ class BankAccountTest < Test::Unit::TestCase
   should_have_many :bank_transactions
   should_require_unique_attributes :account_id, :scoped_to => :family_id
 
+  context "An existing BankAccount" do
+    setup do
+      @bank_account = bank_accounts(:checking)
+    end
+
+    context "with a transfer attached to one of it's transactions" do
+      setup do
+        @transfer = families(:beausoleil).transfers.build(:debit_account => accounts(:cell_phone_service))
+        @transfer.bank_transactions << bank_transactions(:credit_card_payment)
+        @transfer.save!
+      end
+
+      context "on destroy" do
+        setup do
+          @bank_account.destroy
+        end
+
+        should_change "families(:beausoleil).bank_accounts.count", :by => -1
+        should_change "families(:beausoleil).bank_transactions.count", :by => -1
+        should_change "families(:beausoleil).transfers.count", :by => -2
+      end
+    end
+  end
+
   context "A new BankAccount" do
     setup do
       @bank_account = families(:beausoleil).bank_accounts.build(:account_number => "4510111122223456", :bank_number => "92109291")
