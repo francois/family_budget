@@ -32,6 +32,9 @@ class Account < ActiveRecord::Base
     when /^(\d{4})/
       year = $1.to_i
       {:conditions => ["#{Transfer.table_name}.posted_on BETWEEN ? AND ?", Date.new(year, 1, 1), Date.new(year, 12, 31)]}
+    when Date, Time, DateTime
+      start = period.at_beginning_of_month.to_date
+      {:conditions => ["#{Transfer.table_name}.posted_on BETWEEN ? AND ?", start, (start >> 1) - 1]}
     else
       {}
     end
