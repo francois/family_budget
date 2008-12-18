@@ -21,6 +21,10 @@ class BankTransactionTest < Test::Unit::TestCase
       end
 
       should_change "@bank_transaction.reload.ignored_at"
+
+      should "NOT appear in the pending scope" do
+        assert_does_not_contain BankTransaction.pending, @bank_transaction
+      end
     end
 
     context "on the last day of October 2008" do
