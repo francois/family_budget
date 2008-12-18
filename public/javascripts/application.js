@@ -18,7 +18,7 @@ $(document).ready(function() {
 
   $("#bank_transactions td.actions input[type=submit]").bind("click", function() {
     if (this.getAttribute("class").match(/process/)) {
-      if ($("input.regroup[checked]").length > 0) {
+      if ($("input.regroup[checked]").length > 1) {
         var ids = [];
         $("input.regroup[checked]").each(function(index, elem) {
           ids.push(elem.getAttribute("id").replace("regroup_bank_transaction_", ""));
