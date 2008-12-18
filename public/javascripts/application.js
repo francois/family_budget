@@ -10,6 +10,12 @@ $(document).ready(function() {
   $("#bank_transactions tr.bank_transaction").draggable({revert: true, helper: 'clone', opacity: 0.7, scroll: true, handle: ".handle"});
   $("#bank_transactions tr.bank_transaction").droppable({accept: "#bank_transactions .handle", drop: handleTransfer});
 
+  $("#bank_transactions a.ignore").click(function() {
+    var id = this.getAttribute("id").replace("ignore_bank_transaction_", "");
+    jQuery.post("/bank_transactions/" + id + ".js", {"_method": "delete"}, insecureProcess);
+    return false;
+  });
+
   $("#bank_transactions td.actions input[type=submit]").bind("click", function() {
     if (this.getAttribute("class").match(/process/)) {
       if ($("input.regroup[checked]").length > 0) {
