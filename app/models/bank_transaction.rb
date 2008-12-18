@@ -30,4 +30,8 @@ class BankTransaction < ActiveRecord::Base
   named_scope :on_bank_account, lambda {|bank_account| {:conditions => {:bank_account_id => bank_account.id}}}
   named_scope :by_posted_on, :order => "posted_on"
   named_scope :pending, :select => "#{table_name}.*", :joins => "LEFT JOIN bank_transactions_transfers btt ON btt.bank_transaction_id = bank_transactions.id", :conditions => "btt.bank_transaction_id IS NULL"
+
+  def ignore!
+    update_attribute(:ignored_at, Time.now.utc)
+  end
 end

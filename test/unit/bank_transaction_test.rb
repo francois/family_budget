@@ -15,6 +15,14 @@ class BankTransactionTest < Test::Unit::TestCase
       @bank_transaction = bank_transactions(:credit_card_payment)
     end
 
+    context "calling #ignore!" do
+      setup do
+        @bank_transaction.ignore!
+      end
+
+      should_change "@bank_transaction.reload.ignored_at"
+    end
+
     context "on the last day of October 2008" do
       setup do
         @bank_transaction.posted_on = Date.new(2008, 10, 31)
