@@ -42,6 +42,7 @@ class TransfersControllerTest < ActionController::TestCase
         delete :destroy, :id => @transfer.id
       end
 
+      should_redirect_to "transfers_path"
       should_change "families(:beausoleil).transfers.count", :by => -1
     end
 
@@ -60,6 +61,7 @@ class TransfersControllerTest < ActionController::TestCase
           delete :destroy, :id => @transfer.id
         end
 
+        should_redirect_to "transfers_path"
         should_change "families(:beausoleil).transfers.count", :by => -1
         should_change "@bank_transaction.transfers(true).count", :to => 0
       end
