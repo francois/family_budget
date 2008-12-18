@@ -20,6 +20,19 @@ class BankTransactionTest < Test::Unit::TestCase
         @bank_transaction.ignore!
       end
 
+      context "calling #unignore!" do
+        setup do
+          @bank_transaction.unignore!
+        end
+
+        should_change "@bank_transaction.reload.ignored_at", :to => nil
+        should_change "@bank_transaction.reload.ignored?", :to => false
+
+        should "appear in the pending scope" do
+          assert_contains BankTransaction.pending, @bank_transaction
+        end
+      end
+
       should_change "@bank_transaction.reload.ignored_at"
       should_change "@bank_transaction.reload.ignored?", :to => true
 

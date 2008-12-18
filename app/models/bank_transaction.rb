@@ -36,6 +36,10 @@ class BankTransaction < ActiveRecord::Base
     !!self.ignored_at
   end
 
+  def unignore!
+    update_attribute(:ignored_at, nil)
+  end
+
   def ignore!
     update_attribute(:ignored_at, Time.now.utc)
   end
