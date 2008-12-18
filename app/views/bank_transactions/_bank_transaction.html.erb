@@ -11,7 +11,7 @@
     <%= submit_tag "Traiter", :class => "process", :name => "", :id => "#{dom_id(bank_transaction)}_process" %>
     <%= submit_tag "Annuler", :class => "cancel", :name => "", :id => "#{dom_id(bank_transaction)}_cancel", :style => "display:none" %>
     <%= hidden_field_tag "transfer_id", nil, :id => "#{dom_id(bank_transaction)}_transfer", :class => "transfer_id" %>
-    <p id="<%= dom_id(bank_transaction, "split") %>"><%= link_to "Répartir", edit_split_path(bank_transaction) %></p>
+    <p id="<%= dom_id(bank_transaction, "actions") %>"><%= link_to "Répartir", edit_split_path(bank_transaction) %> <%= link_to "Ignorer", "#", :class => "ignore" %></p>
     <p class="minor"><label><%= check_box_tag "regroup", "1", false, :class => "regroup", :id => dom_id(bank_transaction, "regroup") %> Regrouper</label></p>
   </td>
 </tr>
