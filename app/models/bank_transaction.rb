@@ -4,8 +4,7 @@ class BankTransaction < ActiveRecord::Base
   delegate :account, :to => :bank_account
   has_and_belongs_to_many :transfers
 
-  attr_accessible :family, :bank_account, :debit_account, :credit_account, :fitid, :amount, :name, :memo, :posted_on, :bank_transactions, :pending
-  attr_accessor :pending
+  attr_accessible :family, :bank_account, :debit_account, :credit_account, :fitid, :amount, :name, :memo, :posted_on, :bank_transactions
 
   validates_numericality_of :amount
   validates_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081121002800) do
+ActiveRecord::Schema.define(:version => 20081218201104) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id",  :limit => 11
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20081121002800) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "transfer_id",     :limit => 11
+    t.datetime "ignored_at"
   end
 
   add_index "bank_transactions", ["family_id", "fitid"], :name => "by_family_fitid", :unique => true
