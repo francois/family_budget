@@ -12,9 +12,19 @@ $(document).ready(function() {
 
   $("#bank_transactions td.actions input[type=submit]").bind("click", function() {
     if (this.getAttribute("class").match(/process/)) {
-      var bankTransactionId = this.id.replace("bank_transaction_", "").replace("_process", "");
-      var accountId = $("#accounts input[checked]").val();
-      jQuery.post("/transfers.js", {"transfer[bank_transaction_id]": bankTransactionId, "transfer[debit_account_id]": accountId}, insecureProcess);
+      if ($("input.regroup[checked]").length > 0) {
+        console.log("found %d checked elements", $("input.regroup[checked]").length);
+        var ids = [];
+        $("input.regroup[checked]").each(function(index, elem) {
+          console.log("elem: %o", elem);
+          ids.push(elem.getAttribute("id").replace("regroup_bank_transaction_", ""));
+        });
+        jQuery.post("/transfers.js", {"transfer[bank_transaction_id][]": ids}, insecureProcess);
+      } else {
+        var bankTransactionId = this.id.replace("bank_transaction_", "").replace("_process", "");
+        var accountId = $("#accounts input[checked]").val();
+        jQuery.post("/transfers.js", {"transfer[bank_transaction_id]": bankTransactionId, "transfer[debit_account_id]": accountId}, insecureProcess);
+      }
     } else if (this.getAttribute("class").match(/cancel/)) {
       var bankTransactionId = this.id.replace("bank_transaction_", "").replace("_cancel", "");
       var transferId = $("#bank_transactions #bank_transaction_" + bankTransactionId + " input.transfer_id").val();
