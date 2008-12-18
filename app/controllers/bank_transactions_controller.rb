@@ -15,6 +15,11 @@ class BankTransactionsController < ApplicationController
   def create
   end
 
+  def update
+    bank_transaction.unignore!
+    respond_to :js
+  end
+
   def destroy
     bank_transaction.ignore!
     respond_to :js
