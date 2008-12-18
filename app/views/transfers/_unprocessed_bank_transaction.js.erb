@@ -2,4 +2,4 @@ $("#<%= dom_id(unprocessed_bank_transaction) %>").removeClass("processed");
 $("#<%= dom_id(unprocessed_bank_transaction) %> input.process").show();
 $("#<%= dom_id(unprocessed_bank_transaction) %> input.transfer_id").val(null);
 $("#<%= dom_id(unprocessed_bank_transaction) %> input.cancel").hide();
-$("#<%= dom_id(unprocessed_bank_transaction, "regroup") %>").attr("checked", false).parent("label").show();
+$("#<%= dom_id(unprocessed_bank_transaction, "regroup") %>").attr("checked", true).parent("label").show();
