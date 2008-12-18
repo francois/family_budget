@@ -32,6 +32,10 @@ class BankTransaction < ActiveRecord::Base
   named_scope :pending, :select => "#{table_name}.*", :joins => "LEFT JOIN bank_transactions_transfers btt ON btt.bank_transaction_id = bank_transactions.id",
                         :conditions => "btt.bank_transaction_id IS NULL AND #{table_name}.ignored_at IS NULL"
 
+  def ignored?
+    !!self.ignored_at
+  end
+
   def ignore!
     update_attribute(:ignored_at, Time.now.utc)
   end
