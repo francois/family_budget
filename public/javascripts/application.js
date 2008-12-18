@@ -25,6 +25,11 @@ $(document).ready(function() {
     }
   });
 
+  $("#clear_groupings").click(function() {
+    $("input.regroup").attr("checked", false);
+    return false;
+  });
+
   // Split amounts page (splits/:id/edit)
   (function() {
     
