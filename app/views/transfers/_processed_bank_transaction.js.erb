@@ -3,3 +3,4 @@ $("#<%= dom_id(processed_bank_transaction) %> input.process").hide();
 $("#<%= dom_id(processed_bank_transaction) %> input.transfer_id").val(<%= transfer.id.to_json %>);
 $("#<%= dom_id(processed_bank_transaction) %> input.cancel").show();
 $("#<%= dom_id(processed_bank_transaction, "regroup") %>").attr("checked", false).parent("label").hide();
+$("#<%= dom_id(processed_bank_transaction, "split") %>").hide();
