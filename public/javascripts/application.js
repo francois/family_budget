@@ -32,7 +32,11 @@ $(document).ready(function() {
     } else if (this.getAttribute("class").match(/cancel/)) {
       var bankTransactionId = this.id.replace("bank_transaction_", "").replace("_cancel", "");
       var transferId = $("#bank_transactions #bank_transaction_" + bankTransactionId + " input.transfer_id").val();
-      jQuery.post("/transfers/" + transferId + ".js", {"_method": "delete"}, insecureProcess);
+      if (transferId) {
+        jQuery.post("/transfers/" + transferId + ".js", {"_method": "delete"}, insecureProcess);
+      } else {
+        jQuery.post("/bank_transactions/" + bankTransactionId + ".js", {"_method": "put", "bank_transaction[ignored_at]": ""}, insecureProcess);
+      }
     } else {
       alert("Programming error:  don't know how to process '" + this.getAttribute("class") + "'");
     }
