@@ -344,6 +344,39 @@ class TransferTest < ActiveSupport::TestCase
     end
   end
 
+  context "3 bank transactions" do
+    setup do
+      @bt0 = create_bank_transaction(:bank_account => bank_accounts(:checking), :amount => -140)
+      @bt1 = create_bank_transaction(:bank_account => bank_accounts(:checking), :amount => -110)
+      @bt2 = create_bank_transaction(:bank_account => bank_accounts(:credit_card), :amount => (140 + 110))
+    end
+
+    context "used to build a transfer" do
+      setup do
+        @transfer = Transfer.new(:posted_on => Date.today, :family => families(:beausoleil))
+        @transfer.bank_transactions << @bt0
+        @transfer.bank_transactions << @bt1
+        @transfer.bank_transactions << @bt2
+      end
+
+      context "on save" do
+        setup do
+          @transfer.save!
+        end
+
+        should_change "@transfer.amount", :to => (140 + 110)
+
+        should "debit the credit card" do
+          assert_equal accounts(:credit_card), @transfer.debit_account
+        end
+
+        should "credit the checking account" do
+          assert_equal accounts(:checking), @transfer.credit_account
+        end
+      end
+    end
+  end
+
   context "Scoping" do
     setup do
       @transfer = transfers(:checking_to_credit_card)
