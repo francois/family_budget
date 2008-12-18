@@ -13,10 +13,8 @@ $(document).ready(function() {
   $("#bank_transactions td.actions input[type=submit]").bind("click", function() {
     if (this.getAttribute("class").match(/process/)) {
       if ($("input.regroup[checked]").length > 0) {
-        console.log("found %d checked elements", $("input.regroup[checked]").length);
         var ids = [];
         $("input.regroup[checked]").each(function(index, elem) {
-          console.log("elem: %o", elem);
           ids.push(elem.getAttribute("id").replace("regroup_bank_transaction_", ""));
         });
         jQuery.post("/transfers.js", {"transfer[bank_transaction_id][]": ids}, insecureProcess);
