@@ -353,10 +353,18 @@ class TransferTest < ActiveSupport::TestCase
 
     context "used to build a transfer" do
       setup do
-        @transfer = Transfer.new(:posted_on => Date.today, :family => families(:beausoleil))
+        @transfer = families(:beausoleil).transfers.build(:posted_on => Date.today)
         @transfer.bank_transactions << @bt0
         @transfer.bank_transactions << @bt1
         @transfer.bank_transactions << @bt2
+      end
+
+      should "have a family" do
+        assert_not_nil @transfer.family
+      end
+
+      should "set the family to beausoleil's" do
+        assert_equal families(:beausoleil), @transfer.family
       end
 
       context "on save" do

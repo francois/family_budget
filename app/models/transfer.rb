@@ -78,7 +78,18 @@ class Transfer < ActiveRecord::Base
         self.debit_account, self.credit_account = bt1.account, bt0.account
       end
     else
-      raise MulitpleBankTransactionsNotHandledYet
+      decreases, increases                 = self.bank_transactions.partition {|bt| bt.amount < 0}
+      decrease_accounts, increase_accounts = decreases.map(&:account).uniq, increases.map(&:account).uniq
+      decrease_amount, increase_amount     = decreases.map(&:amount).sum.abs, increases.map(&:amount).sum
+      if decrease_amount == increase_amount && [decrease_accounts, increase_accounts].map(&:length).all? {|l| l == 1} then
+        increase_account, decrease_account      = increase_accounts.first, decrease_accounts.first
+        self.debit_account, self.credit_account = increase_account, decrease_account
+
+        # Ensure the amounts will be swapped later, if need be
+        self.amount = increase_account.asset? ? -increase_amount : increase_amount
+      else
+        raise "Not handled"
+      end
     end
   end
 
@@ -88,8 +99,8 @@ class Transfer < ActiveRecord::Base
       errors.add_on_blank("credit_account_id")
     elsif self.bank_transactions.length == 1 then
       errors.add_on_blank("debit_account_id")
-    elsif self.bank_transactions.length > 2 then
-      errors.add_to_base("Cannot handle multiple bank transations at this time -- call François")
+    # elsif self.bank_transactions.length > 2 then
+    #   errors.add_to_base("Cannot handle multiple bank transations at this time -- call François")
     end
   end
 
