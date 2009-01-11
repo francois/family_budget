@@ -24,6 +24,13 @@ class Month
   end
 
   def budgets
-    budgets = @family.budgets.for_period(@year, @month)
+    budgets          = @family.budgets.for_period(@year, @month)
+    income_accounts  = @family.accounts.incomes.all
+    expense_accounts = @family.accounts.expenses.all
+    budgets = (income_accounts + expense_accounts).inject(Hash.new) do |memo, account|
+      memo[account] = budgets.detect {|b| b.account == account} || @family.budgets.build(:year => @year, :month => @month, :account => account)
+      memo
+    end
+    budgets.values
   end
 end
