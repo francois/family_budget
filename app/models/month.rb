@@ -22,4 +22,8 @@ class Month
   def errors
     @errors ||= ActiveRecord::Errors.new(self)
   end
+
+  def budgets
+    budgets = @family.budgets.for_period(@year, @month)
+  end
 end

@@ -30,4 +30,20 @@ class MonthTest < Test::Unit::TestCase
       end
     end
   end
+
+  context "A valid month" do
+    setup do
+      @month = Month.new(:family => families(:beausoleil), :date => Date.today)
+    end
+
+    context "calling #budgets" do
+      setup do
+        @budgets = @month.budgets
+      end
+
+      should "return budget instances that match the family" do
+        assert @budgets.all? {|b| b.family == families(:beausoleil)}
+      end
+    end
+  end
 end
