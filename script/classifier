@@ -2,17 +2,22 @@
 require File.dirname(__FILE__) + "/../config/environment"
 require "classifier"
 
-training_set_size = 0
-family = Family.first
-bayes  = Classifier::Bayes.new
-family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.years.ago .. 2.weeks.ago)}, :order => "posted_on").each do |bt|
-  data = []
+def data_builder(bt)
+  returning([]) do |data|
   data << bt.posted_on.to_s(:db).split("-")
   data << bt.name
   data << bt.memo
   data << bt.bank_account.display_account_number
+  data << bt.bank_account.account.name
+  data << "%.2f" % bt.amount
+  end.flatten.compact.join(" ")
+end
 
-  data = data.flatten.compact.join(" ")
+training_set_size = 0
+family = Family.first
+bayes  = Classifier::Bayes.new
+family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.years.ago .. 2.weeks.ago)}, :order => "posted_on").each do |bt|
+  data = data_builder(bt)
 
   bt.transfers.each do |t|
     set = [t.debit_account.name, t.credit_account.name].join("; ")
@@ -26,17 +31,32 @@ end
 
 puts "After #{training_set_size} trainings, what does this thing look like?"
 
+good, bad = 0, 0
 family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.weeks.ago .. Date.today)}, :order => "posted_on").each do |bt|
-  data = []
-  data << bt.posted_on.to_s(:db).split("-")
-  data << bt.name
-  data << bt.memo
-  data << bt.bank_account.display_account_number
+  data = data_builder(bt)
 
-  data = data.flatten.compact.join(" ")
-
-  sets = bayes.classifications(data)
+  set = bayes.classify(data)
   puts
   pp data
-  pp sets.sort_by(&:last).reverse.first(5)
+  pp set
+
+  loop do
+    puts "G)ood or B)ad?"
+    c = STDIN.gets
+    case c
+    when /g/i
+      # NOP, just exist the loop
+      # The data is correct
+      good += 1
+      break
+    when /b/i
+      # We'd have to train here
+      bad += 1
+      break
+    else
+      # NOP, will retry the loop
+    end
+  end
 end
+
+puts "#{good} good guesses, #{bad} bad guesses"
