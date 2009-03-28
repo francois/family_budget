@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + "/../config/environment"
+require "classifier"
+
+family = Family.first
+accounts = family.accounts.all(:include => :bank_transactions)
+bayes = Classifier::Bayes.new(*accounts.map(&:name))
+accounts.each do |account|
+  account_name = account.name
+  account.bank_transactions.all(:include => :bank_account, :conditions => {:posted_on => (2.years.ago .. 1.month.ago)}).each do |bt|
+    data = []
+    data << bt.posted_on.to_s(:db).split("/")
+    data << bt.name
+    data << bt.memo
+    data << bt.bank_account.display_account_number
+
+    data = data.flatten.compact.join(" ")
+    puts "Training #{data.inspect} on #{account_name}"
+    bayes.train(account_name, data)
+  end
+end
