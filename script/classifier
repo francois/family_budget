@@ -4,18 +4,35 @@ require "classifier"
 
 family = Family.first
 bayes  = Classifier::Bayes.new
-family.accounts.each do |account|
-  account_name = account.name
-  bayes.add_category(account_name)
-  account.bank_transactions.all(:include => :bank_account, :conditions => {:posted_on => (2.years.ago .. 1.month.ago)}).each do |bt|
-    data = []
-    data << bt.posted_on.to_s(:db).split("/")
-    data << bt.name
-    data << bt.memo
-    data << bt.bank_account.display_account_number
+family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.years.ago .. 2.weeks.ago)}, :order => "posted_on").each do |bt|
+  data = []
+  data << bt.posted_on.to_s(:db).split("-")
+  data << bt.name
+  data << bt.memo
+  data << bt.bank_account.display_account_number
 
-    data = data.flatten.compact.join(" ")
-    puts "Training #{data.inspect} on #{account_name}"
-    bayes.train(account_name, data)
+  data = data.flatten.compact.join(" ")
+
+  bt.transfers.each do |t|
+    set = [t.debit_account.name, t.credit_account.name].join("; ")
+    bayes.add_category(set)
+
+    # puts "Training #{data.inspect} on #{set.inspect}"
+    bayes.train(set, data)
   end
+end
+
+family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.weeks.ago .. Date.today)}, :order => "posted_on").each do |bt|
+  data = []
+  data << bt.posted_on.to_s(:db).split("-")
+  data << bt.name
+  data << bt.memo
+  data << bt.bank_account.display_account_number
+
+  data = data.flatten.compact.join(" ")
+
+  sets = bayes.classifications(data)
+  puts
+  pp data
+  pp sets.sort_by(&:last).reverse.first(5)
 end
