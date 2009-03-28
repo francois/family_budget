@@ -2,6 +2,7 @@
 require File.dirname(__FILE__) + "/../config/environment"
 require "classifier"
 
+training_set_size = 0
 family = Family.first
 bayes  = Classifier::Bayes.new
 family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.years.ago .. 2.weeks.ago)}, :order => "posted_on").each do |bt|
@@ -19,8 +20,11 @@ family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on 
 
     # puts "Training #{data.inspect} on #{set.inspect}"
     bayes.train(set, data)
+    training_set_size += 1
   end
 end
+
+puts "After #{training_set_size} trainings, what does this thing look like?"
 
 family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.weeks.ago .. Date.today)}, :order => "posted_on").each do |bt|
   data = []
