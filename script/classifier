@@ -13,6 +13,14 @@ def data_builder(bt)
   end.flatten.compact.join(" ")
 end
 
+def find_set(*accounts)
+  accounts = accounts.flatten.compact
+  target_accounts = accounts.select(&:expense?) + accounts.select(&:income?)
+
+  # If it's a transfer, none of the accounts will be income/expense
+  target_accounts.length == 1 ? target_accounts.first.name : nil
+end
+
 training_set_size = 0
 family = Family.first
 bayes  = Classifier::Bayes.new
@@ -20,10 +28,10 @@ family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on 
   data = data_builder(bt)
 
   bt.transfers.each do |t|
-    set = [t.debit_account.name, t.credit_account.name].join("; ")
-    bayes.add_category(set)
+    set = find_set(t.debit_account, t.credit_account)
+    next if set.blank?
 
-    # puts "Training #{data.inspect} on #{set.inspect}"
+    bayes.add_category(set)
     bayes.train(set, data)
     training_set_size += 1
   end
@@ -31,32 +39,30 @@ end
 
 puts "After #{training_set_size} trainings, what does this thing look like?"
 
-good, bad = 0, 0
+unknown, good, bad = 0, 0, 0
 family.bank_transactions.all(:include => :transfers, :conditions => {:posted_on => (2.weeks.ago .. Date.today)}, :order => "posted_on").each do |bt|
   data = data_builder(bt)
 
-  set = bayes.classify(data)
-  puts
-  pp data
-  pp set
+  t = bt.transfers.first
+  actual_set = t.blank? ? nil : find_set(t.debit_account, t.credit_account)
 
-  loop do
-    puts "G)ood or B)ad?"
-    c = STDIN.gets
-    case c
-    when /g/i
-      # NOP, just exist the loop
-      # The data is correct
-      good += 1
-      break
-    when /b/i
-      # We'd have to train here
-      bad += 1
-      break
-    else
-      # NOP, will retry the loop
-    end
-  end
+  set = bayes.classify(data)
+  printf "%s\n\tReal: %s\n\tAuto: %s\n" % [data, actual_set, set]
+
+  result = if actual_set.blank? then
+             unknown += 1
+             "Unknown"
+           else
+             if set.downcase == actual_set.downcase
+               good += 1
+               "Good"
+             else
+               bad += 1
+               "Bad"
+             end
+           end
+
+  puts result
 end
 
-puts "#{good} good guesses, #{bad} bad guesses"
+puts "#{good} good guesses, #{bad} bad guesses, #{unknown} unknown guesses"
