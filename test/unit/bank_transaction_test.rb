@@ -7,7 +7,7 @@ class BankTransactionTest < ActiveSupport::TestCase
   should_validate_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
   should_only_allow_numeric_values_for :amount
   should_allow_values_for :amount, 0, -100, 100, -99.99, 99.99
-  should_require_unique_attributes :fitid, :scoped_to => :family_id
+  should_validate_uniqueness_of :fitid, :scoped_to => :family_id
 
   context "A bank transaction with assigned bank account" do
     setup do

@@ -4,7 +4,7 @@ class AccountTest < ActiveSupport::TestCase
   should_belong_to :family
   should_have_many :budgets
   should_validate_presence_of :name, :purpose, :family_id
-  should_require_unique_attributes :name, :scoped_to => :family_id
+  should_validate_uniqueness_of :name, :scoped_to => :family_id
   should_not_allow_mass_assignment_of :family_id, :budget_ids
   should_not_allow_values_for :purpose, "foo", :message => "is not included in the list"
   should_allow_values_for :purpose, *Account::ValidPurposes
