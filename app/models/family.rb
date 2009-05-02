@@ -1,5 +1,4 @@
 require "digest/sha1"
-require "rails_generator/secret_key_generator"
 
 class Family < ActiveRecord::Base
   has_many :people, :dependent => :destroy
@@ -44,10 +43,7 @@ class Family < ActiveRecord::Base
 
   protected
   def generate_salt
-    pid = Process.pid
-    time = Time.now.utc.to_i
-    data = "this is the secret key used by the generator -- needs to be unique (#{pid}, #{time})"
-    self.salt = Rails::SecretKeyGenerator.new(data).generate_secret
+    self.salt = ActiveSupport::SecureRandom.hex(64)
   end
 
   def amounts_in_dates(root, range)
