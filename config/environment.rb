@@ -54,10 +54,10 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
 
-  config.gem "mislav-will_paginate", :lib => "will_paginate", :source => "http://gems.github.com"
-  config.gem "quicken_parser"
-  config.gem "gchartrb",             :lib => "google_chart"
-  config.gem "francois-money",       :lib => "money", :source => "http://gems.github.com"
+  config.gem "mislav-will_paginate",    :lib => "will_paginate",  :source => "http://gems.github.com"
+  config.gem "FooBarWidget-money",      :lib => "money",          :source => "http://gems.github.com"
+  config.gem "francois-quicken_parser", :lib => "quicken_parser", :source => "http://gems.github.com"
+  config.gem "gchartrb",                :lib => "google_chart"
 
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
