@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class BankTransactionTest < Test::Unit::TestCase
-  should_have_valid_fixtures
   should_belong_to :family, :bank_account
   should_protect_attributes :family_id, :bank_account_id, :ignored_at
   should_allow_attributes :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions

@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class BudgetTest < ActiveSupport::TestCase
-  should_have_valid_fixtures
   should_require_attributes :family_id, :account_id
   should_only_allow_numeric_values_for :amount
   should_protect_attributes :family_id, :account_id, :starting_on

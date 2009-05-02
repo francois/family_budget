@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TransferTest < ActiveSupport::TestCase
-  should_have_valid_fixtures
   should_protect_attributes :family, :family_id, :debit_account_id, :credit_account_id, :created_at, :updated_at
   should_require_attributes :family_id, :debit_account_id, :posted_on
   should_allow_attributes :debit_account, :credit_account, :posted_on, :description, :amount
