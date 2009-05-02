@@ -199,7 +199,7 @@ class TransferTest < ActiveSupport::TestCase
         end
 
         should "be invalid" do
-          assert_invalid @transfer
+          assert_equal false, @transfer.valid?
         end
     
         should "be missing a debit account" do

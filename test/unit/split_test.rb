@@ -68,7 +68,7 @@ class SplitTest < Test::Unit::TestCase
         end
 
         should "be invalid" do
-          assert_invalid @split
+          assert_equal false, @split.valid?
         end
 
         should "flag an error on amounts" do
