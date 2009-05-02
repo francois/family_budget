@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
   should_protect_attributes :crypted_password, :salt, :remember_token, :remember_token_expires_at, :family_id, :admin
-  should_require_attributes :login, :email, :password, :password_confirmation
+  should_validate_presence_of :login, :email, :password, :password_confirmation
   should_require_unique_attributes :login, :email
 
   context "A person" do

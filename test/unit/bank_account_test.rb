@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class BankAccountTest < ActiveSupport::TestCase
-  should_require_attributes :family_id
+  should_validate_presence_of :family_id
   should_not_allow_mass_assignment_of :family_id, :account_id, :display_account_number, :salted_account_number
   should_allow_mass_assignment_of :family, :account, :bank_number, :account_number
   should_belong_to :account, :family

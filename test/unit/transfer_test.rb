@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class TransferTest < ActiveSupport::TestCase
   should_not_allow_mass_assignment_of :family, :family_id, :debit_account_id, :credit_account_id, :created_at, :updated_at
-  should_require_attributes :family_id, :debit_account_id, :posted_on
+  should_validate_presence_of :family_id, :debit_account_id, :posted_on
   should_allow_mass_assignment_of :debit_account, :credit_account, :posted_on, :description, :amount
 
   # It should be possible to split a single bank transaction into two or more transfers
