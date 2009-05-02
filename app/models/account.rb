@@ -21,8 +21,8 @@ class Account < ActiveRecord::Base
   named_scope :expenses, :conditions => {:purpose => Expense}
   named_scope :by_type_and_name, :order => "purpose, name"
   named_scope :purposes, lambda {|*purposes| {:conditions => {:purpose => purposes.flatten.compact}}}
-  named_scope :by_most_debited, :select => "#{table_name}.*, SUM(#{Transfer.table_name}.amount) AS amount", :joins => "INNER JOIN #{Transfer.table_name} ON #{Transfer.table_name}.debit_account_id = #{table_name}.id", :order => "amount DESC", :group => "#{table_name}.id"
-  named_scope :by_most_credited, :select => "#{table_name}.*, SUM(#{Transfer.table_name}.amount) AS amount", :joins => "INNER JOIN #{Transfer.table_name} ON #{Transfer.table_name}.credit_account_id = #{table_name}.id", :order => "amount DESC", :group => "#{table_name}.id"
+  named_scope :by_most_debited, :select => "#{table_name}.*, SUM(#{Transfer.table_name}.amount) AS amount", :joins => "INNER JOIN #{Transfer.table_name} ON #{Transfer.table_name}.debit_account_id = #{table_name}.id", :order => "amount DESC", :group => "#{table_name}.family_id, #{table_name}.id"
+  named_scope :by_most_credited, :select => "#{table_name}.*, SUM(#{Transfer.table_name}.amount) AS amount", :joins => "INNER JOIN #{Transfer.table_name} ON #{Transfer.table_name}.credit_account_id = #{table_name}.id", :order => "amount DESC", :group => "#{table_name}.family_id, #{table_name}.id"
   named_scope :in_period, lambda {|period|
     case period
     when /^(\d{4})-?(\d{2})/
