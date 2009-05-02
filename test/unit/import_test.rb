@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/../test_helper"
+require 'test_helper'
 
 class ImportTest < ActiveSupport::TestCase
   context "An import" do
