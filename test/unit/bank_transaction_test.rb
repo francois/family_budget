@@ -2,8 +2,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class BankTransactionTest < Test::Unit::TestCase
   should_belong_to :family, :bank_account
-  should_protect_attributes :family_id, :bank_account_id, :ignored_at
-  should_allow_attributes :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions
+  should_not_allow_mass_assignment_of :family_id, :bank_account_id, :ignored_at
+  should_allow_mass_assignment_of :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions
   should_require_attributes :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
   should_only_allow_numeric_values_for :amount
   should_allow_values_for :amount, 0, -100, 100, -99.99, 99.99
