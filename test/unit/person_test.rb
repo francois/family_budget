@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
-  should_protect_attributes :crypted_password, :salt, :remember_token, :remember_token_expires_at, :family_id, :admin
+  should_not_allow_mass_assignment_of :crypted_password, :salt, :remember_token, :remember_token_expires_at, :family_id, :admin
   should_validate_presence_of :login, :email, :password, :password_confirmation
   should_require_unique_attributes :login, :email
 
