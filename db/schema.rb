@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(:version => 20081218201104) do
   end
 
   create_table "bank_accounts", :force => true do |t|
-    t.integer  "family_id",              :limit => 11
+    t.integer  "family_id"
     t.string   "bank_number"
     t.string   "display_account_number"
-    t.integer  "account_id",             :limit => 11
+    t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "salted_account_number"
@@ -35,13 +35,17 @@ ActiveRecord::Schema.define(:version => 20081218201104) do
     t.integer  "family_id",       :limit => 11
     t.integer  "bank_account_id", :limit => 11
     t.date     "posted_on"
+<<<<<<< HEAD:db/schema.rb
     t.decimal  "amount",                        :precision => 12, :scale => 2
+=======
+    t.decimal  "amount",          :precision => 12, :scale => 2
+>>>>>>> 925db16... Migrated development and test databases to PostgreSQL:db/schema.rb
     t.string   "name"
     t.string   "memo"
     t.string   "fitid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "transfer_id",     :limit => 11
+    t.integer  "transfer_id"
     t.datetime "ignored_at"
   end
 
@@ -54,12 +58,12 @@ ActiveRecord::Schema.define(:version => 20081218201104) do
   end
 
   add_index "bank_transactions_transfers", ["bank_transaction_id", "transfer_id"], :name => "by_bank_transaction_transfer", :unique => true
-  add_index "bank_transactions_transfers", ["transfer_id", "bank_transaction_id"], :name => "by_transfer_bank_transaction", :unique => true
+  add_index "bank_transactions_transfers", ["bank_transaction_id", "transfer_id"], :name => "by_transfer_bank_transaction", :unique => true
 
   create_table "budgets", :force => true do |t|
-    t.integer  "family_id",   :limit => 11
-    t.integer  "account_id",  :limit => 11
-    t.decimal  "amount",                    :precision => 9, :scale => 2, :default => 0.0
+    t.integer  "family_id"
+    t.integer  "account_id"
+    t.decimal  "amount",      :precision => 9, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "starting_on"
@@ -91,9 +95,15 @@ ActiveRecord::Schema.define(:version => 20081218201104) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD:db/schema.rb
     t.integer  "debit_account_id",  :limit => 11
     t.integer  "credit_account_id", :limit => 11
     t.decimal  "amount",                          :precision => 9, :scale => 2
+=======
+    t.integer  "debit_account_id"
+    t.integer  "credit_account_id"
+    t.decimal  "amount",            :precision => 9, :scale => 2
+>>>>>>> 925db16... Migrated development and test databases to PostgreSQL:db/schema.rb
   end
 
 end
