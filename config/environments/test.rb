@@ -21,5 +21,5 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-config.gem "francois-shoulda", :lib => "shoulda", :source => "http://gems.github.com/"
+config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com/"
 config.gem "mocha"

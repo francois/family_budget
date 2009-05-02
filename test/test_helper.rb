@@ -3,9 +3,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
-gem "francois-shoulda"
 require "shoulda/rails"
-gem "mocha"
 require "mocha"
 
 class Test::Unit::TestCase
