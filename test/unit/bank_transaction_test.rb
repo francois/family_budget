@@ -5,7 +5,7 @@ class BankTransactionTest < ActiveSupport::TestCase
   should_not_allow_mass_assignment_of :family_id, :bank_account_id, :ignored_at
   should_allow_mass_assignment_of :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions
   should_validate_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
-  should_only_allow_numeric_values_for :amount
+  should_validate_numericality_of :amount
   should_allow_values_for :amount, 0, -100, 100, -99.99, 99.99
   should_validate_uniqueness_of :fitid, :scoped_to => :family_id
 

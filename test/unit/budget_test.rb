@@ -2,7 +2,7 @@ require 'test_helper'
 
 class BudgetTest < ActiveSupport::TestCase
   should_validate_presence_of :family_id, :account_id
-  should_only_allow_numeric_values_for :amount
+  should_validate_numericality_of :amount
   should_not_allow_mass_assignment_of :family_id, :account_id, :starting_on
   should_allow_mass_assignment_of :family, :account, :year, :month
 
