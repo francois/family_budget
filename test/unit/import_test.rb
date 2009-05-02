@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class ImportTest < Test::Unit::TestCase
+class ImportTest < ActiveSupport::TestCase
   context "An import" do
     context "referring to a new bank, account and bank_transaction" do
       setup do

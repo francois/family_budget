@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class MonthTest < Test::Unit::TestCase
+class MonthTest < ActiveSupport::TestCase
   context "A month" do
     setup do
       @month = Month.new

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class BankTransactionTest < Test::Unit::TestCase
+class BankTransactionTest < ActiveSupport::TestCase
   should_belong_to :family, :bank_account
   should_not_allow_mass_assignment_of :family_id, :bank_account_id, :ignored_at
   should_allow_mass_assignment_of :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../test_helper"
 
-class SplitTest < Test::Unit::TestCase
+class SplitTest < ActiveSupport::TestCase
   context "A split" do
     setup do
       @split = Split.new(:family => families(:beausoleil), :bank_transaction => bank_transactions(:cell_phone_charge))
