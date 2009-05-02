@@ -58,5 +58,14 @@ class Split
     def human_attribute_name(*args)
       ActiveRecord::Base.human_attribute_name(*args)
     end
+
+    # Duck type as an ActiveRecord::Base subclass
+    def self_and_descendants_from_active_record
+      [self]
+    end
+
+    def human_name(options={})
+      self.name.underscore
+    end
   end
 end
