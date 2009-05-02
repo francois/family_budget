@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class BankTransactionTest < ActiveSupport::TestCase
   should_belong_to :family, :bank_account
@@ -47,60 +47,60 @@ class BankTransactionTest < ActiveSupport::TestCase
       end
 
       should "NOT appear for period 2008-11" do
-        assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("200811")
+        assert_does_not_contain families(:beausoleil).bank_transactions.in_period("200811"), @bank_transaction
       end
 
       should "appear for period 2008-10" do
-        assert_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("200810")
+        assert_contains families(:beausoleil).bank_transactions.in_period("200810"), @bank_transaction
       end
     end
 
     should "NOT appear when filtering by text and text isn't in name or memo" do
-      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("POWER WALK")
+      assert_does_not_contain families(:beausoleil).bank_transactions.with_name_or_memo_like("POWER WALK"), @bank_transaction
     end
 
     should "appear when filtering by text and text in memo (case-insensitve search)" do
-      assert_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("TRANSFER W3")
+      assert_contains families(:beausoleil).bank_transactions.with_name_or_memo_like("TRANSFER W3"), @bank_transaction
     end
 
     should "appear when filtering by text and text in name (case-insensitve search)" do
-      assert_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("Payment")
+      assert_contains families(:beausoleil).bank_transactions.with_name_or_memo_like("Payment"), @bank_transaction
     end
 
     should "appear when filtering by text and text in name" do
-      assert_include @bank_transaction, families(:beausoleil).bank_transactions.with_name_or_memo_like("PAYMENT")
+      assert_contains families(:beausoleil).bank_transactions.with_name_or_memo_like("PAYMENT"), @bank_transaction
     end
 
     should "appear when filtering by bank_account_id" do
-      assert_include @bank_transaction, families(:beausoleil).bank_transactions.on_bank_account(bank_transactions(:credit_card_payment).bank_account)
+      assert_contains families(:beausoleil).bank_transactions.on_bank_account(bank_transactions(:credit_card_payment).bank_account), @bank_transaction
     end
 
     should "NOT appear when filtering by another bank account" do
-      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.on_bank_account(bank_accounts(:credit_card))
+      assert_does_not_contain @bank_transaction, families(:beausoleil).bank_transactions.on_bank_account(bank_accounts(:credit_card))
     end
 
     should "NOT appear when filtering by posted_on for the previous year" do
-      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2007")
+      assert_does_not_contain @bank_transaction, families(:beausoleil).bank_transactions.in_period("2007")
     end
 
     should "NOT appear when filtering by posted_on for the next year" do
-      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2009")
+      assert_does_not_contain @bank_transaction, families(:beausoleil).bank_transactions.in_period("2009")
     end
 
     should "NOT appear when filtering by posted_on for the next period" do
-      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("200812")
+      assert_does_not_contain @bank_transaction, families(:beausoleil).bank_transactions.in_period("200812")
     end
 
     should "NOT appear when filtering by posted_on for the previous period" do
-      assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2008-10")
+      assert_does_not_contain @bank_transaction, families(:beausoleil).bank_transactions.in_period("2008-10")
     end
 
     should "appear when filtering by posted_on for the correct year/month" do
-      assert_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2008-11")
+      assert_contains families(:beausoleil).bank_transactions.in_period("2008-11"), @bank_transaction
     end
 
     should "appear when filtering by posted_on for the correct year" do
-      assert_include @bank_transaction, families(:beausoleil).bank_transactions.in_period("2008")
+      assert_contains families(:beausoleil).bank_transactions.in_period("2008"), @bank_transaction
     end
 
     should "return the bank account's account when asked for #account" do
@@ -114,7 +114,7 @@ class BankTransactionTest < ActiveSupport::TestCase
       end
     
       should "NOT appear in bank_transactions#pending scope" do
-        assert_does_not_include @bank_transaction, families(:beausoleil).bank_transactions.pending.all
+        assert_does_not_contain @bank_transaction, families(:beausoleil).bank_transactions.pending.all
       end
     end
     

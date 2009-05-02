@@ -11,7 +11,7 @@ class BankTransaction < ActiveRecord::Base
   validates_uniqueness_of :fitid, :scope => :family_id
 
   named_scope :with_name_or_memo_like, lambda {|text|
-    string = "%#{text}%"
+    string = "%#{text}%".downcase
     {:conditions => ["LOWER(name) LIKE ? OR LOWER(memo) LIKE ?", string, string]}}
   named_scope :in_period, lambda {|period|
     case period
