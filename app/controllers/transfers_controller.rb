@@ -33,7 +33,6 @@ class TransfersController < ApplicationController
     transfer.posted_on         = current_date
     Transfer.transaction do
       respond_to do |format|
-        logger.debug { transfer.to_yaml }
         if transfer.save
           flash_message = "Transféré #{transfer.amount} de #{transfer.debit_account} à #{transfer.credit_account}, en date du #{transfer.posted_on}"
           format.html do
