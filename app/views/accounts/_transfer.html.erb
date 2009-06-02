@@ -1,0 +1,10 @@
+<tr>
+  <td><%= transfer.posted_on %></td>
+  <td>
+    <%=h transfer.description %>
+    <ul>
+      <%= render :partial => "bank_transaction", :collection => transfer.bank_transactions %>
+    </ul>
+  </td>
+  <td><%=amount transfer.amount %></td>
+</tr>

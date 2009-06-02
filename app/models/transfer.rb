@@ -41,6 +41,10 @@ class Transfer < ActiveRecord::Base
   named_scope :for_account, lambda {|account| {:conditions => ["debit_account_id = :account_id OR credit_account_id = :account_id", {:account_id => account.id}]}}
   named_scope :by_posted_on, :order => "posted_on"
 
+  def period
+    read_attribute(:period) || posted_on.at_beginning_of_month.to_date
+  end
+
   protected
   def copy_amount_from_bank_transactions
     return if self.bank_transactions.empty?

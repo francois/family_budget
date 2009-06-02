@@ -49,12 +49,17 @@ class Account < ActiveRecord::Base
     debit_amount  = debits.map(&:amount).compact.sum
     credit_amount = credits.map(&:amount).compact.sum
 
+    normalize_amount(debit_amount, credit_amount)
+  end
+
+  def normalize_amount(debit_amount, credit_amount)
     case purpose
     when Asset, Expense
       debit_amount - credit_amount
     when Liability, Income, Equity
       credit_amount - debit_amount
     end
+
   end
 
   def budget_amount_in_period(year, month)

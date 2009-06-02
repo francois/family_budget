@@ -14,6 +14,15 @@ class AccountsController < ApplicationController
     end
   end
 
+  def show
+    # Can't seem to find another way to do it, so go with the flow...
+    # We need to ensure we have a date object for each period we're interested in
+    @dates = []
+    (12.months.ago.to_date .. Date.today).step(31) do |date|
+      @dates << date.at_beginning_of_month.to_date
+    end
+  end
+
   def new
     @account = current_family.accounts.build(:purpose => params[:purpose])
 

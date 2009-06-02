@@ -1,0 +1,14 @@
+<h1><%=h @account.name %></h1>
+<%= account_spending_history(@account, @dates) %>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Détails</th>
+      <th>Montant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => "transfer", :collection => current_family.transfers.for_account(@account).within_period(@dates.sort.first .. @dates.sort.last) %>
+  </tbody>
+</table>

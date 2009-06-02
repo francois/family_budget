@@ -125,4 +125,33 @@ module ApplicationHelper
       return image_tag(lc.to_url(options[:extras] || {}), :size => options[:size])
     end
   end
+
+  def account_spending_history(account, dates)
+    period  = (dates.sort.first .. (dates.sort.last >> 1))
+    debits  = current_family.transfers.in_debit_accounts(account).within_period(period).group_amounts_by_period.all
+    debits  = debits.index_by {|dt| Date.parse(dt.period)}
+    credits = current_family.transfers.in_credit_accounts(account).within_period(period).group_amounts_by_period.all
+    credits = credits.index_by {|dt| Date.parse(dt.period)}
+
+    amounts = dates.inject([]) do |memo, date|
+      debit_amount  = debits[date]
+      credit_amount = credits[date]
+      debit_amount  = debit_amount.amount  if     debit_amount
+      credit_amount = credit_amount.amount if     credit_amount
+      debit_amount  = 0                    unless debit_amount
+      credit_amount = 0                    unless credit_amount
+      memo << @account.normalize_amount(debit_amount, credit_amount)
+    end
+
+    GoogleChart::BarChart.new("600x200", "Dépenses réelles pour #{h(account.name)}") do |lc|
+      lc.data "Montants", amounts
+
+      lc.show_legend = false
+
+      lc.axis :x, :labels => dates.map {|d| d.strftime("%b")}
+      lc.axis :y, :range => [0, (debits.to_a + credits.to_a).map(&:last).map(&:amount).max]
+
+      return image_tag(lc.to_url(:chbh => "36,8,2"), :size => "600x200")
+    end
+  end
 end
