@@ -12,3 +12,8 @@
 <%= button_to "Détruire", transfer, :method => "delete" %>
 <%= link_to "Retour à la liste", transfers_path %>
 </p>
+
+<h3>Transactions Banquaires</h3>
+<ul>
+  <%= render :partial => "accounts/bank_transaction", :collection => transfer.bank_transactions %>
+</ul>
