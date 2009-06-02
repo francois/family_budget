@@ -8,10 +8,16 @@
   </td>
   <td class="amount"><%= format_money(bank_transaction.amount) %></td>
   <td class="actions">
-    <%= submit_tag "Traiter", :class => "process", :name => "", :id => "#{dom_id(bank_transaction)}_process" %>
-    <%= submit_tag "Annuler", :class => "cancel", :name => "", :id => "#{dom_id(bank_transaction)}_cancel", :style => "display:none" %>
-    <%= hidden_field_tag "transfer_id", nil, :id => "#{dom_id(bank_transaction)}_transfer", :class => "transfer_id" %>
-    <p id="<%= dom_id(bank_transaction, "actions") %>"><%= link_to "Répartir", edit_split_path(bank_transaction), :class => "split", :id => dom_id(bank_transaction, "split") %> <%= link_to "Ignorer", "#", :class => "ignore", :id => dom_id(bank_transaction, "ignore") %></p>
-    <p class="minor"><label><%= check_box_tag "regroup", "1", false, :class => "regroup", :id => dom_id(bank_transaction, "regroup") %> Regrouper</label></p>
+    <% if bank_transaction.transfers.empty? %>
+      <%= submit_tag "Traiter", :class => "process", :name => "", :id => "#{dom_id(bank_transaction)}_process" %>
+      <%= submit_tag "Annuler", :class => "cancel", :name => "", :id => "#{dom_id(bank_transaction)}_cancel", :style => "display:none" %>
+      <%= hidden_field_tag "transfer_id", nil, :id => "#{dom_id(bank_transaction)}_transfer", :class => "transfer_id" %>
+      <p id="<%= dom_id(bank_transaction, "actions") %>"><%= link_to "Répartir", edit_split_path(bank_transaction), :class => "split", :id => dom_id(bank_transaction, "split") %> <%= link_to "Ignorer", "#", :class => "ignore", :id => dom_id(bank_transaction, "ignore") %></p>
+      <p class="minor"><label><%= check_box_tag "regroup", "1", false, :class => "regroup", :id => dom_id(bank_transaction, "regroup") %> Regrouper</label></p>
+    <% else %>
+      <ol>
+        <%= render :partial => "transfer", :collection => bank_transaction.transfers %>
+      </ol>
+    <% end %>
   </td>
 </tr>

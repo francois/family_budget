@@ -2,10 +2,13 @@ class BankTransactionsController < ApplicationController
   helper_method :bank_transactions, :bank_transaction, :accounts, :income_and_expense_accounts, :bank_accounts
 
   def index
-    @period = params[:period]
+    @period          = params[:period]
     @bank_account_id = params[:bank_account_id]
-    @text = params[:text]
-    root = current_family.bank_transactions.pending.by_posted_on
+    @text            = params[:text]
+    @processed       = params[:processed] == "1"
+
+    root = current_family.bank_transactions.by_posted_on
+    root = root.pending unless @processed
     root = root.in_period(@period) unless @period.blank?
     root = root.on_bank_account(current_family.bank_accounts.find(@bank_account_id)) unless @bank_account_id.blank?
     root = root.with_name_or_memo_like(@text) unless @text.blank?
