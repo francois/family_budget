@@ -8,12 +8,12 @@
 
 <p>
   <label for="transfer_debit_account_id">Débiter</label><br/>
-  <%= f.select :debit_account_id, accounts %>
+  <%= f.collection_select :debit_account_id, accounts, :id, :name %>
 </p>
 
 <p>
   <label for="transfer_credit_account_id">Créditer</label><br/>
-  <%= f.select :credit_account_id, accounts %>
+  <%= f.collection_select :credit_account_id, accounts, :id, :name %>
 </p>
 
 <p>
