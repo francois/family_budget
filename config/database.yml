@@ -6,3 +6,7 @@ development: &defaults
 test:
   <<: *defaults
   database: family_budget_test
+
+staging:
+  <<: *defaults
+  database: family_budget_staging
