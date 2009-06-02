@@ -50,9 +50,9 @@ class Account < ActiveRecord::Base
     credit_amount = credits.map(&:amount).compact.sum
 
     case purpose
-    when "asset", "expense"
+    when Asset, Expense
       debit_amount - credit_amount
-    when "liability", "equity", "income"
+    when Liability, Income, Equity
       credit_amount - debit_amount
     end
   end
