@@ -52,6 +52,9 @@ class TransfersController < ApplicationController
   end
 
   def update
+    params[:transfer][:debit_account]  = current_family.accounts.find(params[:transfer].delete(:debit_account_id))  if params[:transfer][:debit_account_id]
+    params[:transfer][:credit_account] = current_family.accounts.find(params[:transfer].delete(:credit_account_id)) if params[:transfer][:credit_account_id]
+
     respond_to do |format|
       if transfer.update_attributes(params[:transfer])
         flash[:notice] = "Transfer mis à jour"
