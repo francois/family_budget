@@ -81,6 +81,7 @@ p.help { font-size: 80%; margin: .2em 0 0 0; }
 
 .budget input { width: 100%; text-align: right; }
 .budget tbody td.budget, .budget tbody td.real { width: 5em; text-align: right; }
+.budget td.over { border: 3px solid red; }
 
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
