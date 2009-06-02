@@ -147,7 +147,7 @@ module ApplicationHelper
       memo << current_family.budgets.find_or_initialize_by_account_id_and_starting_on(account.id, date).amount
     end
 
-    GoogleChart::BarChart.new("600x200", "Dépenses réelles pour #{h(account.name)}") do |lc|
+    GoogleChart::BarChart.new("600x200", "Budgété vs Réel pour #{h(account.name)}") do |lc|
       lc.data "Budgété", budget_amounts, "cc9999"
       lc.data "Réel", real_amounts, "9999cc"
 
