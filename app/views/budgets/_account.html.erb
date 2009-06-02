@@ -1,8 +1,9 @@
 <%-
-  car = periods.first; cdr = periods[1..-1]
+  car           = periods.first
+  cdr           = periods[1..-1]
   budget_amount = account.budget_amount_in_period(car.year, car.month)
-  real_amount = account.real_amount_in_period(car.year, car.month)
-  over = real_amount > budget_amount
+  real_amount   = account.real_amount_in_period(car.year, car.month)
+  over          = real_amount > budget_amount
 -%>
 <tr>
   <td scope="row"><%=h account.name %></td>

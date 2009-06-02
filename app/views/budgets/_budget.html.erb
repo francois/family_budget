@@ -1,7 +1,7 @@
 <%-
   budget_amount = account.budget_amount_in_period(budget.year, budget.month)
-  real_amount = account.real_amount_in_period(budget.year, budget.month)
-  over = real_amount > budget_amount
+  real_amount   = account.real_amount_in_period(budget.year, budget.month)
+  over          = real_amount > budget_amount
 -%>
 <td class="budget<%= " over" if over %>"><%=amount budget_amount %></td>
 <td class="real<%= " over" if over %>"><%=amount real_amount %></td>
