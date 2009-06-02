@@ -2,8 +2,14 @@ require 'test_helper'
 
 class BudgetsControllerTest < ActionController::TestCase
   logged_in_as :quentin do
-    should "flunk" do
-      flunk
+    context "on GET to :show" do
+      setup do
+        get :show
+      end
+
+      should_respond_with :success
+      should_render_template "show"
+      should_render_a_form
     end
   end
 
