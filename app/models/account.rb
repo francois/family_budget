@@ -12,7 +12,7 @@ class Account < ActiveRecord::Base
   before_validation {|a| a.purpose = a.purpose.downcase unless a.purpose.blank?}
   validates_inclusion_of :purpose, :in => ValidPurposes
 
-  has_many :budgets, :order => "year, month"
+  has_many :budgets, :order => "starting_on"
 
   named_scope :assets, :conditions => {:purpose => Asset}
   named_scope :liabilities, :conditions => {:purpose => Liability}
