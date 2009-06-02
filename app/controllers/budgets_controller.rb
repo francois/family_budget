@@ -1,6 +1,9 @@
 class BudgetsController < ApplicationController
   before_filter :load_budget_date
 
+  attr_reader :budget_date, :budget_year, :budget_month
+  helper_method :budget_date, :budget_year, :budget_month
+
   def show
     @periods = [@budget_date, @budget_date << 1, @budget_date << 2]
 
@@ -20,9 +23,6 @@ class BudgetsController < ApplicationController
   end
 
   protected
-  attr_reader :budget_date, :budget_year, :budget_month
-  helper_method :budget_date, :budget_year, :budget_month
-
   def load_budget_date
     @budget_date = current_date
     @budget_year, @budget_month = budget_date.year, budget_date.month
