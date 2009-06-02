@@ -43,10 +43,10 @@ class Account < ActiveRecord::Base
   attr_accessible :name, :purpose, :family
 
   def real_amount_in_period(year, month)
-    debits = self.family.transfers.all_debits_by_account_year_month(self, year, month)
+    debits  = self.family.transfers.all_debits_by_account_year_month(self, year, month)
     credits = self.family.transfers.all_credits_by_account_year_month(self, year, month)
 
-    debit_amount = debits.map(&:amount).compact.sum
+    debit_amount  = debits.map(&:amount).compact.sum
     credit_amount = credits.map(&:amount).compact.sum
 
     case purpose

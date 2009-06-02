@@ -4,7 +4,7 @@ class BudgetsController < ApplicationController
   def show
     @periods = [@budget_date, @budget_date << 1, @budget_date << 2]
 
-    @income_accounts = current_family.accounts.incomes
+    @income_accounts  = current_family.accounts.incomes
     @expense_accounts = current_family.accounts.expenses
   end
 
