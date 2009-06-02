@@ -58,7 +58,7 @@ class Account < ActiveRecord::Base
   end
 
   def budget_amount_in_period(year, month)
-    self.budgets.for_account_year_month(self, year, month).amount
+    self.budgets.for_account_year_month(self, year, month).map(&:amount).sum
   end
 
   def to_s
