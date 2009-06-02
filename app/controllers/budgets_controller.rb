@@ -15,7 +15,8 @@ class BudgetsController < ApplicationController
     Budget.transaction do
       params[:budget].each do |account_id, amount|
         amount = amount.blank? ? "0" : amount
-        current_family.budgets.for_account_id_year_month(account_id, @budget_year, @budget_month).update_attributes!(:amount => amount)
+        budget = current_family.budgets.find_or_initialize_by_account_id_and_starting_on(account_id, budget_date)
+        budget.update_attributes!(:amount => amount)
       end
     end
 
