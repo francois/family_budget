@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>NotreBudget.com</title>
+    <%= stylesheet_link_tag "../ext-3.0-rc2/resources/css/ext-all.css", "../ext-3.0-rc2/resources/css/xtheme-aero.css" %>
+    <%= javascript_include_tag "../ext-3.0-rc2/adapter/ext/ext-base.js", "../ext-3.0-rc2/ext-all#{'-debug' if Rails.env.development?}.js" %>
+    <%= javascript_include_tag "../ext-3.0-rc2/examples/ux/TabCloseMenu.js" %>
+    <%= javascript_include_tag "extjs-application" %>
+  </head>
+  <body>
+    <noscript>
+      <p>You do not have JavaScript enabled: the JavaScript interface cannot be used.  Please use the <%= link_to "HTML", root_url %> interface instead.</p>
+    </noscript>
+  </body>
+</html>
