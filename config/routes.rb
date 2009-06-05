@@ -11,4 +11,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people, :families, :imports, :bank_transactions
   map.resource :session
   map.root :controller => "dashboards", :action => "show"
+
+  map.resource :app
 end
