@@ -9,6 +9,6 @@
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => "transfer", :collection => current_family.transfers.for_account(@account).within_period(@dates.sort.first .. @dates.sort.last) %>
+    <%= render :partial => "transfer", :collection => current_family.transfers.for_account(@account).within_period(@dates.sort.first .. @dates.sort.last).all(:order => "posted_on") %>
   </tbody>
 </table>
