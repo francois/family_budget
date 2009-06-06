@@ -26,7 +26,7 @@ class BankTransactionsController < ApplicationController
   def destroy
     bank_transaction.ignore!
     respond_to do |format|
-      format.html { redirect_to(budget_account_url(bank_transaction.account) }
+      format.html { redirect_to(budget_account_url(bank_transaction.account)) }
       format.js
     end
   end
