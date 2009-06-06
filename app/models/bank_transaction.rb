@@ -41,6 +41,10 @@ class BankTransaction < ActiveRecord::Base
   end
 
   def ignore!
-    update_attribute(:ignored_at, Time.now.utc)
+    if transfers.empty?
+      update_attribute(:ignored_at, Time.now.utc)
+    else
+      transfers.each(&:destroy)
+    end
   end
 end
