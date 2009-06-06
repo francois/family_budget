@@ -3,7 +3,8 @@
   <%= link_to("#{@next_account.name} &raquo;", @next_account, :class => "next") if @next_account %>
 </div>
 <h1><%=h @account.name %></h1>
-<%= account_spending_history(@account, @dates) %>
+<p><%= link_to("Modifier les détails", edit_account_url(@account)) %></p>
+<%= account_spending_history(@account, @dates) if @account.expense_or_income? %>
 <table>
   <thead>
     <tr>

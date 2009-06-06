@@ -66,6 +66,10 @@ class Account < ActiveRecord::Base
     self.budgets.for_account_year_month(self, year, month).map(&:amount).sum
   end
 
+  def expense_or_income?
+    expense? || income?
+  end
+
   def to_s
     name
   end
