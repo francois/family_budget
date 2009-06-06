@@ -80,11 +80,11 @@ class Account < ActiveRecord::Base
 
   class << self
     def most_active_income_in_period(period, options={})
-      in_period(period).purposes(Account::Income).by_most_credited.all
+      in_period(period).purposes(Account::Income).by_most_credited.all(:order => "amount DESC")
     end
 
     def most_active_expense_in_period(period, options={})
-      in_period(period).purposes(Account::Expense).by_most_debited.all
+      in_period(period).purposes(Account::Expense).by_most_debite.all(:order => "amount DESC")
     end
   end
 end
