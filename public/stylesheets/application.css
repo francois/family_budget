@@ -83,6 +83,9 @@ p.help { font-size: 80%; margin: .2em 0 0 0; }
 .budget tbody td.budget, .budget tbody td.real { width: 5em; text-align: right; }
 .budget td.over { border: 3px solid red; }
 
+.inline-nav a { width: 50%; display: block; float: left; }
+.inline-nav a.next { text-align: right; }
+
 /* 
 Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
    dark green:          #365C4A

@@ -15,6 +15,10 @@ class AccountsController < ApplicationController
   end
 
   def show
+    accounts          = current_family.accounts.all(:order => "name")
+    @next_account     = accounts[accounts.index(@account) + 1]
+    @previous_account = accounts[accounts.index(@account) - 1]
+
     # Can't seem to find another way to do it, so go with the flow...
     # We need to ensure we have a date object for each period we're interested in
     @dates = []

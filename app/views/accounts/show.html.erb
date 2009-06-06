@@ -1,3 +1,7 @@
+<div class="inline-nav">
+  <%= link_to("&laquo; #{@previous_account.name}", @previous_account, :class => "prev") if @previous_account %>
+  <%= link_to("#{@next_account.name} &raquo;", @next_account, :class => "next") if @next_account %>
+</div>
 <h1><%=h @account.name %></h1>
 <%= account_spending_history(@account, @dates) %>
 <table>
