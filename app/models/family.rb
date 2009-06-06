@@ -2,11 +2,11 @@ require "digest/sha1"
 
 class Family < ActiveRecord::Base
   has_many :people, :dependent => :destroy
-  has_many :transfers, :dependent => :destroy
+  has_many :transfers, :dependent => :destroy, :order => "posted_on"
   has_many :accounts, :order => "name", :dependent => :destroy
   has_many :budgets, :order => "account_id, starting_on", :dependent => :destroy
   has_many :bank_accounts
-  has_many :bank_transactions
+  has_many :bank_transactions, :order => "posted_on"
 
   validates_presence_of :name
   validates_uniqueness_of :name
