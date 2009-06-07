@@ -26,6 +26,7 @@ Ext.onReady(function() {
             allowBlank: false,
             // This is <INPUT name="">, which ActionController makes available as params[:object][:value]
             name: 'object[value]',
+            // Show only if field is empty, kind of a help message
             emptyText:'200s = success, 200f = failure, 400-599 = server response',
             msgTarget: 'qtip',
             listeners: {
