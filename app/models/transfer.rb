@@ -39,7 +39,7 @@ class Transfer < ActiveRecord::Base
     end
   }
   named_scope :for_account, lambda {|account| {:conditions => ["debit_account_id = :account_id OR credit_account_id = :account_id", {:account_id => account.id}]}}
-  named_scope :by_posted_on, :order => "posted_on"
+  named_scope :by_posted_on, :order => "posted_on DESC"
 
   def period
     read_attribute(:period) || posted_on.at_beginning_of_month.to_date
