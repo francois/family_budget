@@ -13,4 +13,5 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "dashboards", :action => "show"
 
   map.resource :app, :only => :show
+  map.resources :objects
 end

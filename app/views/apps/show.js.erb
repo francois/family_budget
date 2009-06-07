@@ -17,7 +17,56 @@ Ext.onReady(function() {
     var budgetPanel = {
       title: 'Budget',
       closable: false,
-      items: {html: '<p>Budget</p>'}};
+      items: [
+      {
+        xtype: 'panel',
+        items: [
+        new Ext.form.TextField({
+            label: 'Server Response Code:',
+            allowBlank: false,
+            name: 'object[value]',
+            emptyText:'200s = success, 200f = failure, 400-599 = server response',
+            msgTarget: 'qtip',
+            listeners: {
+              change: function(me, newValue, oldValue) {
+                var requestParams = {};
+                requestParams[me.name] = me.getValue();
+
+                me.setDisabled(true);
+                me.getEl().frame();
+                Ext.Ajax.request({
+                    url: <%= object_url(:id => 42).to_json %>,
+                    method: 'put',
+                    params: requestParams,
+                    success: function(response, options) {
+                      var result = Ext.decode(response.responseText);
+                      if (result.success) {
+                        // Successful, NOP
+                      } else {
+                        // Validation failure, ensure field is invalid and show squiggly lines
+                        me.markInvalid(result.errors.toString());
+                      }
+                      me.setDisabled(false);
+                    },
+                    failure: function(response, options) {
+                      // Server error, notify user
+                      Ext.MessageBox.show({
+                          title : 'Value unsaved',
+                          msg : "The server returned: '" + response.responseText + "'",
+                          buttons: this.OK,
+                          closable: true,
+                          icon: Ext.MessageBox.ERROR
+                        });
+                      me.setDisabled(false);
+                    }
+                  });
+              }}
+          }),
+        new Ext.Button({
+            text: 'Click Me!'
+          })]
+      },
+      {html: '<p>Budget</p>'}]};
 
     // The main panel, where everything is
     var mainPanel = new Ext.TabPanel({
