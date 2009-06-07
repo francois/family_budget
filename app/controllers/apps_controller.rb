@@ -4,6 +4,6 @@ class AppsController < ApplicationController
   ssl_required :show
 
   def show
-    render
+    respond_to :html, :js
   end
 end

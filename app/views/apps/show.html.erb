@@ -6,7 +6,7 @@
     <%= stylesheet_link_tag "../ext-3.0-rc2/resources/css/ext-all.css", "../ext-3.0-rc2/resources/css/xtheme-aero.css" %>
     <%= javascript_include_tag "../ext-3.0-rc2/adapter/ext/ext-base.js", "../ext-3.0-rc2/ext-all#{'-debug' if Rails.env.development?}.js" %>
     <%= javascript_include_tag "../ext-3.0-rc2/examples/ux/TabCloseMenu.js" %>
-    <%= javascript_include_tag "extjs-application" %>
+    <%= javascript_include_tag app_url(:format => :js) %>
   </head>
   <body>
     <noscript>
