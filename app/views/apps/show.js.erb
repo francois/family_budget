@@ -32,13 +32,18 @@ Ext.onReady(function() {
                 var requestParams = {};
                 requestParams[me.name] = me.getValue();
 
+                // Prevent cascading changes until the field has been saved
                 me.setDisabled(true);
+
+                // Highlight the field that's saving for the user
                 me.getEl().frame();
+
                 Ext.Ajax.request({
                     url: <%= object_url(:id => 42).to_json %>,
                     method: 'put',
                     params: requestParams,
                     success: function(response, options) {
+                      // Ext.decode parses a JSON string into a JS object
                       var result = Ext.decode(response.responseText);
                       if (result.success) {
                         // Successful, NOP
