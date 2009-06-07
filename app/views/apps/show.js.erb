@@ -24,6 +24,7 @@ Ext.onReady(function() {
         new Ext.form.TextField({
             label: 'Server Response Code:',
             allowBlank: false,
+            // This is <INPUT name="">, which ActionController makes available as params[:object][:value]
             name: 'object[value]',
             emptyText:'200s = success, 200f = failure, 400-599 = server response',
             msgTarget: 'qtip',
