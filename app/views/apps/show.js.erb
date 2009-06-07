@@ -42,6 +42,10 @@ Ext.onReady(function() {
                     url: <%= object_url(:id => 42).to_json %>,
                     method: 'put',
                     params: requestParams,
+                    callback: function() {
+                      // Must do that on all branches, so do it before success/failure callbacks
+                      me.setDisabled(false);
+                    },
                     success: function(response, options) {
                       // Ext.decode parses a JSON string into a JS object
                       var result = Ext.decode(response.responseText);
@@ -51,7 +55,6 @@ Ext.onReady(function() {
                         // Validation failure, ensure field is invalid and show squiggly lines
                         me.markInvalid(result.errors.toString());
                       }
-                      me.setDisabled(false);
                     },
                     failure: function(response, options) {
                       // Server error, notify user
@@ -62,7 +65,6 @@ Ext.onReady(function() {
                           closable: true,
                           icon: Ext.MessageBox.ERROR
                         });
-                      me.setDisabled(false);
                     }
                   });
               }}
