@@ -77,6 +77,89 @@ Ext.onReady(function() {
       },
       {html: '<p>Budget</p>'}]};
 
+    var bankTransactionsStore = new Ext.data.ArrayStore({
+        id: 'bank-transactions-store',
+        data: [
+          {id: 12311, name: 'VIR. ELEC.', memo: '1231', amount: '-123.22', postedOn: '2009-04-09', bankAccount: 'Compte Francois', transferIds: [212]},
+          {id: 12312, name: 'PAIEMENT VISA', memo: '', amount: '-200.00', postedOn: '2009-04-09', bankAccount: 'Compte Maison', transferIds: []},
+          {id: 12313, name: 'PAIEMENT VISA', memo: '', amount: '-300.00', postedOn: '2009-05-09', bankAccount: 'Compte Francois', transferIds: []},
+          {id: 12314, name: 'PAIEMENT VISA', memo: '', amount: '-180.00', postedOn: '2009-06-09', bankAccount: 'Compte Stefanny', transferIds: []},
+        ],
+        fields: [
+          'id',
+          'name',
+          'memo',
+          {name: 'amount', type: 'float'},
+          {name: 'postedOn', type: 'date', dateFormat: 'Y-m-d'}
+        ]});
+
+    var bankAccountsStore = new Ext.data.ArrayStore({
+        id: 'bank-accounts-store',
+        fields: [
+          'id', 'name'
+        ],
+        data: [
+          {id: 9291, name: 'Compte Francois'},
+          {id: 9292, name: 'Compte Maison'},
+          {id: 9293, name: 'Compte Stefanny'}
+        ]});
+
+    var bankTransactionsPanel = {
+      title: 'Transactions Banquaires',
+      closable: false,
+      items: new Ext.grid.GridPanel({
+          height: 450,
+          stripeRows: true,
+          bbar: [
+          new Ext.PagingToolbar({
+              store: bankTransactionsStore,
+              pageSize: 400,
+              prependButtons: false,
+              items: [
+              '-',
+              {emptyText: 'Période', width: 80, xtype: 'textfield'},
+              ' ',
+              {
+                xtype: 'combo',
+                emptyText: 'Tous les comptes',
+                store: bankAccountsStore,
+                valueField: 'id',
+                displayField: 'name',
+                forceSelection: false,
+                mode: 'local',
+                triggerAction: 'all',
+                selectOnFocus: true,
+                typeAhead: true
+              },
+              ' ',
+              {
+                xtype: 'combo',
+                emptyText: 'Non-traitées',
+                width: 96,
+                value: 'unprocessed',
+                mode: 'local',
+                triggerAction: 'all',
+                selectOnFocus: true,
+                typeAhead: true,
+                store: [
+                  ['unprocessed', 'Non-traitées'],
+                  ['processed', 'Traitées'],
+                  ['all', 'Toutes']]
+              },
+              ' ',
+              {emptyText: 'Texte', xtype: 'textfield'},
+              '-',
+              {xtype: 'button', text: 'Vider les filtres'}]})],
+          columns: [
+            {header: 'Description', dataIndex: 'name'},
+            {header: 'Description', dataIndex: 'memo'},
+            {header: 'Montant', renderer: 'usMoney', dataIndex: 'amount', align: 'right'},
+            {header: 'Date', dataIndex: 'postedOn', align: 'right', sortable: true},
+            {header: 'Compte', dataIndex: 'bankAccount', sortable: true}
+          ],
+          store: bankTransactionsStore
+      })};
+
     // The main panel, where everything is
     var mainPanel = new Ext.TabPanel({
         id: 'main-panel',
@@ -87,8 +170,8 @@ Ext.onReady(function() {
         autoHeight: true,
         defaults: {autoScroll:true},
         plugins: new Ext.ux.TabCloseMenu(),
-        activeTab: 0, // Ensure dashboard is selected on initial render
+        activeTab: 2, // Ensure dashboard is selected on initial render
         items: [
-          dashboardPanel, budgetPanel]
+          dashboardPanel, budgetPanel, bankTransactionsPanel]
       });
   });
