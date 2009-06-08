@@ -108,7 +108,7 @@ module ApplicationHelper
         pc.data line.first, line.last.to_f
       end
 
-      return image_tag(pc.to_url(options[:extras] || {}), :size => options[:size])
+      return image_tag(pc.to_url(options[:extras] || {}), :size => options[:size], :style => options[:style])
     end
   end
 
