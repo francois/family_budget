@@ -2,7 +2,8 @@ class DashboardsController < ApplicationController
   helper_method :current_period, :most_active_expense_accounts, :most_active_income_accounts, :total_incomes_amount, :total_expenses_amount, :total_expenses_per_period, :total_incomes_per_period, :dates_for_period
 
   def show
-    render
+    @previous_period = current_period << 1
+    @next_period     = current_period >> 1
   end
 
   protected
@@ -10,7 +11,8 @@ class DashboardsController < ApplicationController
     @current_period ||= if params[:period].blank? then
                           current_date.beginning_of_month.to_date
                         else
-                          params[:period].gsub(/\D/, "")
+                          md = params[:period].gsub(/\D/, "").match(/\A(\d{4})(\d{2})\Z/)
+                          Date.new(md[1].to_i, md[2].to_i, 1)
                         end
   end
 

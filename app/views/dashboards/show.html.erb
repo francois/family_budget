@@ -1,6 +1,10 @@
 <% page_title "Sommaire des mouvements d'argent" %>
 
 <div id="pie-wrap">
+  <div class="inline-nav">
+    <%= link_to("&laquo; #{@previous_period.to_s(:db)}", root_url(:period => @previous_period.to_s(:period)), :class => "prev") if @previous_period %>
+    <%= link_to("#{@next_period.to_s(:db)} &raquo;", root_url(:period => @next_period.to_s(:period)), :class => "next") if @next_period %>
+  </div>
   <div id="expenses">
     <h3>Sommaire des dépenses</h3>
     <%= pie_chart(most_active_expense_accounts.map {|account| [account.name, account.amount]}, :title => "Comptes de dépense les plus actifs (#{current_period})", :size => "320x140") %>

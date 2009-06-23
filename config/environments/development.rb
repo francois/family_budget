@@ -19,3 +19,5 @@ config.action_mailer.perform_deliveries = false
 
 ExceptionNotifier.exception_recipients = %w(your-email-address@domain.com)
 ExceptionNotifier.sender_address = %("Application Error" <app.error@family_budget.com>)
+
+config.gem "ruby-debug"
