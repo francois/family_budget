@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
       @dates << date.at_beginning_of_month.to_date
     end
 
-    @transfers = current_family.transfers.for_account(@account).within_period(@dates.sort.first .. @dates.sort.last).paginate(:page => params[:page], :order => "posted_on DESC")
+    @transfers = current_family.transfers.for_account(@account).within_period(@dates.sort.first .. (@dates.sort.last >> 1)).paginate(:page => params[:page], :order => "posted_on DESC")
   end
 
   def new
