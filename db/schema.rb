@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20081218201104) do
     t.integer  "family_id"
     t.integer  "bank_account_id"
     t.date     "posted_on"
-    t.decimal  "amount"
+    t.decimal  "amount",          :precision => 12, :scale => 2
     t.string   "name"
     t.string   "memo"
     t.string   "fitid"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20081218201104) do
   create_table "budgets", :force => true do |t|
     t.integer  "family_id"
     t.integer  "account_id"
-    t.decimal  "amount",      :default => 0.0
+    t.decimal  "amount",      :precision => 9, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "starting_on"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20081218201104) do
     t.datetime "updated_at"
     t.integer  "debit_account_id"
     t.integer  "credit_account_id"
-    t.decimal  "amount"
+    t.decimal  "amount",            :precision => 9, :scale => 2
   end
 
 end
