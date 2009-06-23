@@ -5,6 +5,9 @@
 <h1><%=h @account.name %></h1>
 <p><%= link_to("Modifier les détails", edit_account_url(@account)) %></p>
 <%= account_spending_history(@account, @dates) if @account.expense_or_income? %>
+
+<%= will_paginate(@transfers) %>
+
 <table>
   <thead>
     <tr>
@@ -14,6 +17,8 @@
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => "transfer", :collection => current_family.transfers.for_account(@account).within_period(@dates.sort.first .. @dates.sort.last).all(:order => "posted_on") %>
+    <%= render :partial => "transfer", :collection => @transfers %>
   </tbody>
 </table>
+
+<%= will_paginate(@transfers) %>

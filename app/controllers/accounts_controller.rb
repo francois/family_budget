@@ -25,6 +25,8 @@ class AccountsController < ApplicationController
     (11.months.ago.to_date .. (Date.today >> 1)).step(31) do |date|
       @dates << date.at_beginning_of_month.to_date
     end
+
+    @transfers = current_family.transfers.for_account(@account).within_period(@dates.sort.first .. @dates.sort.last).paginate(:page => params[:page], :order => "posted_on DESC")
   end
 
   def new
