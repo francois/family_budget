@@ -8,8 +8,10 @@
   <div id="expenses">
     <h3>Sommaire des dépenses</h3>
     <%= pie_chart(most_active_expense_accounts.map {|account| [account.name, account.amount]}, :title => "Comptes de dépense les plus actifs (#{current_period})", :size => "320x140") %>
-    <table>
+    <table id="most-active-expense-accounts">
       <caption>Comptes de dépenses les plus actifs</caption>
+      <col class="account"/>
+      <col class="amount"/>
       <thead>
         <th>Compte</th>
         <th>Montant</th>
@@ -28,8 +30,10 @@
   <div id="incomes">
     <h3>Sommaire des revenus</h3>
     <%= pie_chart(most_active_income_accounts.map {|account| [account.name, account.amount]}, :title => "Comptes de revenus les plus actifs (#{current_period})", :size => "320x140") %>
-    <table>
+    <table id="most-active-income-accounts">
       <caption>Comptes de revenus les plus actifs</caption>
+      <col class="account"/>
+      <col class="amount"/>
       <thead>
         <th>Compte</th>
         <th>Montant</th>

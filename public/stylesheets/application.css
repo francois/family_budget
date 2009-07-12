@@ -84,3 +84,16 @@ body { margin: 0; }
 
 .inline-nav a { width: 50%; display: block; float: left; }
 .inline-nav a.next { text-align: right; }
+
+/* Table Styling */
+table { border-collapse: collapse; border: 2px solid #0b5fa5; background: #ffc473; }
+th, td { padding: 0.1em 1em; }
+caption { font-size: 1.2em; font-weight: bold; margin: 1em 0; }
+col { border-right: 1px solid #ccc; }
+col:nth-last-child(0) { border: none; }
+thead { background: #ffae40; border-bottom: 1px solid #0b5fa5; }
+tr:nth-child(even) { background: #ffae40; }
+th { font-weight: normal; text-align: left; }
+td.amount, th.amount, col.amount { text-align: right; }
+tr:hover { color: white; background-color: #ff9400; }
+tfoot tr:hover, thead tr:hover { background-color: transparent; color: inherit; }
