@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :login_required
 
+  filter_parameter_logging :password
+
   protected
   def current_family
     @_current_family ||= self.current_person.family if logged_in?
