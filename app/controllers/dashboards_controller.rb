@@ -1,9 +1,16 @@
 class DashboardsController < ApplicationController
+  skip_before_filter :login_required, :only => %w(show)
+
   helper_method :current_period, :most_active_expense_accounts, :most_active_income_accounts, :total_incomes_amount, :total_expenses_amount, :total_expenses_per_period, :total_incomes_per_period, :dates_for_period
 
   def show
-    @previous_period = current_period << 1
-    @next_period     = current_period >> 1
+    if logged_in? then
+      @previous_period = current_period << 1
+      @next_period     = current_period >> 1
+      render :action => :show
+    else
+      render :action => :welcome
+    end
   end
 
   protected
