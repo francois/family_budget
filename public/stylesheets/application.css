@@ -23,7 +23,7 @@ ol li { list-style-type: decimal; }
 /* Custom Styles from here */
 body { margin: 0; }
 #head { background: #ffc473; }
-#head h1 { color: #0b5fa5; margin-top: 0; padding: 16px 0 18px 16px; letter-spacing: 0.3px; border-bottom: 2px #0b5fa5 solid; }
+#head h1 { color: #0b5fa5; margin-top: 0; padding: 16px 0px 20px 16px; letter-spacing: 0.3px; border-bottom: 2px #0b5fa5 solid; }
 #head #secnav { float: right; }
 #head #mainnav { float: right; clear: right; margin-top: 3px; }
 /* Safari needs margin-top: 1px; instead */
@@ -41,6 +41,7 @@ body { margin: 0; }
   border-top-right-radius: 5px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  background-color: #ffae40;
 }
 
 #head #mainnav li:hover {
@@ -55,7 +56,7 @@ body { margin: 0; }
 #transfers #nav-transfers,
 #accounts #nav-accounts,
 #bank_accounts #nav-bank_accounts
-  { background-color: white; }
+  { background-color: white !important; padding-bottom: 8px; }
 
 .navigation { list-style-type: none; margin: 0; padding: 0; }
 .navigation li { display: block; float: left; margin: 0 4px; line-height: 16px; padding: 6px; }
@@ -74,3 +75,5 @@ body { margin: 0; }
 #nav-transfers          a { background-image: url(../images/icons/report.png);           } 
 #nav-accounts           a { background-image: url(../images/icons/page_white_stack.png); } 
 #nav-bank_accounts      a { background-image: url(../images/icons/page.png);             } 
+
+#content { margin: 0 1em; font-size: 1.5em; }
