@@ -105,3 +105,11 @@ table.budget colgroup col { width: 5em; }
 table.budget .over { font-weight: bold; }
 table.budget#incomes .over { color: green; }
 table.budget#expenses .over { color: red; }
+
+/* Sidebar */
+#sidebar { float: right; }
+
+/* Bank Transactions screen, the right-hand account selector */
+#account_selector { font-size: 0.8em; overflow: auto; height: 50em; width: 20em; position: fixed; margin-left: -20em; }
+#account_selector ul { padding: 0; margin: 0; }
+#account_selector ul li { list-style-type: none; }
