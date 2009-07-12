@@ -78,5 +78,9 @@ body { margin: 0; }
 
 #content { margin: 0 1em; font-size: 1.5em; }
 
+#pie-wrap { width: 780px; margin: 1em auto; }
 #pie-wrap #expenses, #pie-wrap #incomes { width: 45%; margin: 0 1.25%; float: left; }
 #history { clear: both; text-align: center; }
+
+.inline-nav a { width: 50%; display: block; float: left; }
+.inline-nav a.next { text-align: right; }
