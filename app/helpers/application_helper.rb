@@ -112,16 +112,16 @@ module ApplicationHelper
     end
   end
 
-  def line_chart(data, options={})
-    options.reverse_merge!(:size => "320x200", :title => "Pie Chart")
+  def expense_and_income_history_graph
+    options = {:size => "480x200", :title => "Variation des revenus et dépenses"}
     GoogleChart::LineChart.new(options[:size], options[:title]) do |lc|
-      data.each do |label, (points, color)|
-        lc.data label, points, color
-      end
+      incomes, expenses = total_incomes_per_period, total_expenses_per_period
+      lc.data "Revenus",  incomes,  "00ff00"
+      lc.data "Dépenses", expenses, "ff0000"
 
       labels = dates_for_period.map {|d| d.strftime("%b")}
       lc.axis :x, :labels => labels
-      lc.axis :y, :range => [0, data.map(&:last).map(&:first).flatten.compact.max]
+      lc.axis :y, :range => [0, [incomes, expenses].flatten.max * 1.1]
       return image_tag(lc.to_url(options[:extras] || {}), :size => options[:size])
     end
   end
