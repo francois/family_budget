@@ -1,40 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title><%= page_title %></title>
-  <%= stylesheet_link_tag "application" %>
-  <%= javascript_include_tag(jquery_files, "application") %>
-  <!--[if lt IE 7]><script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script><![endif]-->
-  <!--[if lt IE 8]><script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script><![endif]--></head>
-<body class="<%= body_classes %>">
-  <div id="doc2" class="yui-t1">
-    <div id="hd"><h1><%=h @page_title %></h1></div>
-    <div id="bd">
-      <div id="yui-main">
-        <div class="yui-b">
-          <div class="yui-ge">
-            <div class="yui-u first">
-              <div id="flash">
-                <%= render_flash_messages %>
-              </div>
-              <%= yield %>
-            </div>
-            <div class="yui-u">
-              <%= yield :sidebar %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="yui-b">
-        <%= render :partial => "shared/navigation" if logged_in? -%>
-        <%= render :partial => "shared/login" unless logged_in? -%>
-      </div>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title><%= page_title %></title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag(jquery_files, "application") %>
+    <!--[if lt IE 7]><script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script><![endif]-->
+    <!--[if lt IE 8]><script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script><![endif]--></head>
+  <body class="<%= body_classes %>">
+    <div id="head">
+      <h1>NotreBudget.com</h1>
+      <ul id="secnav" class="navigation">
+        <% if logged_in? then %>
+          <li id="families"><%= link_to "Ma Famille", people_path %></li>
+          <li><%= link_to "Déconnecter", session_path, :method => :delete %></li>
+        <% else %>
+          <li id="sessions"><%= link_to "Connecter", new_session_path %></li>
+        <% end %>
+      </ul>
     </div>
-    <div id="ft">
+    <h2><%=h @page_title %></h2>
+    <div id="flash">
+      <%= render_flash_messages %>
+    </div>
+    <%= yield %>
+    <%= yield :sidebar %>
+    <%= render :partial => "shared/navigation" if logged_in? -%>
+    <%= render :partial => "shared/login" unless logged_in? -%>
+    <div id="footer">
       <p>Copyright 2008-<%= Date.today.year %>, Solutions Technologiques Internationales.</p>
       <p>Tous droits réservés.</p>
     </div>
-  </div>
-</body>
+  </body>
 </html>

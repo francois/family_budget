@@ -1,4 +1,4 @@
-@import url("/stylesheets/yui/reset-fonts-grids.css");
+@import url("/stylesheets/yui/reset-fonts.css");
 html { font-size: 62.5%; }
 
 /* http://www.brownbatterystudios.com/sixthings/2007/03/14/lucida-hybrid-the-grande-alternative/ */
@@ -19,3 +19,8 @@ p { text-align: justify; }
 li { display: list-item; }
 ul li { list-style-type: square; }
 ol li { list-style-type: decimal; }
+
+/* Custom Styles from here */
+body { margin: 0; }
+#head { background: #ffc473; }
+#head h1 { color: #0b5fa5; margin-top: 0; padding: 16px 0 0 16px; letter-spacing: 0.3px; }
