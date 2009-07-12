@@ -33,12 +33,12 @@
         <h1>NotreBudget.com</h1>
       </div>
       <div id="content">
+        <div id="sidebar">
+          <%= yield :sidebar %>
+        </div>
         <h2><%=h @page_title %></h2>
         <div id="flash">
           <%= render_flash_messages %>
-        </div>
-        <div id="sidebar">
-          <%= yield :sidebar %>
         </div>
         <%= yield %>
       </div>

@@ -108,6 +108,7 @@ table.budget#expenses .over { color: red; }
 
 /* Sidebar */
 #sidebar { float: right; max-width: 240px; }
+#sidebar h2:first-of-type { margin-top: 0; }
 
 /* Bank Transactions screen, the right-hand account selector */
 #account_selector { font-size: 0.8em; overflow: auto; height: 50em; width: 24em; position: fixed; margin-left: -24em; }
