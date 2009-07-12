@@ -1,96 +1,21 @@
 @import url("/stylesheets/yui/reset-fonts-grids.css");
-html { font-size: 62.5%; color: #5C5E42; background: #BFB491; }
-legend { color: #5C5E42; }
+html { font-size: 62.5%; }
 
 /* http://www.brownbatterystudios.com/sixthings/2007/03/14/lucida-hybrid-the-grande-alternative/ */
-body { font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif; font-size: 1.5em; line-height: 1.7; }
-h1, h2, h3, h4, h5, h6, strong, em, b, i, thead th, caption, legend { color: #365C4A; font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", sans-serif; }
+body { font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif; }
+h1, h2, h3, h4, h5, h6, strong, em, b, i, thead th, caption, legend { font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", sans-serif; }
 h1, h2, h3, h4, h5, h6, strong, b, thead th, caption, legend { font-weight: bold; }
 em, i { font-style: italic; }
 
-h1 { font-size: 2em; letter-spacing: -0.05em; color: #383B2A; }
-h2 { font-size: 1.4em; letter-spacing: 0.05em; color: #365C4A; }
-h3 { font-size: 1.1em; color: #93722F; }
+h1 { font-size: 2em; letter-spacing: -0.05em; }
+h2 { font-size: 1.4em; letter-spacing: 0.05em; }
+h3 { font-size: 1.1em; }
 
 h1 + h2, h2 + h3, h3 + h4 { margin-top: -0.5em; }
 
 p, ul, ol, table { margin: 1em 0; }
 p { text-align: justify; }
 
-.figure { margin: 0; float: left; }
-.figure.reverse { float: right; }
-.figure img { margin: 0.33em 1em 1em 0; padding: 2px; border: 1px solid #93722F; }
-.figure.reverse img { margin: 0.33em 0 1em 1em; }
-.figure p { margin: -1em auto 1em auto; width: 26em; font-size: .7em; }
-.figure + p { margin-top: 0; }
-
 li { display: list-item; }
 ul li { list-style-type: square; }
 ol li { list-style-type: decimal; }
-
-form label, form legend { letter-spacing: -0.05em; }
-form p.radio { margin: 0; }
-
-table { border-collapse: collapse; font-size: .9em; width: 100%; color: #383B2A; }
-table caption { font-size: 1.1em; }
-table thead { background: #93722F; line-height: 1; }
-table thead th { text-align: center; color: #383B2A; }
-table tfoot { background: #93722F; text-align: center; color: #BFB491; }
-table th, table td { padding: 2px .5em; border: 1px solid #93722F; }
-table td.amount, table td.amount input { text-align: right; }
-
-a { color: #365C4A; }
-a:visited { color: #383B2A; }
-a:hover { color: #93722F; }
-
-ul.navigation { margin: 0; letter-spacing: -0.12em; list-style-type: none; }
-ul.navigation li { list-style-type: none; }
-.yui-u { font-size: .8em; }
-.yui-u.first { font-size: 1em; }
-.yui-b { padding-left: .5em; }
-
-#ft { font-size: 0.67em; color: #383B2A; }
-#ft p { text-align: center; margin: 0; line-height: 1.2; }
-
-q { font-family: "Georgia", serif; }
-q:before { content: "\201C"; padding-right: 0.1em; }
-q:after { content: "\201D"; padding-left: 0.1em; }
-
-.static { position: fixed; }
-
-#bank_transactions .account { color: #5C5E42; display: block; }
-#bank_transactions .handle { float: right; padding: 2px; border: 1px solid #383B2A; background: #93722F; color: #383B2A; font-size: .8em; cursor: move; }
-#bank_transactions p { margin: 0; }
-#bank_transactions .processed { background: #5C5E42; }
-#bank_transactions .errorText { color: red; font-size: 90%; }
-#bank_transactions .minor { font-size: 80%; }
-
-#splits #template { display: none; }
-
-#flash { margin: 1em auto; padding: .5em; width: 90%; color: #365C4A; }
-#flash .notice, #flash .error { padding: 1em 32px; border: 1px solid #365C4A; background: left no-repeat; margin: .5em 0; line-height: 1; }
-#flash .notice { background-image: url(../images/emoticon_happy.png); }
-#flash .error { background-image: url(../images/error.png); }
-
-form p { margin: .5em 0; }
-p.help { font-size: 80%; margin: .2em 0 0 0; }
-
-#pie-wrap #expenses, #pie-wrap #incomes { width: 49%; }
-#pie-wrap #expenses { float: right; margin-left: 1em; }
-#history { margin: 1em auto; text-align: center; }
-
-.budget input { width: 100%; text-align: right; }
-.budget tbody td.budget, .budget tbody td.real { width: 5em; text-align: right; }
-.budget td.over { border: 3px solid red; }
-
-.inline-nav a { width: 50%; display: block; float: left; }
-.inline-nav a.next { text-align: right; }
-
-/* 
-Colors chosen from: http://www.colourlovers.com/palette/602284/Forest_Elf
-   dark green:          #365C4A
-   3 spoons of creamer: #BFB491
-   Invalid Coastline:   #5C5E42
-   Expert Tracker:      #93722F
-   HEX 383B2A:          #383B2A
-*/
