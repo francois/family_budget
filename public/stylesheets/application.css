@@ -23,14 +23,54 @@ ol li { list-style-type: decimal; }
 /* Custom Styles from here */
 body { margin: 0; }
 #head { background: #ffc473; }
-#head h1 { color: #0b5fa5; margin-top: 0; padding: 16px 0 0 16px; letter-spacing: 0.3px; }
+#head h1 { color: #0b5fa5; margin-top: 0; padding: 16px 0 18px 16px; letter-spacing: 0.3px; border-bottom: 2px #0b5fa5 solid; }
 #head #secnav { float: right; }
+#head #mainnav { float: right; clear: right; margin-top: 3px; }
+/* Safari needs margin-top: 1px; instead */
+
+#head #mainnav li { border: 2px solid #0b5fa5; border-bottom: 0; 
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#head #mainnav li:hover {
+  background-color: #ff9400;
+}
+#head #mainnav li a { color: black; text-decoration: none; }
+
+#dashboards #nav-dashboards,
+#imports #nav-imports,
+#budgets #nav-budgets,
+#bank_transactions #nav-bank_transactions,
+#transfers #nav-transfers,
+#accounts #nav-accounts,
+#bank_accounts #nav-bank_accounts
+  { background-color: white; }
 
 .navigation { list-style-type: none; margin: 0; padding: 0; }
-.navigation li { display: block; float: Left; margin: 0 8px; padding-left: 20px; background: left middle transparent; line-height: 16px; background-repeat: no-repeat !important; }
+.navigation li { display: block; float: left; margin: 0 4px; line-height: 16px; padding: 6px; }
+.navigation a { padding: 0 0 0 20px; background: left middle transparent; background-repeat: no-repeat !important; display: block; }
 
 /* Icons */
-#nav-family  { background-image: url(../images/icons/group.png);      } 
-#nav-signout { background-image: url(../images/icons/disconnect.png); } 
-#nav-signin  { background-image: url(../images/icons/connect.png);    } 
-#nav-signup  { background-image: url(../images/icons/bullet_go.png);  } 
+#nav-people             a { background-image: url(../images/icons/group.png);            } 
+#nav-signout            a { background-image: url(../images/icons/disconnect.png);       } 
+#nav-signin             a { background-image: url(../images/icons/connect.png);          } 
+#nav-signup             a { background-image: url(../images/icons/bullet_go.png);        } 
+
+#nav-dashboards         a { background-image: url(../images/icons/chart_bar.png);        } 
+#nav-imports            a { background-image: url(../images/icons/picture_add.png);      } 
+#nav-budgets            a { background-image: url(../images/icons/pencil.png);           } 
+#nav-bank_transactions  a { background-image: url(../images/icons/folder_database.png);  } 
+#nav-transfers          a { background-image: url(../images/icons/report.png);           } 
+#nav-accounts           a { background-image: url(../images/icons/page_white_stack.png); } 
+#nav-bank_accounts      a { background-image: url(../images/icons/page.png);             } 
