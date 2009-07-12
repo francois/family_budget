@@ -116,3 +116,8 @@ table.budget#expenses .over { color: red; }
 
 #footer { margin: 8em auto; clear: both; width: 40em; }
 #footer p { text-align: center; margin: 0; }
+
+#dashboards.unauthenticated #content { width: 780px; }
+#dashboards #form-signin { float: right; margin-left: 2em; width: 200px; border: 2px solid #0b5fa5; padding: 4px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; background: #ffc473; }
+#dashboards #form-signin h2 { margin-top: 0; color: #0b5fa5; }
+#dashboards #form-signin p { margin: 1em; }

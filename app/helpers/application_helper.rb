@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def body_classes
-    [controller.controller_name, controller.action_name] * " "
+    [controller.controller_name, controller.action_name, logged_in? ? "authenticated" : "unauthenticated"] * " "
   end
 
   def render_flash_messages
