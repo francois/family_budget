@@ -13,3 +13,9 @@
 
   <p><%= submit_tag "S'enregistrer" %></p>
 <% end -%>
+
+<% content_for :sidebar do %>
+  <h2>Avertissement</h2>
+  <p>Ce site est présentement en version bétà.  Le site est construit pour ne pas permettre à vos informations d'être perdues ou exposées, volontairement ou involontairement.</p>
+  <p>En étant l'auteur du site, j'ai accès à toute la base de donnée.  La seule chose que je ne peux pas lire est votre mot de passe.  Si vous recevez un message d'erreur, je recevrai le même message dans mes courriels, avec plus de détails.  Il est alors possible que je regarde les données brutes: vos comptes et transactions.  Mais aussitôt que j'ai terminé, j'aurai oublié ce que j'aurai vu.</p>
+<% end %>
