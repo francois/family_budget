@@ -9,15 +9,16 @@
     <!--[if lt IE 8]><script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script><![endif]--></head>
   <body class="<%= body_classes %>">
     <div id="head">
-      <h1>NotreBudget.com</h1>
       <ul id="secnav" class="navigation">
         <% if logged_in? then %>
-          <li id="families"><%= link_to "Ma Famille", people_path %></li>
-          <li><%= link_to "Déconnecter", session_path, :method => :delete %></li>
+          <li id="nav-family"><%= link_to "Ma Famille", people_path %></li>
+          <li id="nav-signout"><%= link_to "Déconnecter", session_path, :method => :delete %></li>
         <% else %>
-          <li id="sessions"><%= link_to "Connecter", new_session_path %></li>
+          <li id="nav-signup"><%= link_to "Inscription", new_person_path %></li>
+          <li id="nav-signin"><%= link_to "Connecter", new_session_path %></li>
         <% end %>
       </ul>
+      <h1>NotreBudget.com</h1>
     </div>
     <h2><%=h @page_title %></h2>
     <div id="flash">

@@ -24,3 +24,13 @@ ol li { list-style-type: decimal; }
 body { margin: 0; }
 #head { background: #ffc473; }
 #head h1 { color: #0b5fa5; margin-top: 0; padding: 16px 0 0 16px; letter-spacing: 0.3px; }
+#head #secnav { float: right; }
+
+.navigation { list-style-type: none; margin: 0; padding: 0; }
+.navigation li { display: block; float: Left; margin: 0 8px; padding-left: 20px; background: left middle transparent; line-height: 16px; background-repeat: no-repeat !important; }
+
+/* Icons */
+#nav-family  { background-image: url(../images/icons/group.png);      } 
+#nav-signout { background-image: url(../images/icons/disconnect.png); } 
+#nav-signin  { background-image: url(../images/icons/connect.png);    } 
+#nav-signup  { background-image: url(../images/icons/bullet_go.png);  } 
