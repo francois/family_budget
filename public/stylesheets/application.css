@@ -76,7 +76,7 @@ body { margin: 0; }
 #nav-accounts           a { background-image: url(../images/icons/page_white_stack.png); } 
 #nav-bank_accounts      a { background-image: url(../images/icons/page.png);             } 
 
-#content { margin: 0 auto; font-size: 1.5em; width: 75%; max-width: 80em; }
+#content { margin: 0 auto; font-size: 1.4em; width: 75%; max-width: 80em; }
 
 #pie-wrap { width: 780px; margin: 1em auto; }
 #pie-wrap #expenses, #pie-wrap #incomes { width: 45%; margin: 0 1.25%; float: left; }
