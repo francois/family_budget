@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class BankTransactionTest < ActiveSupport::TestCase
-  should_belong_to :family, :bank_account
+  should_belong_to :family, :bank_account, :auto_account
   should_not_allow_mass_assignment_of :family_id, :bank_account_id, :ignored_at
   should_allow_mass_assignment_of :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions
   should_validate_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
@@ -9,9 +9,35 @@ class BankTransactionTest < ActiveSupport::TestCase
   should_allow_values_for :amount, 0, -100, 100, -99.99, 99.99
   should_validate_uniqueness_of :fitid, :scoped_to => :family_id
 
+  context "A new bank transaction" do
+    setup do
+      @bank_transaction = BankTransaction.new(:family => families(:beausoleil), :bank_account => bank_accounts(:checking), :amount => "15.49", :fitid => "120381", :name => "TRANSFER", :memo => "X1V2", :posted_on => Date.today)
+    end
+
+    context "on #save" do
+      setup do
+        @bank_transaction.save!
+      end
+
+      before_should "ask the family for an auto_account" do
+        @bank_transaction.family.expects(:classify_transaction).with(@bank_transaction).returns(accounts(:cell_phone_service))
+      end
+    end
+  end
+
   context "A bank transaction with assigned bank account" do
     setup do
       @bank_transaction = bank_transactions(:credit_card_payment)
+    end
+
+    context "on #save" do
+      setup do
+        @bank_transaction.save!
+      end
+
+      before_should "NOT attempt classification" do
+        @bank_transaction.family.expects(:classify_transaction).never
+      end
     end
 
     context "calling #ignore!" do

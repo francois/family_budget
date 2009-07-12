@@ -1,6 +1,7 @@
 class BankTransaction < ActiveRecord::Base
   belongs_to :family
   belongs_to :bank_account
+  belongs_to :auto_account, :class_name => "Account"
   delegate :account, :to => :bank_account
   has_and_belongs_to_many :transfers
 
@@ -9,6 +10,8 @@ class BankTransaction < ActiveRecord::Base
   validates_numericality_of :amount
   validates_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
   validates_uniqueness_of :fitid, :scope => :family_id
+
+  before_create :attempt_classification
 
   named_scope :with_name_or_memo_like, lambda {|text|
     string = "%#{text}%".downcase
@@ -46,5 +49,9 @@ class BankTransaction < ActiveRecord::Base
     else
       transfers.each(&:destroy)
     end
+  end
+
+  def attempt_classification
+    self.auto_account = self.family.classify_transaction(self)
   end
 end

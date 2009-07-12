@@ -15,6 +15,10 @@ class Family < ActiveRecord::Base
 
   attr_accessible :name
 
+  def classify_transaction(bank_transaction)
+    nil
+  end
+
   def encrypt(*args)
     raise ArgumentError, "No salt defined in the family -- can't encrypt!" if salt.blank?
     args.flatten!
