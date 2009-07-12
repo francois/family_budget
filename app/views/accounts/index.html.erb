@@ -1,4 +1,4 @@
-<%= page_title "Liste des comptes" %>
+<% page_title "Liste des comptes" %>
 
 <% form_tag(accounts_path, :method => "get") do %>
   <label>Voir seulement: <%= select_tag "purpose", options_for_select(@purposes, @purpose) %></label>
