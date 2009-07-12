@@ -1,4 +1,8 @@
 $(document).ready(function() {
+  $("#flash").slideDown("slow").click(function() {
+    $("#flash").slideUp();
+  });
+
   var insecureProcess = function(data) { eval(data); };
   var handleTransfer = function(e, ui) {
     // this == droppable, ui.draggable == draggable

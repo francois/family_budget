@@ -18,10 +18,11 @@ module ApplicationHelper
   end
 
   def render_flash_messages
-    %w(notice error).map do |key|
+    buffer = %w(notice error).map do |key|
       next if flash[key.to_sym].blank?
       content_tag(:p, h(flash[key.to_sym]), :class => key)
     end.join("\n")
+    content_tag(:div, buffer + content_tag(:p, "Cliquez ici pour fermer", :class => "close"), :id => "flash", :style => "display:none") unless buffer.blank?
   end
 
   def calendar
