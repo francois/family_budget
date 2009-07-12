@@ -2,6 +2,6 @@
   <td><%= select_tag "split[account_id][]", options_from_collection_for_select(expense_accounts, :id, :name) %></td>
   <td class="amount">
     <%= text_field_tag "split[amount][]", nil, :class => "amount", :size => 8 %>
-    <%= link_to(image_tag("delete.png", :alt => "Détruire cette ligne"), "#", :class => "destroy", :title => "Détruire cette ligne") %>
+    <%= link_to(image_tag("icons/delete.png", :alt => "Détruire cette ligne"), "#", :class => "destroy", :title => "Détruire cette ligne") %>
   </td>
 </tr>
