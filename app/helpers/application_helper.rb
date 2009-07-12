@@ -25,40 +25,6 @@ module ApplicationHelper
     content_tag(:div, buffer + content_tag(:p, "Cliquez ici pour fermer", :class => "close"), :id => "flash", :style => "display:none") unless buffer.blank?
   end
 
-  def calendar
-    year, month, day = current_date.year, current_date.month, current_date.day
-    first_of_month = Date.new(year, month, 1)
-    first_sunday = first_of_month - first_of_month.wday
-    last_of_month = Date.new(year, month, 1) >> 1
-    last_saturday = last_of_month + (6 - last_of_month.wday)
-    returning([]) do |buffer|
-      buffer << %q(<table cellspacing="0" cellpadding="0">)
-      buffer << %Q(<caption>#{month_name(month)} #{year}</caption>)
-      buffer << %q(<thead>)
-      buffer << %q(<tr>)
-      %w(Dim Lun Mar Mer Jeu Ven Sam).each do |dayname|
-        buffer << %q(<th>)
-        buffer << dayname
-        buffer << %q(</th>)
-      end
-      buffer << %q(</tr>)
-      buffer << %q(</thead>)
-      buffer << %q(<tbody>)
-      (first_sunday .. last_saturday).step(7) do |week|
-        buffer << %q(<tr>)
-        (week ... (week+7)).each do |date|
-          classes = []
-          classes << "today" if date == current_date
-          classes << "outside" if date.month != month
-          buffer << content_tag(:td, content_tag(:a, date.day, :href => "#"), :id => "date_#{date}", :class => classes.join(" "))
-        end
-        buffer << %q(</tr>)
-      end
-      buffer << %q(</tbody>)
-      buffer << %q(</table>)
-    end.join("\n")
-  end
-
   DAY_NAMES = %w(dimanche lundi mardi mercredi jeudi vendredi samedi)
   def render_current_date
     "#{DAY_NAMES[current_date.wday]} le #{current_date.day}"
