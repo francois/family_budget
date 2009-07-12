@@ -37,8 +37,10 @@
         <div id="flash">
           <%= render_flash_messages %>
         </div>
+        <div id="sidebar">
+          <%= yield :sidebar %>
+        </div>
         <%= yield %>
-        <%= yield :sidebar %>
       </div>
       <div id="footer">
         <p>Copyright 2008-<%= Date.today.year %>, Solutions Technologiques Internationales.</p>
