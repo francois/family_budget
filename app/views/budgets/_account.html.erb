@@ -7,7 +7,7 @@
 -%>
 <tr>
   <td scope="row"><%= link_to(h(account.name), budget_account_url(account)) %></td>
-  <td class="budget<%= " over" if over %>"><%= text_field_tag "budget[#{account.id}]", amount(budget_amount), :size => 6 %></td>
-  <td class="real<%= " over" if over %>"><%=amount real_amount %></td>
+  <td class="amount budget<%= " over" if over %>"><%= text_field_tag "budget[#{account.id}]", amount(budget_amount), :size => 6 %></td>
+  <td class="amount real<%= " over" if over %>"><%=amount real_amount %></td>
   <%= render :partial => "budget", :collection => cdr, :locals => {:account => account} %>
 </tr>

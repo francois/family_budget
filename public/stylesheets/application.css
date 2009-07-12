@@ -97,3 +97,11 @@ th { font-weight: normal; text-align: left; }
 td.amount, th.amount, col.amount { text-align: right; }
 tr:hover { color: white; background-color: #ff9400; }
 tfoot tr:hover, thead tr:hover { background-color: transparent; color: inherit; }
+
+/* Budgeting table */
+table.budget { width: 60em; }
+table.budget thead th[colspan] { text-align: center; }
+table.budget colgroup col { width: 5em; }
+table.budget .over { font-weight: bold; }
+table.budget#incomes .over { color: green; }
+table.budget#expenses .over { color: red; }

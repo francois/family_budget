@@ -1,6 +1,11 @@
-<table class="budget">
+<table id="<%= id %>" class="budget">
   <col width="*2"/>
-  <col span="6" width="*1"/>
+  <colgroup>
+    <% 3.times do %>
+      <col class="budgeted amount" width="*1"/>
+      <col class="real amount" width="*1"/>
+    <% end %>
+  </colgroup>
   <thead>
     <tr>
       <th rowspan="2"><%=h name %></th>
@@ -9,13 +14,13 @@
     <tr>
       <%- 3.times do -%>
         <th class="budget">Budgété</th>
-        <th class="real">Réel</th>
+        <th class="amount real">Réel</th>
       <%- end -%>
     </tr>
   </thead>
   <tfoot>
     <tr>
-      <td>&nbsp;</td>
+      <td>Totaux</td>
       <%= render :partial => "total", :collection => periods, :locals => {:accounts => accounts} %>
     </tr>
   </tfoot>

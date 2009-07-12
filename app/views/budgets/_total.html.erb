@@ -4,5 +4,5 @@
   real_amount   = accounts.map {|account| account.real_amount_in_period(period.year, period.month) }.compact.sum
   class_name    = " over" if real_amount > budget_amount
 -%>
-<td class="budget<%= class_name %>"><%=amount budget_amount %></td>
-<td class="real<%= class_name %>"><%=amount real_amount %></td>
+<td class="amount budget<%= class_name %>"><%=amount budget_amount %></td>
+<td class="amount real<%= class_name %>"><%=amount real_amount %></td>
