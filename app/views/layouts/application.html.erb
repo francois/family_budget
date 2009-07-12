@@ -13,10 +13,10 @@
         <ul id="secnav" class="navigation">
           <% if logged_in? then %>
             <li id="nav-people"><%=  link_to "Ma Famille", people_path %></li>
-            <li id="nav-signout"><%= link_to "Déconnecter", session_path, :method => :delete %></li>
+            <li id="nav-signout"><%= link_to "Déconnection", session_path, :method => :delete %></li>
           <% else %>
             <li id="nav-signup"><%=  link_to "Inscription", new_person_path %></li>
-            <li id="nav-signin"><%=  link_to "Connecter", new_session_path %></li>
+            <li id="nav-signin"><%=  link_to "Connection", new_session_path %></li>
           <% end %>
         </ul>
         <% if logged_in? then %>
