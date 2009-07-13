@@ -11,7 +11,7 @@
       <%= hidden_field_tag :bank_transaction_id, bank_transaction.id %>
       <%= submit_tag "Accepter" %>
     <% end %>
-    <% form_for(@import, :method => :delete) do |_| %>
+    <% form_for(@import, :html => {:method => :delete}) do |_| %>
       <%= hidden_field_tag :bank_transaction_id, bank_transaction.id %>
       <%= submit_tag "Rejeter" %>
     <% end %>
