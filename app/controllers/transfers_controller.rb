@@ -27,11 +27,13 @@ class TransfersController < ApplicationController
   end
 
   def create
-    transfer.debit_account     = current_family.accounts.find_by_id(params[:transfer][:debit_account_id])
-    transfer.credit_account    = current_family.accounts.find_by_id(params[:transfer][:credit_account_id])
-    transfer.bank_transactions << current_family.bank_transactions.find_all_by_id(params[:transfer][:bank_transaction_id])
-    transfer.posted_on         = current_date
     Transfer.transaction do
+      bank_transactions = current_family.bank_transactions.find_all_by_id(params[:transfer][:bank_transaction_id])
+      transfer.bank_transactions << bank_transactions
+
+      transfer.debit_account  = current_family.accounts.find_by_id(params[:transfer][:debit_account_id])
+      transfer.credit_account = current_family.accounts.find_by_id(params[:transfer][:credit_account_id])
+      transfer.posted_on      = current_date
       respond_to do |format|
         if transfer.save
           flash_message = "Transféré #{transfer.amount} de #{transfer.debit_account} à #{transfer.credit_account}, en date du #{transfer.posted_on}"
@@ -42,6 +44,13 @@ class TransfersController < ApplicationController
           format.js do
             flash.now[:notice] = flash_message
             render
+          end
+
+          # We want to do this only after the transfer's saved
+          logger.debug {"Clearing auto accounts"}
+          bank_transactions.each(&:clear_auto_account!)
+          bank_transactions.each do |bt|
+            transfer.family.train_classifier(bt)
           end
         else
           format.html { render :action => "new" }

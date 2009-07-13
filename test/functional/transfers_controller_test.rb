@@ -84,6 +84,35 @@ class TransfersControllerTest < ActionController::TestCase
         end
       end
 
+      context "with bank_transaction that has an auto_account_id" do
+        setup do
+          @bank_transaction = bank_transactions(:cell_phone_charge)
+          @bank_transaction.auto_account = accounts(:movies)
+          @bank_transaction.save!
+        end
+
+        context "" do
+          setup do
+            post :create, :transfer => {:bank_transaction_id => [@bank_transaction.id], :debit_account_id => accounts(:cell_phone_service)}
+          end
+
+          should_redirect_to("the transfers page") { transfers_path }
+          should_change "@bank_transaction.reload.auto_account", :to => nil
+
+          before_should "retrain the transaction" do
+            Family.any_instance.expects(:train_classifier).with(equals(@bank_transaction))
+          end
+
+          should "debit the cell phone service account" do
+            assert_equal accounts(:cell_phone_service), assigns(:transfer).debit_account
+          end
+
+          should "credit the credit card account" do
+            assert_equal accounts(:credit_card), assigns(:transfer).credit_account
+          end
+        end
+      end
+
       context "with bank_transaction and debit account" do
         setup do
           post :create, :transfer => {:bank_transaction_id => [bank_transactions(:cell_phone_charge).id], :debit_account_id => accounts(:cell_phone_service)}

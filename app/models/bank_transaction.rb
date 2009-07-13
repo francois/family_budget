@@ -35,6 +35,11 @@ class BankTransaction < ActiveRecord::Base
   named_scope :pending, :select => "#{table_name}.*", :joins => "LEFT JOIN bank_transactions_transfers btt ON btt.bank_transaction_id = bank_transactions.id",
                         :conditions => "btt.bank_transaction_id IS NULL AND #{table_name}.ignored_at IS NULL"
 
+  def clear_auto_account!
+    self.auto_account = nil
+    self.save!
+  end
+
   def ignored?
     !!self.ignored_at
   end

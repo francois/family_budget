@@ -20,11 +20,11 @@ class Family < ActiveRecord::Base
   def classification_possibilities(bank_transaction, limit=3)
     classifications = classifier.classifications(classifier_text(bank_transaction)).reject {|category, score| score.infinite?}
     names = classifications.sort_by(&:last).last(limit)
-    self.account.all(:conditions => {:name => names}).sort_by {|account| names.index(account.name)}
+    self.accounts.all(:conditions => {:name => names}).sort_by {|account| names.index(account.name)}
   end
 
   def classify_transaction(bank_transaction)
-    classification_possibilities.last
+    classification_possibilities(bank_transaction).last
   end
 
   def new_classifier
