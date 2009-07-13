@@ -1,0 +1,28 @@
+<table class="auto_classify">
+  <caption><%=h section.first %></caption>
+  <col id="date"/>
+  <col class="details" id="transaction"/>
+  <col class="amount" id="amount"/>
+  <col id="account"/>
+  <col id="actions"/>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Transaction</th>
+      <th class="amount">Montant</th>
+      <th>Compte</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <td colspan="5">
+      <% form_for(@import) do |_| %>
+        <%= hidden_field_tag :account_id, section.first.id %>
+        <%= submit_tag "Accepter ce groupe" %>
+      <% end %>
+    </td>
+  </tfoot>
+  <tbody>
+    <%= render :partial => "bank_transaction", :collection => section.last %>
+  </tbody>
+</table>

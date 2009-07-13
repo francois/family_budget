@@ -1,0 +1,19 @@
+<tr id="<%= dom_id(bank_transaction) %>" class="<%= dom_class(bank_transaction) %>">
+  <td><abbr title="<%= bank_transaction.posted_on.to_s(:db) %>"><%= i18n_date(bank_transaction.posted_on) %></abbr></td>
+  <td class="details">
+    <span class="account"><%=h bank_transaction.bank_account %></span>
+    <p><%= [bank_transaction.name, bank_transaction.memo].reject(&:blank?).join("<br/>") %></p>
+  </td>
+  <td class="amount"><%= format_money(bank_transaction.amount) %></td>
+  <td><%=h bank_transaction.auto_account %></td>
+  <td>
+    <% form_for(@import) do |_| %>
+      <%= hidden_field_tag :bank_transaction_id, bank_transaction.id %>
+      <%= submit_tag "Accepter" %>
+    <% end %>
+    <% form_for(@import, :method => :delete) do |_| %>
+      <%= hidden_field_tag :bank_transaction_id, bank_transaction.id %>
+      <%= submit_tag "Rejeter" %>
+    <% end %>
+  </td>
+</tr>

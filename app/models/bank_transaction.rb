@@ -37,6 +37,7 @@ class BankTransaction < ActiveRecord::Base
                         :conditions => "btt.bank_transaction_id IS NULL AND #{table_name}.ignored_at IS NULL"
 
   def clear_auto_account!
+    return if auto_account.nil?
     self.auto_account = nil
     self.save!
   end
@@ -59,5 +60,6 @@ class BankTransaction < ActiveRecord::Base
 
   def attempt_classification
     self.auto_account = self.family.classify_transaction(self)
+    logger.debug {"==> Auto Account: #{auto_account ? auto_account.name : 'none'}"}
   end
 end

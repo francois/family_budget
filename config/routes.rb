@@ -8,7 +8,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :bank_accounts, :accounts, :splits
 
-  map.resources :people, :families, :imports, :bank_transactions
+  map.resources :people, :families, :bank_transactions
+  map.resources :imports, :only => %w(new create show update destroy)
   map.resource :session
   map.root :controller => "dashboards", :action => "show"
 end

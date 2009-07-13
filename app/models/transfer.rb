@@ -13,6 +13,7 @@ class Transfer < ActiveRecord::Base
   validates_presence_of :family_id, :posted_on, :debit_account_id, :credit_account_id
   validate :presence_of_bank_transactions_or_debit_and_credit_account
   validate :no_transfer_between_same_accounts
+  after_save :clear_associated_bank_transaction_auto_accounts
 
   attr_accessible :debit_account, :credit_account, :bank_transaction, :posted_on, :description, :amount
 
@@ -116,5 +117,9 @@ class Transfer < ActiveRecord::Base
     return unless debit_account == credit_account
     errors.add("debit_account_id", "cannot be the same as the credit account")
     errors.add("credit_account_id", "cannot be the same as the debit account")
+  end
+
+  def clear_associated_bank_transaction_auto_accounts
+    self.bank_transactions.each(&:clear_auto_account!)
   end
 end
