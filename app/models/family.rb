@@ -1,3 +1,4 @@
+require "classifier"
 require "digest/sha1"
 
 class Family < ActiveRecord::Base
@@ -12,11 +13,82 @@ class Family < ActiveRecord::Base
   validates_uniqueness_of :name
 
   before_create :generate_salt
+  before_save :update_classifier
 
   attr_accessible :name
 
+  def classification_possibilities(bank_transaction, limit=3)
+    classifications = classifier.classifications(classifier_text(bank_transaction)).reject {|category, score| score.infinite?}
+    names = classifications.sort_by(&:last).last(limit)
+    self.account.all(:conditions => {:name => names}).sort_by {|account| names.index(account.name)}
+  end
+
   def classify_transaction(bank_transaction)
-    nil
+    classification_possibilities.last
+  end
+
+  def new_classifier
+    income_or_expense_accounts = self.accounts.incomes + self.accounts.expenses
+    Classifier::Bayes.new(:categories => income_or_expense_accounts.map(&:name))
+  end
+
+  def classifier
+    @classifier ||= if self.classifier_dump.blank? then
+                      logger.debug {"==> Instantiating new Classifier for #{self}"}
+                      new_classifier
+                    else
+                      logger.debug {"==> Reusing existing Classifier instance for #{self}"}
+                      Marshal.load(Base64.decode64(self.classifier_dump))
+                    end
+  end
+
+  def clear_classifier
+    @classifier = self.classifier_dump = nil
+  end
+
+  def retrain
+    self.clear_classifier
+    accounts = self.accounts.index_by(&:id)
+    self.bank_transactions.all(:include => %w(transfers bank_account)).each do |bt|
+      next unless bt.transfers.length == 1
+      transfer = bt.transfers.first
+      id = if transfer.debit_account_id == bt.bank_account.account_id then
+             transfer.credit_account_id
+           else
+             transfer.debit_account_id
+           end
+      account = accounts[id]
+      next unless account.income? || account.expense?
+      train_classifier(bt, account)
+    end
+    save
+  end
+
+  def train_classifier(bank_transaction, account=nil)
+    transfer = bank_transaction.transfers.first
+    unless account
+      account = if transfer.debit_account == bank_transaction.account then
+                  transfer.credit_account
+                else
+                  transfer.debit_account
+                end
+    end
+
+    text = classifier_text(bank_transaction)
+    logger.debug {"==> Training #{text.inspect} => #{account.name}"}
+    self.classifier.train(account.name, text)
+  end
+
+  def classifier_text(bank_transaction)
+    text = []
+    text << bank_transaction.name.to_s.gsub(/\W+/, " ")
+    text << bank_transaction.memo.to_s.gsub(/\W+/, " ")
+    text << NumberToWords.number_to_words(bank_transaction.amount)
+    text << NumberToWords.number_to_words(bank_transaction.posted_on.day)
+    text << NumberToWords.number_to_words(bank_transaction.posted_on.month)
+    text << NumberToWords.number_to_words(bank_transaction.posted_on.year)
+    text << bank_transaction.account.name
+    text.join(" ")
   end
 
   def encrypt(*args)
@@ -64,5 +136,10 @@ class Family < ActiveRecord::Base
       date = date >> 1
     end
     data.sort
+  end
+
+  def update_classifier
+    logger.debug {"==> Updating classifier: #{classifier_dump_changed?}"}
+    self.classifier_dump = Base64.encode64(Marshal.dump(self.classifier))
   end
 end
