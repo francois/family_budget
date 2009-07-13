@@ -30,7 +30,7 @@ $(document).ready(function() {
         jQuery.post("/transfers.js", {"transfer[bank_transaction_id][]": ids}, insecureProcess);
       } else {
         var bankTransactionId = this.id.replace("bank_transaction_", "").replace("_process", "");
-        var accountId = $("#accounts input[checked]").val();
+        var accountId = $("#account_selector input[checked]").val();
         jQuery.post("/transfers.js", {"transfer[bank_transaction_id]": bankTransactionId, "transfer[debit_account_id]": accountId}, insecureProcess);
       }
     } else if (this.getAttribute("class").match(/cancel/)) {
