@@ -50,6 +50,18 @@ class ImportsControllerTest < ActionController::TestCase
         end
       end
 
+      context "on DELETE to :destroy with :account_id" do
+        setup do
+          delete :destroy, :id => @import.id, :account_id => accounts(:salary).id
+        end
+
+        should_redirect_to("the import page") { import_url(@import) }
+        should_not_change "Transfer.count"
+        should_not_change "@bt_groceries.reload.transfers.count"
+
+        should_change "@bt_groceries.reload.auto_account",    :to => nil
+      end
+
       context "on DELETE to :destroy with :bank_transaction_id" do
         setup do
           delete :destroy, :id => @import.id, :bank_transaction_id => @bt_groceries.id

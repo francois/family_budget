@@ -46,8 +46,19 @@ class ImportsController < ApplicationController
   end
 
   def destroy
-    @bank_transaction = current_family.bank_transactions.find(params[:bank_transaction_id])
-    @bank_transaction.update_attribute(:auto_account, nil)
+    case
+    when params[:account_id]
+      @account = current_family.accounts.find(params[:account_id])
+      BankTransaction.transaction do
+        @import.bank_transactions.all(:include => :auto_account, :conditions => {:auto_account_id => @account.id}).each do |bt|
+          bt.clear_auto_account!
+        end
+      end
+    when params[:bank_transaction_id]
+      @bank_transaction = current_family.bank_transactions.find(params[:bank_transaction_id])
+      @bank_transaction.clear_auto_account!
+    end
+
     redirect_to @import
   end
 

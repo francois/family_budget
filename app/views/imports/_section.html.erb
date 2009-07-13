@@ -20,6 +20,10 @@
         <%= hidden_field_tag :account_id, section.first.id %>
         <%= submit_tag "Accepter ce groupe" %>
       <% end %>
+      <% form_for(@import, :html => {:method => :delete}) do |_| %>
+        <%= hidden_field_tag :account_id, section.first.id %>
+        <%= submit_tag "Rejeter ce groupe" %>
+      <% end %>
     </td>
   </tfoot>
   <tbody>
