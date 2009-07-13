@@ -5,7 +5,6 @@
     <p><%= [bank_transaction.name, bank_transaction.memo].reject(&:blank?).join("<br/>") %></p>
   </td>
   <td class="amount"><%= format_money(bank_transaction.amount) %></td>
-  <td><%=h bank_transaction.auto_account %></td>
   <td>
     <% form_for(@import) do |_| %>
       <%= hidden_field_tag :bank_transaction_id, bank_transaction.id %>
