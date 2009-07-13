@@ -8,6 +8,7 @@ class Family < ActiveRecord::Base
   has_many :budgets, :order => "account_id, starting_on", :dependent => :destroy
   has_many :bank_accounts
   has_many :bank_transactions
+  has_many :imports
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -89,7 +90,7 @@ class Family < ActiveRecord::Base
     text << NumberToWords.number_to_words(bank_transaction.posted_on.day)
     text << NumberToWords.number_to_words(bank_transaction.posted_on.month)
     text << NumberToWords.number_to_words(bank_transaction.posted_on.year)
-    text << bank_transaction.account.name
+    text << bank_transaction.account.name if bank_transaction.account
     text.join(" ")
   end
 

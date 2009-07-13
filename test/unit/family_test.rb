@@ -4,7 +4,7 @@ class FamilyTest < ActiveSupport::TestCase
   should_validate_presence_of :name
   should_validate_uniqueness_of :name
   should_not_allow_mass_assignment_of :family_ids, :budget_ids, :people_ids, :salt
-  should_have_many :accounts, :budgets, :people, :bank_accounts, :bank_transactions
+  should_have_many :accounts, :budgets, :people, :bank_accounts, :bank_transactions, :imports
 
   context "A new family" do
     setup do

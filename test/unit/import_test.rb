@@ -1,10 +1,16 @@
 require 'test_helper'
 
 class ImportTest < ActiveSupport::TestCase
+  should_belong_to :family
+  should_have_many :bank_transactions
+  should_not_allow_mass_assignment_of :family_id, :bank_transaction_ids, :bank_transactions
+  should_allow_mass_assignment_of :data, :format
+  should_validate_presence_of :family_id
+
   context "An import" do
     context "referring to a new bank, account and bank_transaction" do
       setup do
-        @import = Import.new(:data => qfx(:bankid => "1221", :acctid => "77321812", :fitid => "992381928211"), :family => families(:beausoleil))
+        @import = families(:beausoleil).imports.build(:data => qfx(:bankid => "1221", :acctid => "77321812", :fitid => "992381928211"))
       end
 
       context "calling #process!" do
@@ -22,7 +28,7 @@ class ImportTest < ActiveSupport::TestCase
 
     context "referring to an existing bank, account and bank_transaction" do
       setup do
-        @import = Import.new(:data => qfx, :family => families(:beausoleil))
+        @import = families(:beausoleil).imports.build(:data => qfx)
       end
 
       context "calling #process!" do

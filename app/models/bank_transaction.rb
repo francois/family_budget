@@ -2,10 +2,11 @@ class BankTransaction < ActiveRecord::Base
   belongs_to :family
   belongs_to :bank_account
   belongs_to :auto_account, :class_name => "Account"
+  belongs_to :import
   delegate :account, :to => :bank_account
   has_and_belongs_to_many :transfers
 
-  attr_accessible :family, :bank_account, :debit_account, :credit_account, :fitid, :amount, :name, :memo, :posted_on, :bank_transactions
+  attr_accessible :family, :bank_account, :debit_account, :credit_account, :fitid, :amount, :name, :memo, :posted_on, :bank_transactions, :auto_account, :import
 
   validates_numericality_of :amount
   validates_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount

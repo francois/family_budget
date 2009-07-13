@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090712225136) do
+ActiveRecord::Schema.define(:version => 20090713054644) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "family_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20090712225136) do
     t.integer  "transfer_id"
     t.datetime "ignored_at"
     t.integer  "auto_account_id"
+    t.integer  "import_id"
   end
 
   add_index "bank_transactions", ["family_id", "fitid"], :name => "by_family_fitid", :unique => true
@@ -72,6 +73,12 @@ ActiveRecord::Schema.define(:version => 20090712225136) do
     t.datetime "updated_at"
     t.string   "salt"
     t.text     "classifier_dump"
+  end
+
+  create_table "imports", :force => true do |t|
+    t.integer  "family_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "people", :force => true do |t|

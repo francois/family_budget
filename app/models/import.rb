@@ -1,13 +1,12 @@
 require "quicken_parser"
 
-class Import
-  attr_accessor :family, :data, :format
+class Import < ActiveRecord::Base
+  belongs_to :family
+  has_many :bank_transactions
 
-  def initialize(params={})
-    params.each_pair do |attr, value|
-      send("#{attr}=", value)
-    end
-  end
+  attr_accessor :data, :format
+  attr_accessible :data, :format
+  validates_presence_of :family_id
 
   # Returns the number of *new* bank transactions that were added.
   def process!

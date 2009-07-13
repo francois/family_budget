@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class BankTransactionTest < ActiveSupport::TestCase
-  should_belong_to :family, :bank_account, :auto_account
-  should_not_allow_mass_assignment_of :family_id, :bank_account_id, :ignored_at
-  should_allow_mass_assignment_of :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions
+  should_belong_to :family, :bank_account, :auto_account, :import
+  should_not_allow_mass_assignment_of :family_id, :bank_account_id, :ignored_at, :import_id, :auto_account_id
+  should_allow_mass_assignment_of :family, :bank_account, :amount, :posted_on, :name, :memo, :fitid, :bank_transactions, :import, :auto_account
   should_validate_presence_of :family_id, :bank_account_id, :posted_on, :name, :fitid, :amount
   should_validate_numericality_of :amount
   should_allow_values_for :amount, 0, -100, 100, -99.99, 99.99
