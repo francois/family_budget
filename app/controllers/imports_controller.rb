@@ -19,7 +19,7 @@ class ImportsController < ApplicationController
     @bank_transactions = @import.bank_transactions.all(:include => :auto_account).dup
     @bank_transactions.delete_if {|bt| bt.auto_account_id.nil?}
     @bank_transactions = @bank_transactions.group_by(&:auto_account)
-    return redirect_to(transfers_path) if @bank_transactions.empty?
+    return redirect_to(bank_transactions_path) if @bank_transactions.empty?
   end
 
   def update

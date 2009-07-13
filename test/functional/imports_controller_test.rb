@@ -2,6 +2,21 @@ require "test_helper"
 
 class ImportsControllerTest < ActionController::TestCase
   logged_in_as :quentin do
+    context "Given an import with no transactions left" do
+      setup do
+        @family      = families(:beausoleil)
+        @import      = @family.imports.create!
+      end
+
+      context "on GET to :show" do
+        setup do
+          get :show, :id => @import.id
+        end
+
+        should_redirect_to("the transactions processing page") { bank_transactions_path }
+      end
+    end
+
     context "Given three transactions from a single import" do
       setup do
         @family      = families(:beausoleil)
