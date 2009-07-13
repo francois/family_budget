@@ -14,7 +14,7 @@ h3 { font-size: 1.1em; }
 h1 + h2, h2 + h3, h3 + h4 { margin-top: -0.5em; }
 
 p, ul, ol, table { margin: 1em 0; }
-p { text-align: justify; }
+p { text-align: left; }
 
 li { display: list-item; }
 ul li { list-style-type: square; }
@@ -105,6 +105,8 @@ table.budget colgroup col { width: 5em; }
 table.budget .over { font-weight: bold; }
 table.budget#incomes .over { color: green; }
 table.budget#expenses .over { color: red; }
+
+table.auto_classify { width: 66%; }
 
 /* Sidebar */
 #sidebar { float: right; max-width: 240px; }
