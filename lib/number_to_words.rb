@@ -9,6 +9,8 @@ module NumberToWords
   def number_to_words(number, zero_as_text=true)
     num    = number.abs.to_i
     result = case num
+             when 10000..999999
+               number_to_words(num / 1000) + " " + HUNDREDS[1] + " " + number_to_words(num % 1000, false)
              when 1000..9999
                SINGLES[num / 1000] + " " + HUNDREDS[1] + " " + number_to_words(num % 1000, false)
              when 100..999
@@ -28,7 +30,7 @@ module NumberToWords
                  SINGLES[num]
                end
              else
-               raise OutOfBoundsException, "This converter can only convert 0 to 99999, negative or positive.  Received #{number}"
+               raise OutOfBoundsException, "This converter can only convert 0 to 999999, negative or positive.  Received #{number}"
              end.strip
     whole   = number < 0 ? "minus #{result}" : result
     decimal = number.kind_of?(Float) || number.kind_of?(BigDecimal) ? number_to_words(number.to_s.split(".").last.to_i) : nil

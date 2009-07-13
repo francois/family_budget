@@ -21,16 +21,13 @@ class NumberToWordsTest < ActiveSupport::TestCase
         1.1 => "one point one",
       10.23 => "ten point twenty three",
     928.093 => "nine hundred twenty eight point ninety three",
-     0.9999 => "zero point nine thousand nine hundred ninety nine"
+     0.9999 => "zero point nine thousand nine hundred ninety nine",
+      10293 => "ten thousand two hundred ninety three",
+      51281 => "fifty one thousand two hundred eighty one",
+     999999 => "nine hundred ninety nine thousand nine hundred ninety nine"
   }.each do |number, words|
     should "convert #{number} to #{words.inspect}" do
       assert_equal words, NumberToWords.number_to_words(number)
-    end
-  end
-
-  should "raise an OutOfBoundsException when converting 10000" do
-    assert_raise NumberToWords::OutOfBoundsException do
-      NumberToWords.number_to_words(10_000)
     end
   end
 end
