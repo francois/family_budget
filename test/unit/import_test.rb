@@ -23,6 +23,10 @@ class ImportTest < ActiveSupport::TestCase
         should "report 1 update transaction" do
           assert_equal 1, @update_count
         end
+
+        should "set the bank transaction's import_id to the new import" do
+          assert_equal @import, BankTransaction.last.import
+        end
       end
     end
 
