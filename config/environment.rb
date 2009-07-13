@@ -58,7 +58,7 @@ Rails::Initializer.run do |config|
   config.gem "FooBarWidget-money",      :version => "2.1.3", :lib => "money",          :source => "http://gems.github.com"
   config.gem "francois-quicken_parser", :version => "0.1.5", :lib => "quicken_parser", :source => "http://gems.github.com"
   config.gem "gchartrb",                :version => "0.8",   :lib => "google_chart"
-  config.gem "francois-classifier",     :version => "1.3.4", :lib => "classifier",     :source => "http://gems.github.com"
+  config.gem "francois-classifier",     :version => "1.3.6", :lib => "classifier",     :source => "http://gems.github.com"
 
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
