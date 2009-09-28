@@ -1,5 +1,10 @@
 <% page_title "Notre Budget" %>
 
+<div class="inline-nav">
+  <%= link_to(month_name((budget_date >> 1).month), budget_path(:date => (budget_date >> 1).to_s(:db))) %>
+  <%= link_to(month_name((budget_date << 1).month), budget_path(:date => (budget_date << 1).to_s(:db))) %>
+</div>
+
 <% form_tag(budget_path, :method => :put) do %>
   <%= render :partial => "budget_table", :locals => {:name => "Revenus", :accounts => @income_accounts, :periods => @periods, :id => "incomes"} %>
   <%= submit_tag "Enregister" %>

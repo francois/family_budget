@@ -25,8 +25,13 @@ class BudgetsController < ApplicationController
 
   protected
   def load_budget_date
-    @budget_date = current_date.at_beginning_of_month.to_date
-    @budget_date = @budget_date >> 1 if @budget_date.day > 7
+    if params[:date] then
+      @budget_date = Date.parse(params[:date])
+    else
+      @budget_date = current_date.at_beginning_of_month.to_date
+      @budget_date = @budget_date >> 1 if @budget_date.day > 7
+    end
+
     @budget_year, @budget_month = budget_date.year, budget_date.month
   end
 end
