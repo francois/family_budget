@@ -45,6 +45,10 @@ class Family < ActiveRecord::Base
                     end
   end
 
+  def to_s
+    name
+  end
+
   def clear_classifier
     @classifier = self.classifier_dump = nil
   end
