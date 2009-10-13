@@ -1,7 +1,6 @@
 development: &defaults
   adapter: postgresql
   database: family_budget_development
-  username: family_budget
 
 test:
   <<: *defaults
