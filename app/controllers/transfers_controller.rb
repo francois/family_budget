@@ -50,7 +50,10 @@ class TransfersController < ApplicationController
           logger.debug {"Clearing auto accounts"}
           bank_transactions.each(&:clear_auto_account!)
           bank_transactions.each do |bt|
-            transfer.family.train_classifier(bt)
+            training_time = Benchmark.ms do
+              transfer.family.train_classifier(bt)
+            end
+            logger.info {"Trained #{transfer.family} in #{training_time} ms"}
           end
         else
           format.html { render :action => "new" }
