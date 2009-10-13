@@ -83,6 +83,7 @@ class Family < ActiveRecord::Base
 
     text = classifier_text(bank_transaction)
     logger.debug {"==> Training #{text.inspect} => #{account.name}"}
+    self.classifier.add_category(account.name) unless self.classifier.categories.include?(account.name)
     self.classifier.train(account.name, text)
   end
 
