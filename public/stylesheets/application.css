@@ -135,3 +135,5 @@ table.auto_classify { width: 66%; }
 #flash p.notice { background-image: url(../images/icons/emoticon_happy.png); }
 #flash p.error { background-image: url(../images/icons/error.png); }
 #flash p.close { text-align: right; font-size: .8em; cursor: pointer; text-decoration: underline; }
+
+.details .handle { float: right; border: 1px solid #0b5fa5; padding: 2px; cursor: pointer; }
